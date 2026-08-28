@@ -18,10 +18,38 @@ import {
 } from "lucide-react";
 
 const pillars = [
-  { icon: Compass, number: "01", title: "Identidad", text: "Dejas de preguntar qué debes hacer y comienzas a elegir desde la mujer que quieres ser." },
-  { icon: Brain, number: "02", title: "Reprogramación", text: "Reconoces las historias y creencias que sostienen tu realidad actual para construir una narrativa más consciente." },
-  { icon: HeartPulse, number: "03", title: "Sistema nervioso", text: "Aprendes a relacionarte con la incertidumbre sin volver automáticamente al control, la urgencia o el autosabotaje." },
-  { icon: Target, number: "04", title: "Acción estratégica", text: "Traducimos intención en hábitos, límites y decisiones concretas que sí dependen de ti." },
+  {
+    icon: Compass,
+    image: "/pillar-identidad.webp",
+    alt: "Mujer observando su reflejo con serenidad",
+    number: "01",
+    title: "Identidad",
+    text: "Dejas de preguntar qué debes hacer y comienzas a elegir desde la mujer que quieres ser.",
+  },
+  {
+    icon: Brain,
+    image: "/pillar-reprogramacion.webp",
+    alt: "Mujer escuchando una práctica auditiva mientras escribe en su diario",
+    number: "02",
+    title: "Reprogramación",
+    text: "Reconoces las historias y creencias que sostienen tu realidad actual para construir una narrativa más consciente.",
+  },
+  {
+    icon: HeartPulse,
+    image: "/pillar-sistema-nervioso.webp",
+    alt: "Mujer haciendo una pausa consciente junto al agua",
+    number: "03",
+    title: "Sistema nervioso",
+    text: "Aprendes a relacionarte con la incertidumbre sin volver automáticamente al control, la urgencia o el autosabotaje.",
+  },
+  {
+    icon: Target,
+    image: "/pillar-accion-estrategica.webp",
+    alt: "Mujer avanzando con determinación a través de un umbral",
+    number: "04",
+    title: "Acción estratégica",
+    text: "Traducimos intención en hábitos, límites y decisiones concretas que sí dependen de ti.",
+  },
 ];
 
 const phases = [
@@ -80,8 +108,8 @@ export default function Home() {
 
       <section className="hero" id="inicio">
         <picture className="hero-media">
-          <source media="(max-width: 700px)" srcSet="/el-alquimista-cenote-mobile.webp" />
-          <img src="/el-alquimista-cenote.webp" alt="Cenote rodeado de selva iluminado por el sol" />
+          <source media="(max-width: 700px)" srcSet="/el-alquimista-editorial-hero-mobile.webp" />
+          <img src="/el-alquimista-editorial-hero.webp" alt="Mujer sosteniendo una edición de El Alquimista bajo un cielo luminoso" />
         </picture>
         <div className="hero-overlay" />
         <div className="hero-content">
@@ -89,7 +117,10 @@ export default function Home() {
           <h1>No persigas tu próxima realidad. Conviértete en la mujer capaz de sostenerla.</h1>
           <p className="hero-lead">Una experiencia auditiva de 21 días para transformar un deseo difuso en una visión clara, una práctica diaria y acciones congruentes con la mujer que estás eligiendo ser.</p>
           <div className="hero-actions">
-            <a className="button button-rose" href="#oferta">Comenzar mi transformación <ArrowRight size={17} /></a>
+            <a className="button button-rose hero-primary-cta" href="#oferta">
+              <span className="cta-label">Comenzar mi transformación</span>
+              <span className="cta-orbit" aria-hidden="true"><ArrowRight size={18} /></span>
+            </a>
             <a className="listen-link" href="#metodo"><span><Play size={13} fill="currentColor" /></span> Descubrir el método</a>
           </div>
           <div className="hero-proof" aria-label="Resumen del programa">
@@ -105,7 +136,6 @@ export default function Home() {
       </section>
 
       <section className="manifesto-section" id="manifiesto">
-        <div className="manifesto-index">01</div>
         <div className="manifesto-copy">
           <p className="eyebrow">Una definición diferente</p>
           <h2>Manifestar no es esperar. Es entrenar quién eres frente a lo que deseas.</h2>
@@ -123,8 +153,15 @@ export default function Home() {
           <p>No necesitas elegir entre intuición y estrategia. El método integra ambas para que tu práctica interior se traduzca en una manera distinta de vivir y decidir.</p>
         </div>
         <div className="pillar-grid">
-          {pillars.map(({ icon: Icon, number, title, text }) => (
-            <article className="pillar-card" key={title}><div className="pillar-top"><span>{number}</span><Icon size={22} /></div><h3>{title}</h3><p>{text}</p></article>
+          {pillars.map(({ icon: Icon, image, alt, number, title, text }) => (
+            <article className="pillar-card" key={title}>
+              <div className="pillar-media">
+                <img src={image} alt={alt} loading="lazy" />
+                <div className="pillar-image-shade" aria-hidden="true" />
+                <div className="pillar-top"><span>{number}</span><Icon size={22} /></div>
+              </div>
+              <div className="pillar-body"><h3>{title}</h3><p>{text}</p></div>
+            </article>
           ))}
         </div>
       </section>
