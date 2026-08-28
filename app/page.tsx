@@ -21,31 +21,35 @@ const pillars = [
   {
     icon: Compass,
     image: "/pillar-identidad.webp",
-    alt: "Mujer observando su reflejo con serenidad",
+    alt: "Mujer meditando durante un ritual de bienestar con su laptop",
+    focalPoint: "center 58%",
     number: "01",
     title: "Identidad",
     text: "Dejas de preguntar qué debes hacer y comienzas a elegir desde la mujer que quieres ser.",
   },
   {
-    icon: Brain,
-    image: "/pillar-reprogramacion.webp",
-    alt: "Mujer escuchando una práctica auditiva mientras escribe en su diario",
-    number: "02",
-    title: "Reprogramación",
-    text: "Reconoces las historias y creencias que sostienen tu realidad actual para construir una narrativa más consciente.",
-  },
-  {
     icon: HeartPulse,
     image: "/pillar-sistema-nervioso.webp",
-    alt: "Mujer haciendo una pausa consciente junto al agua",
-    number: "03",
+    alt: "Ritual de escritura consciente con una manifestación en una libreta",
+    focalPoint: "center center",
+    number: "02",
     title: "Sistema nervioso",
     text: "Aprendes a relacionarte con la incertidumbre sin volver automáticamente al control, la urgencia o el autosabotaje.",
   },
   {
+    icon: Brain,
+    image: "/pillar-reprogramacion.webp",
+    alt: "Mujer escuchando una práctica de reprogramación durante un ritual de bienestar",
+    focalPoint: "center center",
+    number: "03",
+    title: "Reprogramación",
+    text: "Reconoces las historias y creencias que sostienen tu realidad actual para construir una narrativa más consciente.",
+  },
+  {
     icon: Target,
     image: "/pillar-accion-estrategica.webp",
-    alt: "Mujer avanzando con determinación a través de un umbral",
+    alt: "Mujer convirtiendo sus ideas en un plan de acción estratégico",
+    focalPoint: "center 54%",
     number: "04",
     title: "Acción estratégica",
     text: "Traducimos intención en hábitos, límites y decisiones concretas que sí dependen de ti.",
@@ -153,10 +157,10 @@ export default function Home() {
           <p>No necesitas elegir entre intuición y estrategia. El método integra ambas para que tu práctica interior se traduzca en una manera distinta de vivir y decidir.</p>
         </div>
         <div className="pillar-grid">
-          {pillars.map(({ icon: Icon, image, alt, number, title, text }) => (
+          {pillars.map(({ icon: Icon, image, alt, focalPoint, number, title, text }) => (
             <article className="pillar-card" key={title}>
               <div className="pillar-media">
-                <img src={image} alt={alt} loading="lazy" />
+                <img src={image} alt={alt} loading="lazy" style={{ objectPosition: focalPoint }} />
                 <div className="pillar-image-shade" aria-hidden="true" />
                 <div className="pillar-top"><span>{number}</span><Icon size={22} /></div>
               </div>
