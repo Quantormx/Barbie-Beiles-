@@ -20,7 +20,7 @@ import {
 const pillars = [
   {
     icon: Compass,
-    image: "/pillar-identidad.webp",
+    image: "/pillar-identidad-v2.webp",
     alt: "Mujer meditando durante un ritual de bienestar con su laptop",
     focalPoint: "center 58%",
     number: "01",
@@ -29,7 +29,7 @@ const pillars = [
   },
   {
     icon: HeartPulse,
-    image: "/pillar-sistema-nervioso.webp",
+    image: "/pillar-sistema-nervioso-v2.webp",
     alt: "Ritual de escritura consciente con una manifestación en una libreta",
     focalPoint: "center center",
     number: "02",
@@ -38,7 +38,7 @@ const pillars = [
   },
   {
     icon: Brain,
-    image: "/pillar-reprogramacion.webp",
+    image: "/pillar-reprogramacion-v2.webp",
     alt: "Mujer escuchando una práctica de reprogramación durante un ritual de bienestar",
     focalPoint: "center center",
     number: "03",
@@ -47,7 +47,7 @@ const pillars = [
   },
   {
     icon: Target,
-    image: "/pillar-accion-estrategica.webp",
+    image: "/pillar-accion-estrategica-v2.webp",
     alt: "Mujer convirtiendo sus ideas en un plan de acción estratégico",
     focalPoint: "center 54%",
     number: "04",
