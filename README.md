@@ -1,4 +1,4 @@
-# El Alquimista — web de Bárbara Beiles
+# El Alquimista — web de Barbie Beiles
 
 Paquete editable estático (HTML + CSS + JavaScript) reconstruido a partir de la última dirección creativa y los assets guardados en **Proyecto Influencer**.
 
@@ -19,7 +19,7 @@ y visita `http://localhost:8080`.
 - `index.html` — estructura y contenido de la landing.
 - `styles.css` — diseño responsive y sistema visual.
 - `script.js` — animaciones de entrada y navegación.
-- `assets/` — hero, retrato de Bárbara, pilares y método de 21 días.
+- `assets/` — hero, retrato de Barbie, pilares y método de 21 días.
 - `source-material/` — referencia de decisiones y contenido fuente.
 
 ## Compra
