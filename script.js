@@ -123,4 +123,17 @@
       });
     });
   }
+  // Meta Pixel: track clicks that start the Hotmart purchase journey.
+  document.querySelectorAll('.buy-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'InitiateCheckout', {
+          content_name: 'El Alquimista',
+          value: 37,
+          currency: 'USD'
+        });
+      }
+    });
+  });
+
 })();
