@@ -43,7 +43,7 @@
 
   // The widget supplied by Hotmart opens checkout over the current page.
   const checkoutScript = document.createElement('script');
-  checkoutScript.src = 'https://static.hotmart.com/checkout/widget-preview-test-missing.js';
+  checkoutScript.src = 'https://static.hotmart.com/checkout/widget.min.js';
   checkoutScript.onerror = loadAlternateCheckout;
   document.head.appendChild(checkoutScript);
 
