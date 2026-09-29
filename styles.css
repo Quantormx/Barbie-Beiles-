@@ -25,3 +25,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.pillar-card img,.btn{transition:none}}
 
 .checkout-error{position:fixed;z-index:10000;left:50%;bottom:24px;transform:translateX(-50%);width:min(90vw,480px);padding:16px 22px;border-radius:16px;background:#17352c;color:#fff;box-shadow:0 16px 40px rgba(0,0,0,.28);text-align:center;font:500 14px/1.5 'DM Sans',sans-serif}.checkout-error p{margin:0 0 10px}.checkout-error button,.checkout-error a{display:inline-block;margin:4px;padding:8px 12px;border:1px solid rgba(255,255,255,.6);border-radius:8px;background:transparent;color:#fff;font:inherit;cursor:pointer}.checkout-error a{text-decoration:underline}
+
+/* Hotmart Checkout Elements appends its overlay to body without a layer index. */
+#custom-element-lightbox-overlay{z-index:99998}
+#custom-element-lightbox-modal{z-index:99999}
