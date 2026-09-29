@@ -1,16 +1,50 @@
 (() => {
-  // The official Hotmart widget opens its checkout over the current page.
-  const checkoutScript = document.createElement('script');
-  checkoutScript.src = 'https://static.hotmart.com/checkout/widget.min.js';
-  checkoutScript.onerror = () => {
-    // Keep visitors on this page if Hotmart's widget cannot load.
+  const checkoutUrl = 'https://pay.hotmart.com/T95794906V?checkoutMode=2';
+
+  const showCheckoutError = () => {
     if (document.querySelector('.checkout-error')) return;
-    const notice = document.createElement('p');
+    const notice = document.createElement('div');
     notice.className = 'checkout-error';
     notice.setAttribute('role', 'alert');
-    notice.textContent = 'No pudimos abrir el pago aquí. Recarga la página e inténtalo de nuevo.';
+    const message = document.createElement('p');
+    message.textContent = 'No pudimos cargar el pago dentro de la página.';
+    const retry = document.createElement('button');
+    retry.type = 'button';
+    retry.textContent = 'Reintentar';
+    retry.addEventListener('click', () => window.location.reload());
+    const alternative = document.createElement('a');
+    alternative.href = checkoutUrl;
+    alternative.target = '_blank';
+    alternative.rel = 'noopener';
+    alternative.textContent = 'Abrir pago seguro en Hotmart';
+    notice.append(message, retry, alternative);
     document.body.appendChild(notice);
   };
+
+  const loadAlternateCheckout = () => {
+    // Checkout Elements uses another official Hotmart script host.
+    const alternateScript = document.createElement('script');
+    alternateScript.src = 'https://checkout.hotmart.com/lib/hotmart-checkout-elements.js';
+    alternateScript.onload = () => {
+      try {
+        if (typeof window.checkoutElements?.init !== 'function') throw new Error('Checkout Elements unavailable');
+        document.querySelectorAll('.buy-link').forEach((link, index) => {
+          link.id ||= `hotmart-checkout-${index + 1}`;
+          const overlay = window.checkoutElements.init('overlayCheckout', { offer: 'jloebrwk' });
+          overlay.attach(`#${link.id}`);
+        });
+      } catch (error) {
+        showCheckoutError();
+      }
+    };
+    alternateScript.onerror = showCheckoutError;
+    document.head.appendChild(alternateScript);
+  };
+
+  // The widget supplied by Hotmart opens checkout over the current page.
+  const checkoutScript = document.createElement('script');
+  checkoutScript.src = 'https://static.hotmart.com/checkout/widget.min.js';
+  checkoutScript.onerror = loadAlternateCheckout;
   document.head.appendChild(checkoutScript);
 
   const header = document.querySelector('.site-header');
