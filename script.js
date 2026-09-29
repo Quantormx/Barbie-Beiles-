@@ -3,10 +3,13 @@
   const checkoutScript = document.createElement('script');
   checkoutScript.src = 'https://static.hotmart.com/checkout/widget.min.js';
   checkoutScript.onerror = () => {
-    // If the widget cannot load, let the official checkout URL work as a fallback.
-    document.querySelectorAll('.hotmart__button-checkout').forEach((link) => {
-      link.removeAttribute('onclick');
-    });
+    // Keep visitors on this page if Hotmart's widget cannot load.
+    if (document.querySelector('.checkout-error')) return;
+    const notice = document.createElement('p');
+    notice.className = 'checkout-error';
+    notice.setAttribute('role', 'alert');
+    notice.textContent = 'No pudimos abrir el pago aquí. Recarga la página e inténtalo de nuevo.';
+    document.body.appendChild(notice);
   };
   document.head.appendChild(checkoutScript);
 
