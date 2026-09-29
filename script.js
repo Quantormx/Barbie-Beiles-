@@ -1,4 +1,15 @@
 (() => {
+  // The official Hotmart widget opens its checkout over the current page.
+  const checkoutScript = document.createElement('script');
+  checkoutScript.src = 'https://static.hotmart.com/checkout/widget.min.js';
+  checkoutScript.onerror = () => {
+    // If the widget cannot load, let the official checkout URL work as a fallback.
+    document.querySelectorAll('.hotmart__button-checkout').forEach((link) => {
+      link.removeAttribute('onclick');
+    });
+  };
+  document.head.appendChild(checkoutScript);
+
   const header = document.querySelector('.site-header');
   const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 40);
   onScroll();
