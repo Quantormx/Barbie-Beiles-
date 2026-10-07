@@ -91,11 +91,15 @@
     let pending = false;
     const keepWhatsAppClear = () => {
       pending = false;
-      whatsapp.classList.remove('is-hidden');
+      whatsapp.style.bottom = '';
       const a = heroBuyLink.getBoundingClientRect();
       const b = whatsapp.getBoundingClientRect();
       const overlaps = a.left < b.right + 8 && a.right > b.left - 8 && a.top < b.bottom + 8 && a.bottom > b.top - 8;
-      whatsapp.classList.toggle('is-hidden', overlaps);
+      if (!overlaps) return;
+      const above = a.top - b.height - 14;
+      const below = a.bottom + 14;
+      const top = above >= 76 ? above : below + b.height <= window.innerHeight - 14 ? below : 76;
+      whatsapp.style.bottom = `${Math.round(window.innerHeight - top - b.height)}px`;
     };
     const scheduleWhatsAppCheck = () => {
       if (pending) return;
