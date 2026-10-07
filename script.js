@@ -52,6 +52,61 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  const countdown = document.getElementById('offer-countdown');
+  if (countdown) {
+    const storageKey = 'el_alquimista_offer_deadline_v1';
+    const duration = 59 * 60 * 1000;
+    let deadline;
+    try {
+      deadline = Number(localStorage.getItem(storageKey));
+      if (!Number.isFinite(deadline) || deadline <= 0) {
+        deadline = Date.now() + duration;
+        localStorage.setItem(storageKey, String(deadline));
+      }
+    } catch (_) {
+      deadline = Date.now() + duration;
+    }
+    const twoDigits = value => String(value).padStart(2, '0');
+    const updateCountdown = () => {
+      const seconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      countdown.textContent = `${twoDigits(Math.floor(seconds / 3600))}:${twoDigits(Math.floor(seconds % 3600 / 60))}:${twoDigits(seconds % 60)}`;
+      if (seconds === 0) document.getElementById('countdown-label').textContent = 'EL TIEMPO DE ESTA OFERTA TERMINÓ';
+    };
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+  }
+
+  const dayTrack = document.getElementById('timeline-track');
+  if (dayTrack) {
+    for (let day = 1; day <= 21; day += 1) {
+      const dot = document.createElement('span');
+      dot.className = `day-dot${day === 9 ? ' is-now' : ''}`;
+      dayTrack.appendChild(dot);
+    }
+  }
+
+  const whatsapp = document.querySelector('.whatsapp-contact');
+  const heroBuyLink = document.querySelector('.hero--offer .buy-link');
+  if (whatsapp && heroBuyLink) {
+    let pending = false;
+    const keepWhatsAppClear = () => {
+      pending = false;
+      whatsapp.classList.remove('is-hidden');
+      const a = heroBuyLink.getBoundingClientRect();
+      const b = whatsapp.getBoundingClientRect();
+      const overlaps = a.left < b.right + 8 && a.right > b.left - 8 && a.top < b.bottom + 8 && a.bottom > b.top - 8;
+      whatsapp.classList.toggle('is-hidden', overlaps);
+    };
+    const scheduleWhatsAppCheck = () => {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(keepWhatsAppClear);
+    };
+    window.addEventListener('scroll', scheduleWhatsAppCheck, { passive: true });
+    window.addEventListener('resize', scheduleWhatsAppCheck);
+    scheduleWhatsAppCheck();
+  }
+
   const nodes = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const observer = new IntersectionObserver((entries) => {

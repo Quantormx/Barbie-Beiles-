@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#17352c" />
+  <meta name="theme-color" content="#07292e" />
   <meta name="description" content="El Alquimista: un ritual autoguiado de 21 días para entrenar identidad, regulación, claridad, expansión e integración." />
   <!-- Sustituir el contenido con el ID de medición GA4 (formato G-XXXXXXXXXX). -->
   <meta name="ga4-measurement-id" content="G-9REVXE3CQC" />
@@ -49,22 +49,36 @@
   </header>
 
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media" role="img" aria-label="Mujer sosteniendo el periódico El Alquimista al amanecer"></div>
-      <div class="hero-wash"></div>
+    <section class="hero hero--offer" aria-labelledby="hero-title">
+      <div class="hero-rings" aria-hidden="true"></div>
       <div class="hero-content shell">
-        <p class="hero-prehead">Haces de todo. Pero algo sigue sin moverse.</p>
-        <h1 id="hero-title">Deja de preguntarte qué haces mal.<br><em>Descubre qué parte de ti sigue interfiriendo.</em></h1>
-        <div class="hero-note">
-          <p>21 días para soltar la duda y empezar a crear desde certeza, merecimiento y acción alineada.</p>
+        <div class="offer-countdown" aria-label="Tiempo y precio de la oferta">
+          <p class="countdown-kicker" id="countdown-label">ESTA OFERTA TERMINA EN</p>
+          <div class="countdown-digits" id="offer-countdown" role="timer" aria-describedby="countdown-label">00:59:00</div>
+          <div class="countdown-units" aria-hidden="true"><span>HORAS</span><span>MINUTOS</span><span>SEGUNDOS</span></div>
+          <div class="countdown-prices"><del>USD 124</del><span aria-hidden="true">·</span><strong>HOY USD 37</strong></div>
         </div>
-        <p class="hero-copy">Sal de la sala de espera y acércate a lo que estás pidiendo.</p>
+        <p class="offer-eyebrow">TU PUNTO DE PARTIDA</p>
+        <h1 class="offer-title" id="hero-title">¿Y si no necesitas <em>hacer más?</em></h1>
+        <p class="offer-promise">En 21 días, aprende a manifestar desde <strong>la confianza, abundancia y facilidad.</strong></p>
+
+        <div class="hero-timeline" aria-labelledby="timeline-title">
+          <h2 class="timeline-heading" id="timeline-title">TU CAMINO · 21 DÍAS</h2>
+          <div class="timeline-track" id="timeline-track" aria-hidden="true"><span class="timeline-you">Tú estás aquí ↓</span></div>
+          <div class="timeline-stages">
+            <div class="timeline-stage"><span class="timeline-node" aria-hidden="true"></span><div><span class="timeline-day">DÍA 1</span><strong>ANTIGUA IDENTIDAD</strong><em>La que siente que debe perseguir</em></div></div>
+            <div class="timeline-stage is-current"><span class="timeline-node" aria-hidden="true"></span><div><span class="timeline-day">DÍA 9</span><strong>TÚ ESTÁS AQUÍ</strong></div></div>
+            <div class="timeline-stage"><span class="timeline-node" aria-hidden="true"></span><div><span class="timeline-day">DÍA 21</span><strong>NUEVA REALIDAD</strong><em>La que elige desde la confianza</em></div></div>
+          </div>
+        </div>
+
+        <p class="offer-reflection">Deja de perseguir, controlar y preguntarte qué más te falta hacer.</p>
+        <p class="offer-subcopy">Empieza por ti. Lo demás se transforma con tus decisiones.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary buy-link hotmart-fb hotmart__button-checkout" href="https://pay.hotmart.com/T95794906V?checkoutMode=2" onclick="return false;">Quiero entrar a El Alquimista <span>→</span></a>
-          <span class="price-inline"><strong>$37 USD</strong> · acceso autoguiado</span>
+          <a class="btn glass-cta buy-link hotmart-fb hotmart__button-checkout" href="https://pay.hotmart.com/T95794906V?checkoutMode=2" onclick="return false;">QUIERO COMENZAR</a>
+          <span class="offer-after">21 días · a tu ritmo</span>
         </div>
       </div>
-      <div class="hero-scroll" aria-hidden="true">DESLIZA <span>↓</span></div>
     </section>
 
     <section class="testimonials section" id="testimonios" aria-labelledby="testimonials-title">
@@ -345,10 +359,6 @@
     <img src="assets/whatsapp-logo.png" width="25" height="25" alt="" />
     <span>Escríbeme</span>
   </a>
-
-  <div class="mobile-buybar">
-    <a class="buy-link hotmart-fb hotmart__button-checkout" href="https://pay.hotmart.com/T95794906V?checkoutMode=2" onclick="return false;">Entrar ahora · $37 USD</a>
-  </div>
 
   <script src="script.js"></script>
 </body>
