@@ -8,6 +8,11 @@
     notice.setAttribute('role', 'alert');
     const message = document.createElement('p');
     message.textContent = 'No pudimos cargar el pago dentro de la página.';
+    const close = document.createElement('button');
+    close.textContent = '×';
+    close.className = 'checkout-error-close';
+    close.setAttribute('aria-label', 'Cerrar aviso');
+    close.addEventListener('click', () => notice.remove());
     const retry = document.createElement('button');
     retry.type = 'button';
     retry.textContent = 'Reintentar';
@@ -17,7 +22,7 @@
     alternative.target = '_blank';
     alternative.rel = 'noopener';
     alternative.textContent = 'Abrir pago seguro en Hotmart';
-    notice.append(message, retry, alternative);
+    notice.append(close, message, retry, alternative);
     document.body.appendChild(notice);
   };
 
@@ -47,166 +52,54 @@
   checkoutScript.onerror = loadAlternateCheckout;
   document.head.appendChild(checkoutScript);
 
-  const header = document.querySelector('.site-header');
-  const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 40);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
 
-  const countdown = document.getElementById('offer-countdown');
-  if (countdown) {
-    const storageKey = 'el_alquimista_offer_deadline_v1';
-    const duration = 59 * 60 * 1000;
-    let deadline;
-    try {
-      deadline = Number(localStorage.getItem(storageKey));
-      if (!Number.isFinite(deadline) || deadline <= 0) {
-        deadline = Date.now() + duration;
-        localStorage.setItem(storageKey, String(deadline));
-      }
-    } catch (_) {
-      deadline = Date.now() + duration;
-    }
-    const twoDigits = value => String(value).padStart(2, '0');
-    const updateCountdown = () => {
-      const seconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
-      countdown.textContent = `${twoDigits(Math.floor(seconds / 3600))}:${twoDigits(Math.floor(seconds % 3600 / 60))}:${twoDigits(seconds % 60)}`;
-      if (seconds === 0) document.getElementById('countdown-label').textContent = 'EL TIEMPO DE ESTA OFERTA TERMINÓ';
-    };
-    updateCountdown();
-    window.setInterval(updateCountdown, 1000);
+
+const testimonials=[{"sender": "Alumna de El Alquimista", "text": "El Alquimista rebasó por mucho mis expectativas. Me ayudó a ponerle nombre a mis emociones, me siento mucho más ligera, empoderada. Mi meta es manifestar sentirme bien todos los días y lo estoy logrando. ¡Qué poderoso reto! Gracias Barbie.", "time": "10:24"}, {"sender": "Edith", "text": "Amo el reto del Alquimista en mi vida ❤️\nGracias por todo.", "time": "9:17"}, {"sender": "Belén", "text": "Gracias Barbie. Te mando mi video de cómo ha cambiado mi vida. Amo los audios, los escucho en todo momento. Amé El Alquimista.\n\n¡Quiero más!", "time": "11:03"}, {"sender": "Alumna de El Alquimista", "text": "Hola Bárbara, solo quería darte las gracias por todo lo que aprendí en el reto. Me cambió por completo mi forma de ver todo. Ahora siento que estoy atrayendo otro tipo de hombres y hasta mi jefe cambió conmigo. ¡Es impresionante!", "time": "8:46"}, {"sender": "Alumna de El Alquimista", "text": "¡Hola Barbie! Quería contarte que me siento muy bien y ha sucedido lo que he escrito en cuanto a cómo me quiero sentir. Sigo mejorando, pero ya vi más arriba de lo que había experimentado; cada día tengo experiencias nuevas.", "time": "7:52"}, {"sender": "Alumna de El Alquimista", "text": "Personas que tenía que ver, a quienes antes les había escrito, llegaron. Incluso tuve oportunidad de conocer al dueño de una cadena grande que vendemos. Fue un día muy productivo y alineado a mi deseo manifestado.", "time": "6:38"}, {"sender": "Alumna de El Alquimista", "text": "En enero hice este mapa de los sueños con Bárbara. Durante este tiempo se manifestó mi viaje con mi hermana, tengo el cuerpo de mis sueños, logré agendar tres citas por día de microblading y mi camioneta. Todo se ha ido dando.", "time": "9:32"}];
+let current=1;
+const dots=document.getElementById('dots');
+testimonials.forEach((_,i)=>{const b=document.createElement('button');b.className='dot';b.setAttribute('aria-label','Ver testimonio '+(i+1));b.addEventListener('click',()=>showTestimonial(i));dots.appendChild(b)});
+function showTestimonial(n){current=(n+testimonials.length)%testimonials.length;const t=testimonials[current];document.getElementById('testimonial-sender').textContent=t.sender;document.getElementById('testimonial-text').textContent=t.text;document.getElementById('testimonial-time').textContent=t.time;document.querySelector('.chat-body').scrollTop=0;[...dots.children].forEach((b,i)=>{b.classList.toggle('active',i===current);b.setAttribute('aria-current',i===current?'true':'false')});window.gtag?.('event','testimonial_interaction',{testimonial_number:current+1});}
+document.getElementById('prev').addEventListener('click',()=>showTestimonial(current-1));document.getElementById('next').addEventListener('click',()=>showTestimonial(current+1));
+const carousel=document.querySelector('.testimonial-carousel');carousel.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();showTestimonial(current-1)}if(e.key==='ArrowRight'){e.preventDefault();showTestimonial(current+1)}});
+let swipeX=0;carousel.addEventListener('touchstart',e=>{swipeX=e.changedTouches[0].clientX},{passive:true});carousel.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-swipeX;if(Math.abs(dx)>55)showTestimonial(current+(dx<0?1:-1))},{passive:true});showTestimonial(current);
+const menuButton=document.querySelector('.menu-toggle'),menu=document.getElementById('mobile-menu');menuButton.addEventListener('click',()=>{const open=menu.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú')});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','Abrir menú')}));
+document.querySelectorAll('.faq details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)document.querySelectorAll('.faq details').forEach(other=>{if(other!==d)other.open=false})}));
+
+
+
+// Preserve the live site's 59-minute per-visitor deadline and storage key.
+// Never extend an existing (including expired) deadline on page reload.
+const storageKey = 'el_alquimista_offer_deadline_v1';
+const duration = 59 * 60 * 1000;
+let deadline;
+try {
+  deadline = Number(localStorage.getItem(storageKey));
+  if (!Number.isFinite(deadline) || deadline <= 0) {
+    deadline = Date.now() + duration;
+    localStorage.setItem(storageKey, String(deadline));
   }
-
-  const dayTrack = document.getElementById('timeline-track');
-  if (dayTrack) {
-    for (let day = 1; day <= 21; day += 1) {
-      const dot = document.createElement('span');
-      dot.className = `day-dot${day === 9 ? ' is-now' : ''}`;
-      dayTrack.appendChild(dot);
-    }
-  }
-
-  const whatsapp = document.querySelector('.whatsapp-contact');
-  const heroBuyLink = document.querySelector('.hero--offer .buy-link');
-  if (whatsapp && heroBuyLink) {
-    let pending = false;
-    const keepWhatsAppClear = () => {
-      pending = false;
-      whatsapp.style.bottom = '';
-      const a = heroBuyLink.getBoundingClientRect();
-      const b = whatsapp.getBoundingClientRect();
-      const overlaps = a.left < b.right + 8 && a.right > b.left - 8 && a.top < b.bottom + 8 && a.bottom > b.top - 8;
-      if (!overlaps) return;
-      const above = a.top - b.height - (window.innerWidth <= 600 ? 100 : 14);
-      const below = a.bottom + 14;
-      const top = above >= 76 ? above : below + b.height <= window.innerHeight - 14 ? below : 76;
-      whatsapp.style.bottom = `${Math.round(window.innerHeight - top - b.height)}px`;
-    };
-    const scheduleWhatsAppCheck = () => {
-      if (pending) return;
-      pending = true;
-      window.requestAnimationFrame(keepWhatsAppClear);
-    };
-    window.addEventListener('scroll', scheduleWhatsAppCheck, { passive: true });
-    window.addEventListener('resize', scheduleWhatsAppCheck);
-    scheduleWhatsAppCheck();
-  }
-
-  const nodes = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
-    nodes.forEach((node) => observer.observe(node));
-  } else {
-    nodes.forEach((node) => node.classList.add('in'));
-  }
-
-  const carousel = document.querySelector('.testimonial-carousel');
-  const slides = [...document.querySelectorAll('.phone-slide')];
-  const dots = [...document.querySelectorAll('.carousel-dots button')];
-  const current = document.querySelector('.carousel-current');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let activeIndex = 0;
-  let autoplay;
-  let pointerStart = null;
-
-  const normalize = (index) => (index + slides.length) % slides.length;
-
-  const renderCarousel = () => {
-    if (!carousel || !slides.length) return;
-    const previous = normalize(activeIndex - 1);
-    const next = normalize(activeIndex + 1);
-    slides.forEach((slide, index) => {
-      slide.classList.toggle('is-active', index === activeIndex);
-      slide.classList.toggle('is-prev', index === previous);
-      slide.classList.toggle('is-next', index === next);
-      slide.setAttribute('aria-hidden', String(index !== activeIndex));
-    });
-    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === activeIndex));
-    if (current) current.textContent = String(activeIndex + 1).padStart(2, '0');
-  };
-
-  const restartProgress = () => {
-    if (!carousel || reducedMotion) return;
-    carousel.classList.remove('is-playing');
-    void carousel.offsetWidth;
-    carousel.classList.add('is-playing');
-  };
-
-  const showSlide = (index, restart = true) => {
-    activeIndex = normalize(index);
-    renderCarousel();
-    window.gtag?.('event', 'testimonial_interaction', { testimonial_number: activeIndex + 1 });
-    if (restart) startAutoplay();
-  };
-
-  const stopAutoplay = () => {
-    window.clearInterval(autoplay);
-    carousel?.classList.remove('is-playing');
-  };
-
-  function startAutoplay() {
-    stopAutoplay();
-    if (!carousel || reducedMotion || document.hidden) return;
-    restartProgress();
-    autoplay = window.setInterval(() => {
-      activeIndex = normalize(activeIndex + 1);
-      renderCarousel();
-      restartProgress();
-    }, 6500);
-  }
-
-  document.querySelector('.carousel-prev')?.addEventListener('click', () => showSlide(activeIndex - 1));
-  document.querySelector('.carousel-next')?.addEventListener('click', () => showSlide(activeIndex + 1));
-  dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
-  carousel?.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-      event.preventDefault();
-      showSlide(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
-    }
+} catch (_) { deadline = Date.now() + duration; }
+const clockCells = ['days','hours','minutes','seconds'].map(id => document.getElementById(id));
+clockCells.forEach(cell => cell.addEventListener('animationend', () => cell.classList.remove('is-ticking')));
+function updateCountdown(animate = true) {
+  const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+  const values = [Math.floor(remaining / 86400), Math.floor(remaining % 86400 / 3600), Math.floor(remaining % 3600 / 60), remaining % 60];
+  clockCells.forEach((cell, i) => {
+    const value = String(values[i]).padStart(2, '0');
+    if (cell.textContent === value) return;
+    cell.textContent = value;
+    cell.classList.remove('is-ticking');
+    if (animate) { void cell.offsetWidth; cell.classList.add('is-ticking'); }
   });
-  carousel?.addEventListener('pointerdown', (event) => { pointerStart = event.clientX; });
-  carousel?.addEventListener('pointerup', (event) => {
-    if (pointerStart === null) return;
-    const distance = event.clientX - pointerStart;
-    pointerStart = null;
-    if (Math.abs(distance) > 45) showSlide(activeIndex + (distance < 0 ? 1 : -1));
-  });
-  carousel?.addEventListener('pointercancel', () => { pointerStart = null; });
-  carousel?.addEventListener('mouseenter', stopAutoplay);
-  carousel?.addEventListener('mouseleave', startAutoplay);
-  carousel?.addEventListener('focusin', stopAutoplay);
-  carousel?.addEventListener('focusout', (event) => {
-    if (!carousel.contains(event.relatedTarget)) startAutoplay();
-  });
-  document.addEventListener('visibilitychange', () => document.hidden ? stopAutoplay() : startAutoplay());
-  renderCarousel();
-  startAutoplay();
+  if (remaining === 0) {
+    document.getElementById('countdown-label').textContent = 'El tiempo de esta oferta terminó';
+    document.querySelector('.countdown').classList.add('is-expired');
+  }
+  return remaining;
+}
+updateCountdown(false);
+const clockInterval = window.setInterval(() => { if (updateCountdown() === 0) window.clearInterval(clockInterval); }, 1000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) updateCountdown(false); });
 
   const measurementId = document.querySelector('meta[name="ga4-measurement-id"]')?.content.trim();
   if (/^G-[A-Z0-9]+$/i.test(measurementId || '')) {
@@ -242,5 +135,32 @@
       }
     });
   });
+
+
+
+document.querySelectorAll('a[href="#inversion"]').forEach(link => link.addEventListener('click', () => {
+  window.gtag?.('event', 'cta_click', {cta_location:link.closest('section')?.id || 'header',link_text:link.textContent.trim(),destination:'inversion'});
+}));
+document.querySelectorAll('.whatsapp-link').forEach(link => link.addEventListener('click', () => {
+  window.gtag?.('event', 'whatsapp_click', {cta_location:link.closest('section')?.id || 'floating'});
+}));
+// Keep WhatsApp away from the hero purchase CTA while scrolling on mobile.
+const whatsapp = document.querySelector('.whatsapp-contact');
+const heroCta = document.querySelector('.hero-cta');
+let pendingWhatsApp = false;
+function keepWhatsAppClear() {
+  pendingWhatsApp = false;
+  whatsapp.style.bottom = '';
+  const a = heroCta.getBoundingClientRect(), b = whatsapp.getBoundingClientRect();
+  const overlaps = a.left < b.right + 8 && a.right > b.left - 8 && a.top < b.bottom + 8 && a.bottom > b.top - 8;
+  if (!overlaps) return;
+  const top = Math.max(76, a.top - b.height - 14);
+  whatsapp.style.bottom = `${Math.max(16, Math.round(window.innerHeight - top - b.height))}px`;
+}
+function scheduleWhatsAppCheck() { if (!pendingWhatsApp) { pendingWhatsApp = true; window.requestAnimationFrame(keepWhatsAppClear); } }
+window.addEventListener('scroll', scheduleWhatsAppCheck, { passive: true });
+window.addEventListener('resize', scheduleWhatsAppCheck);
+window.addEventListener('load', scheduleWhatsAppCheck);
+scheduleWhatsAppCheck();
 
 })();

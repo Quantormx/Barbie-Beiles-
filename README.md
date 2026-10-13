@@ -18,7 +18,7 @@ y visita `http://localhost:8080`.
 
 - `index.html` — estructura y contenido de la landing.
 - `styles.css` — diseño responsive y sistema visual.
-- `script.js` — animaciones de entrada y navegación.
+- `script.js` — contador persistente, navegación, testimonios, checkout y medición.
 - `assets/` — hero, retrato de Barbie, pilares y método de 21 días.
 - `source-material/` — referencia de decisiones y contenido fuente.
 
@@ -26,7 +26,9 @@ y visita `http://localhost:8080`.
 
 Todos los CTA de compra apuntan a:
 
-https://hotmart.com/es/club/el-alquimista/el-alquimista-magia-y-manifestacion/T95794906V?off=jloebrwk
+https://pay.hotmart.com/T95794906V?checkoutMode=2
+
+Los CTA del encabezado, hero y método llevan a la sección de inversión. Los de la tarjeta de precio y el cierre abren el checkout de Hotmart, con enlace directo de respaldo. WhatsApp conserva el contacto existente.
 
 Precio implementado: **$37 USD**, modalidad única **autoguiada**.
 
@@ -38,8 +40,8 @@ El bloque de oferta se mantiene en una sola tarjeta: programa autoguiado, pago �
 
 ## Publicación
 
-El sitio es 100% estático y puede subirse tal cual a Netlify, Vercel, Cloudflare Pages, GitHub Pages o cualquier hosting convencional.
+El sitio es estático y se publica desde `main` de `Quantormx/Barbie-Beiles-` en el proyecto `barbie-beiles` de Vercel. Dominio: https://www.barbiebeiles.com.
 
 ## Nota de versión
 
-El código fuente original de la maqueta no estaba persistido como archivo dentro de Proyecto Influencer; este paquete recompone la landing editable usando los materiales finales disponibles y los últimos ajustes de contenido/compra.
+La actualización del 12 de octubre de 2026 integra el mockup HTML v2 aprobado. El contador conserva los 59 minutos por visitante y la clave existente de localStorage; cada valor parpadea al cambiar y el plazo no se reinicia al recargar. Respeta la preferencia de movimiento reducido. Véase `source-material/ajustes-2026-10-12.md`.

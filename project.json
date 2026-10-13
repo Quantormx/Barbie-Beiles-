@@ -1,9 +1,9 @@
 {
   "project": "El Alquimista — Barbie Beiles",
   "type": "static landing page",
-  "version": "2026-08-31",
+  "version": "2026-10-12",
   "entry": "index.html",
-  "purchase_url": "https://hotmart.com/es/club/el-alquimista/el-alquimista-magia-y-manifestacion/T95794906V?off=jloebrwk",
+  "purchase_url": "https://pay.hotmart.com/T95794906V?checkoutMode=2",
   "price_usd": 37,
   "mode": "autoguiado",
   "narrative": [
@@ -12,5 +12,6 @@
     "Claridad",
     "Expansión",
     "Integración"
-  ]
+  ],
+  "offer_countdown_minutes": 59
 }
