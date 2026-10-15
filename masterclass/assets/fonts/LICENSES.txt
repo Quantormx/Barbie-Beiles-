@@ -1,0 +1,27 @@
+DM Sans
+Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
+https://scripts.sil.org/OFL
+
+DM Sans Medium
+Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
+https://scripts.sil.org/OFL
+
+Darker Grotesque
+Copyright 2019 The Darker Grotesque Project Authors (https://github.com/bettergui/DarkerGrotesque)
+https://scripts.sil.org/OFL
+
+Darker Grotesque Medium
+Copyright 2019 The Darker Grotesque Project Authors (https://github.com/bettergui/DarkerGrotesque)
+https://scripts.sil.org/OFL
+
+Darker Grotesque SemiBold
+Copyright 2019 The Darker Grotesque Project Authors (https://github.com/bettergui/DarkerGrotesque)
+https://scripts.sil.org/OFL
+
+League Spartan
+Copyright 2020 The League Spartan Project Authors (https://github.com/theleagueof/league-spartan)
+https://scripts.sil.org/OFL
+
+League Spartan ExtraBold
+Copyright 2020 The League Spartan Project Authors (https://github.com/theleagueof/league-spartan)
+https://scripts.sil.org/OFL

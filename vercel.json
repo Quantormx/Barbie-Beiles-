@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/masterclass",
+      "destination": "/masterclass/index.html"
+    },
+    {
+      "source": "/masterclass/",
+      "destination": "/masterclass/index.html"
+    }
+  ]
+}
