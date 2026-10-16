@@ -22,12 +22,16 @@
   <main class="thank-you">
     <header class="welcome">
       <h1>YA ESTÁS DENTRO</h1>
-      <button class="video-preview" id="open-video" type="button" aria-label="Ver el video de Barbie Beiles" aria-haspopup="dialog">
-        <img src="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida-poster.jpg" width="1280" height="720" alt="Barbie Beiles te da la bienvenida" fetchpriority="high">
-        <span class="play-button" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span>
-        <span class="video-label">VIDEO</span>
-      </button>
-      <noscript><video class="fallback-video" controls playsinline preload="metadata" src="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida.mp4">Tu navegador no puede reproducir este video.</video></noscript>
+      <div class="inline-video">
+        <div class="player">
+          <video id="welcome-video" controls autoplay muted playsinline preload="metadata" width="1280" height="720" poster="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida-poster.jpg" aria-label="Video de bienvenida de Barbie Beiles, con subtítulos integrados">
+            <source src="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida.mp4" type="video/mp4">
+          </video>
+          <button id="enable-sound" class="sound-button" type="button" hidden>Activar sonido</button>
+          <button id="play-fallback" class="play-fallback" type="button" aria-label="Reproducir bienvenida de Barbie Beiles" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg></button>
+        </div>
+        <p id="video-error" class="video-error" role="status" hidden>No se pudo cargar el video. <a href="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida.mp4" target="_blank" rel="noopener">Abrir video</a></p>
+      </div>
       <h2>TU LUGAR ESTÁ RESERVADO.</h2>
       <p>Antes de cerrar esta página, haz estas 3 cosas para asegurarte de estar ahí en vivo.</p>
     </header>
@@ -39,7 +43,7 @@
           <h3 id="calendar-heading">01 · AÑÁDELA A TU CALENDARIO</h3>
           <p>Ya reservaste tu lugar. Bloquea este espacio para ti ahora.</p>
           <details class="calendar-options" id="calendar-options">
-            <summary>[ AÑADIR A MI CALENDARIO ]<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
+            <summary>AÑADIR A MI CALENDARIO<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></summary>
             <div class="calendar-links">
               <a id="google-calendar" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=MASTERCLASS%20con%20Barbie%20Beiles&amp;dates=20261105T010000Z%2F20261105T023000Z&amp;ctz=America%2FMexico_City&amp;details=Acceso%20a%20Zoom%3A%20https%3A%2F%2Fus06web.zoom.us%2Fj%2F81400386132%0AID%3A%20814%200038%206132&amp;location=https%3A%2F%2Fus06web.zoom.us%2Fj%2F81400386132" target="_blank" rel="noopener noreferrer">Google Calendar <span aria-hidden="true">↗</span></a>
               <a href="/masterclass/assets/Masterclass-Barbie-Beiles-2026-11-04.ics" download>Apple Calendar <span aria-hidden="true">↓</span></a>
@@ -74,16 +78,5 @@
     </footer>
   </main>
 
-  <dialog id="video-dialog" aria-label="Video de bienvenida de Barbie Beiles">
-    <div class="video-toolbar"><span>Barbie Beiles</span><button id="skip-video" type="button" autofocus>Omitir video <span aria-hidden="true">×</span></button></div>
-    <div class="player">
-      <video id="welcome-video" controls muted playsinline preload="none" poster="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida-poster.jpg" aria-label="Video de bienvenida, con subtítulos integrados">
-        <source src="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida.mp4" type="video/mp4">
-      </video>
-      <button id="enable-sound" class="sound-button" type="button">Activar sonido</button>
-      <button id="play-fallback" class="play-fallback" type="button" hidden>Reproducir video</button>
-    </div>
-    <p id="video-error" class="video-error" hidden>No se pudo cargar el video. <a href="https://beiles-masterclass-mockup.the-bro-medi-4874.chatgpt.site/assets/masterclass-bienvenida.mp4" target="_blank" rel="noopener">Abrir video</a></p>
-  </dialog>
 </body>
 </html>

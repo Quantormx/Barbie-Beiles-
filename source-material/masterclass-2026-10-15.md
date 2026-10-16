@@ -24,3 +24,9 @@ Para una siguiente edición, actualizar fecha, contador, metadatos, nombre de ev
 - WhatsApp group: https://chat.whatsapp.com/IzxPsGys3IxI0zZNXO6QIC?s=cl&p=i&ilr=0
 - Parent page redirects only after a verified Tally.FormSubmitted event from the registration iframe. Direct thank-you visits do not fire a lead conversion.
 - Email and native Tally redirect settings are configured separately in Tally; verify live settings before relying on them. No scheduled email reminder sequence is implemented by the static site.
+
+
+### 16 October 2026 · inline video revision
+- Replaced the popup with one inline video player in the page. Muted autoplay, native playback controls, sound activation, and manual-play fallback remain available; no modal or page scroll lock remains.
+- Removed the VIDEO overlay and calendar CTA brackets. Calendar CTA uses a slow, subtle brightness/glow pulse; animation stops while the options are open, while interacting, and for reduced-motion users.
+- Original signature, green WhatsApp icon, event details, links and Tally settings remain as published.
