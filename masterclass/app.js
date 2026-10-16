@@ -53,10 +53,14 @@
     if(event.origin!=='https://tally.so'||event.source!==frame.contentWindow||typeof event.data!=='string')return;
     if(!event.data.includes('Tally.FormSubmitted'))return;
     let message;try{message=JSON.parse(event.data);}catch{return;}
+    if(message.event!=='Tally.FormSubmitted')return;
     if(message.payload?.formId!=='zEXNbE'||conversionReported)return;
     conversionReported=true;
     window.gtag('event','generate_lead',{event_name:'masterclass_2026_11_04'});
     window.fbq?.('track','CompleteRegistration',{content_name:'Masterclass Barbie Beiles 2026-11-04',status:true});
+    // Redirect the top-level page only after a successful registration.
+    // Tally's native redirect also covers the standalone fallback form.
+    setTimeout(()=>window.location.assign('/masterclass/gracias'),300);
   });
   const widget=document.createElement('script');
   widget.src='https://tally.so/widgets/embed.js';widget.async=true;

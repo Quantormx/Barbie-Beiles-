@@ -1,0 +1,33 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Barbie Beiles//Masterclass//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:masterclass-20261104-81400386132@barbiebeiles.com
+DTSTAMP:20261016T142621Z
+DTSTART:20261105T010000Z
+DTEND:20261105T023000Z
+SUMMARY:MASTERCLASS con Barbie Beiles
+DESCRIPTION:Masterclass gratuita con Barbie Beiles.\n4 de noviembre de 2026
+ \, de 19:00 a 20:30 h (hora de Ciudad de México).\n\nAcceso a Zoom: https
+ ://us06web.zoom.us/j/81400386132\nID de reunión: 814 0038 6132\n\nComunid
+ ad de WhatsApp: https://chat.whatsapp.com/IzxPsGys3IxI0zZNXO6QIC?s=cl&p=i&
+ ilr=0
+LOCATION:https://us06web.zoom.us/j/81400386132
+URL:https://us06web.zoom.us/j/81400386132
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+SEQUENCE:0
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Tu masterclass con Barbie Beiles comienza en 24 horas.
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT1H
+ACTION:DISPLAY
+DESCRIPTION:Tu masterclass con Barbie Beiles comienza en 1 hora.
+END:VALARM
+END:VEVENT
+END:VCALENDAR

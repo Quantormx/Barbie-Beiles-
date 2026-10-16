@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/masterclass/gracias",
+      "destination": "/masterclass/gracias/index.html"
+    },
+    {
+      "source": "/masterclass/gracias/",
+      "destination": "/masterclass/gracias/index.html"
+    },
+    {
       "source": "/masterclass",
       "destination": "/masterclass/index.html"
     },
