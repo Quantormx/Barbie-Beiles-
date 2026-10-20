@@ -33,3 +33,14 @@
 
 .skip-link{position:fixed;top:0;left:20px;z-index:1000;transform:translateY(-120%);background:#fff9ef;padding:12px 20px;border-radius:0 0 8px 8px;font-size:14px}.skip-link:focus{transform:translateY(0)}
 .checkout-error{position:fixed;z-index:10000;bottom:24px;left:50%;transform:translateX(-50%);width:min(480px,calc(100% - 32px));padding:24px;background:#fff9ef;border:1px solid #b9946170;border-radius:16px;box-shadow:0 15px 70px #14392c44;color:#14392c}.checkout-error p{font-size:15px;margin-bottom:18px}.checkout-error button,.checkout-error a{display:inline-block;border:1px solid #b9946170;border-radius:20px;padding:8px 14px;background:transparent;font-size:12px;color:#14392c}.checkout-error a{margin-left:10px;background:#e72672;color:white;border-color:#e72672}.checkout-error .checkout-error-close{position:absolute;right:6px;top:3px;padding:2px 8px;border:0;font-size:22px}.countdown.is-expired .timer-rays{display:none}
+
+
+/* El Alquimista: isolated accessible audio sample */
+.audio-sample{padding-block:clamp(48px,7vw,96px)}
+.audio-sample-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;padding:clamp(28px,5vw,64px);border:1px solid rgba(185,148,97,.3);border-radius:28px;background:#fff9ef;color:#14392c}
+.audio-sample-copy h2{font-size:clamp(2rem,4vw,3.5rem);line-height:1.1;margin:12px 0 18px}
+.audio-sample-copy p:last-child{max-width:38ch;line-height:1.65}
+.audio-sample-control{min-width:0;padding:clamp(18px,3vw,32px);border:1px solid rgba(185,148,97,.26);border-radius:20px;background:rgba(255,255,255,.66)}
+.audio-sample-control p{margin:0 0 16px;font-size:.9rem;line-height:1.55}
+.audio-sample-control audio{display:block;width:100%;min-width:0;accent-color:#14392c}
+@media(max-width:760px){.audio-sample-panel{grid-template-columns:1fr;border-radius:22px}.audio-sample-control{padding:18px}}
