@@ -121,11 +121,161 @@ body.cinematic-active .cinematic-credit{opacity:.7}
   #tgm-cinematic{display:none}
 }
 
+
+/* === TGM NOOMO-LIKE IMMERSIVE OVERRIDE === */
+#tgm-webgl,.scene-progress,.webgl-note,.cinematic-credit{display:none!important}
+#tgm-cinematic{
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100svh!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  z-index:0!important;
+  opacity:1!important;
+  transform:scale(1.035);
+  filter:saturate(1.08) contrast(1.06) brightness(.88);
+  will-change:transform,filter;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 38%,transparent 0 38%,rgba(8,4,7,.12) 72%,rgba(8,4,7,.42) 100%),
+    linear-gradient(180deg,rgba(9,4,7,.12),rgba(9,4,7,.05) 45%,rgba(9,4,7,.28));
+}
+body{background:#0a0709!important}
+header{z-index:50!important}
+main{position:relative;z-index:2}
+main>section.immersive-scene{
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  background:transparent!important;
+  backdrop-filter:none!important;
+  overflow:visible;
+  padding-block:clamp(110px,16vh,180px)!important;
+}
+main>section.immersive-scene>.shell{
+  width:min(1180px,100%);
+}
+main>section.immersive-scene .hero-grid,
+main>section.immersive-scene .photo-split,
+main>section.immersive-scene .split{
+  grid-template-columns:1fr!important;
+  max-width:920px;
+  margin-inline:auto;
+}
+main>section.immersive-scene .hero-photo,
+main>section.immersive-scene .photo{
+  display:none!important;
+}
+main>section.immersive-scene .hero-copy,
+main>section.immersive-scene .shell,
+main>section.immersive-scene .panel,
+main>section.immersive-scene article{
+  position:relative;
+}
+main>section.immersive-scene .hero-copy:before,
+main>section.immersive-scene>.shell:before{
+  content:"";
+  position:absolute;
+  inset:-30px -26px;
+  background:linear-gradient(180deg,rgba(255,249,252,.92),rgba(255,242,248,.80));
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:32px;
+  box-shadow:0 24px 90px rgba(37,5,18,.18);
+  backdrop-filter:blur(14px) saturate(1.08);
+  z-index:-1;
+  opacity:.86;
+}
+main>section.immersive-scene.dark-copy,
+main>section.immersive-scene.dark-copy *{color:#fff!important}
+main>section.immersive-scene.dark-copy .eyebrow{color:#ff9fc4!important}
+main>section.immersive-scene.dark-copy>.shell:before{
+  background:linear-gradient(180deg,rgba(16,5,11,.72),rgba(46,7,24,.60));
+  border-color:rgba(255,255,255,.13);
+}
+main>section.immersive-scene .impact{
+  text-wrap:balance;
+}
+main>section.immersive-scene .hero-title{
+  font-size:clamp(4rem,12vw,8.2rem)!important;
+  max-width:10ch!important;
+}
+main>section.immersive-scene .center .impact{
+  max-width:10ch;
+}
+main>section.immersive-scene .stack,
+main>section.immersive-scene .four,
+main>section.immersive-scene .beliefs,
+main>section.immersive-scene .method,
+main>section.immersive-scene .includes,
+main>section.immersive-scene .bonus-grid{
+  background:rgba(255,255,255,.54);
+  border-radius:26px;
+  padding:18px 24px;
+  backdrop-filter:blur(10px);
+}
+main>section.immersive-scene.dark-copy .stack,
+main>section.immersive-scene.dark-copy .four,
+main>section.immersive-scene.dark-copy .beliefs,
+main>section.immersive-scene.dark-copy .method{
+  background:rgba(13,5,9,.46);
+}
+main>section:not(.immersive-scene){
+  position:relative;z-index:3;
+}
+body.past-immersive #tgm-cinematic{
+  opacity:0!important;
+}
+body.past-immersive:before{opacity:0}
+.nav{background:rgba(255,248,251,.80)!important;backdrop-filter:blur(18px) saturate(1.2)!important}
+.immersive-scene{
+  opacity:.22;
+  transform:translateY(40px) scale(.985);
+  transition:opacity .55s ease,transform .55s ease;
+}
+.immersive-scene.is-active{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+@media(max-width:859px){
+  #tgm-cinematic{
+    object-position:center center!important;
+    transform:scale(1.12);
+  }
+  main>section.immersive-scene{
+    min-height:115svh;
+    padding:104px 18px 80px!important;
+  }
+  main>section.immersive-scene>.shell{padding-inline:0!important}
+  main>section.immersive-scene .hero-copy:before,
+  main>section.immersive-scene>.shell:before{
+    inset:-18px -10px;
+    border-radius:24px;
+    opacity:.80;
+  }
+  main>section.immersive-scene .hero-title{
+    font-size:clamp(3.3rem,15vw,5.4rem)!important;
+  }
+  main>section.immersive-scene .center .impact{
+    font-size:clamp(3.1rem,14vw,5.1rem)!important;
+  }
+  main>section.immersive-scene .four,
+  main>section.immersive-scene .beliefs,
+  main>section.immersive-scene .method,
+  main>section.immersive-scene .includes,
+  main>section.immersive-scene .bonus-grid{
+    padding:12px 16px;
+  }
+}
+
 </style>
 </head>
 <body>
 <video id="tgm-cinematic" aria-hidden="true" muted playsinline preload="auto" poster="https://pikaso.cdnpk.net/private/production/5815613471/render.png?token=exp=1792886400~hmac=56fb02819c286c7f675570da465044e10f3e694204adfa7b9ab2e271336e342e">
-    <source src="https://pikaso.cdnpk.net/private/production/5815660345/a30b5bd6-1894-4eae-803d-f93154d25c3a-0.mp4?token=exp=1792886400~hmac=b12ad351802536545339a6e5cea7112f3822391fdf9aeb3aeac4d5e2448ec810" type="video/mp4">
+    <source src="https://pikaso.cdnpk.net/private/production/5815934378/xs0w6ngjfw-h264-720p.mp4?token=exp=1792886400~hmac=0ea700877aebbc731deec0c9ca3341cbfd2f2f98760c11ab63a02fbb1ee7ebc4" type="video/mp4">
   </video>
   <canvas id="tgm-webgl" aria-hidden="true"></canvas>
   <div class="cinematic-credit" aria-hidden="true">TGM · MAGNIFIC CINEMATIC</div>
@@ -467,382 +617,79 @@ body.cinematic-active .cinematic-credit{opacity:.7}
 </section>
 </main>
 
-<script>
-(() => {
-  const canvas = document.getElementById("tgm-webgl");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isMobile = window.matchMedia("(max-width: 859px)").matches;
-
-  // Real scroll windows where the 3D world takes over visually.
-  const sections = [...document.querySelectorAll("main > section")];
-  [2,4,7,10,13,16].forEach((idx) => {
-    const section = sections[idx];
-    if (!section) return;
-    const spacer = document.createElement("div");
-    spacer.className = "scene-portal";
-    spacer.setAttribute("aria-hidden","true");
-    section.insertAdjacentElement("afterend", spacer);
-  });
-
-  const gl = canvas.getContext("webgl", {
-    alpha:true, antialias:false, premultipliedAlpha:true, powerPreference:"high-performance"
-  });
-
-  if (!gl) {
-    canvas.style.display = "none";
-    document.documentElement.classList.add("no-webgl");
-    return;
-  }
-
-  const vert = `
-    attribute vec2 aPos;
-    varying vec2 vUv;
-    void main(){
-      vUv = aPos * .5 + .5;
-      gl_Position = vec4(aPos,0.0,1.0);
-    }
-  `;
-
-  const frag = `
-    precision highp float;
-    varying vec2 vUv;
-    uniform vec2 uRes;
-    uniform float uTime;
-    uniform float uScroll;
-    uniform vec2 uMouse;
-
-    #define MAX_STEPS 72
-    #define FAR 42.0
-    #define EPS .0025
-
-    mat2 rot(float a){ float c=cos(a),s=sin(a); return mat2(c,-s,s,c); }
-
-    float sdSphere(vec3 p,float r){ return length(p)-r; }
-    float sdBox(vec3 p, vec3 b){
-      vec3 q=abs(p)-b;
-      return length(max(q,0.0))+min(max(q.x,max(q.y,q.z)),0.0);
-    }
-    float sdCapsule(vec3 p, vec3 a, vec3 b, float r){
-      vec3 pa=p-a, ba=b-a;
-      float h=clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0);
-      return length(pa-ba*h)-r;
-    }
-    float sdTorus(vec3 p, vec2 t){
-      vec2 q=vec2(length(p.xz)-t.x,p.y);
-      return length(q)-t.y;
-    }
-
-    // Crystal with faceted silhouette.
-    float sdCrystal(vec3 p,float h,float r){
-      p.y += h*.34;
-      p.xz = abs(p.xz);
-      float side = max(p.x+p.z-r, max(p.x,p.z)-r*.72);
-      float cap = abs(p.y)-h*.5;
-      float tip = (p.x+p.z)*.44 + p.y - h*.36;
-      return max(max(side,cap),tip);
-    }
-
-    // Jellyfish bell + rim + 5 flowing tentacles.
-    float jelly(vec3 p,float sc,float phase){
-      p /= sc;
-      p.y += .15;
-      float t=uTime*.55+phase;
-      p.xz *= rot(sin(t*.35)*.16);
-
-      vec3 b=p;
-      b.y *= 1.26;
-      float bell=sdSphere(b-vec3(0.0,.38,0.0),1.16);
-      bell=max(bell,-(p.y+.10)); // cut underside
-      float rim=sdTorus(vec3(p.x,p.y+.08,p.z),vec2(.91,.055));
-      float d=min(bell,rim);
-
-      for(int i=0;i<5;i++){
-        float fi=float(i)-2.0;
-        vec3 q=p;
-        q.x -= fi*.28;
-        q.z -= sin(fi*1.7)*.12;
-        float wiggle=sin(q.y*2.0+t*1.3+fi)*.16;
-        q.x += wiggle;
-        float tent=sdCapsule(q,vec3(0.0,-.08,0.0),vec3(fi*.05,-2.65,cos(fi)*.18),.032+abs(fi)*.004);
-        d=min(d,tent);
-      }
-      return d*sc;
-    }
-
-    float crystalCluster(vec3 p,float sc,float seed){
-      p/=sc;
-      float d=99.0;
-      for(int i=0;i<5;i++){
-        float fi=float(i);
-        vec3 q=p;
-        q.x -= (fi-2.0)*.34 + sin(fi*2.1+seed)*.10;
-        q.z -= cos(fi*1.4+seed)*.18;
-        q.y += .55;
-        q.xz*=rot(fi*.55+seed*.2);
-        float h=1.0+mod(fi*1.37+seed,1.0)*1.05;
-        d=min(d,sdCrystal(q,h,.22+mod(fi*.33,1.0)*.10));
-      }
-      return d*sc;
-    }
-
-    // Scene repeats in real depth. Scroll advances the camera through it.
-    vec2 mapScene(vec3 p){
-      float mat=0.0;
-      float d=99.0;
-
-      float depth = uScroll * 74.0;
-      vec3 q=p;
-      q.z += depth;
-
-      // six authored depth planes.
-      for(int i=0;i<6;i++){
-        float fi=float(i);
-        float z=4.0-fi*14.5;
-        vec3 j=q-vec3(
-          mix(3.2,-3.0,mod(fi,2.0)),
-          sin(fi*1.4)*.45,
-          z
-        );
-        float jd=jelly(j, 1.0+mod(fi*.37,1.0)*.34, fi*.8);
-        if(jd<d){d=jd;mat=1.0;}
-
-        vec3 c=q-vec3(
-          mix(-4.2,4.0,mod(fi+1.0,2.0)),
-          -2.0,
-          z-4.5
-        );
-        float cd=crystalCluster(c,1.05+mod(fi*.29,1.0)*.38,fi);
-        if(cd<d){d=cd;mat=2.0;}
-      }
-
-      // translucent portal planes / tunnel rings.
-      float localZ = mod(q.z+7.0,14.5)-7.25;
-      vec3 rp=vec3(q.x,q.y,localZ);
-      float ring=abs(length(rp.xy)-4.6)-.032;
-      ring=max(ring,abs(rp.z)-.028);
-      if(ring<d){d=ring;mat=3.0;}
-
-      return vec2(d,mat);
-    }
-
-    vec3 normalAt(vec3 p){
-      vec2 e=vec2(EPS,0.0);
-      float d=mapScene(p).x;
-      return normalize(vec3(
-        mapScene(p+e.xyy).x-d,
-        mapScene(p+e.yxy).x-d,
-        mapScene(p+e.yyx).x-d
-      ));
-    }
-
-    vec3 palette(float m){
-      if(m<1.5) return vec3(1.0,.30,.62);
-      if(m<2.5) return vec3(.98,.38,.68);
-      return vec3(1.0,.62,.79);
-    }
-
-    void main(){
-      vec2 uv=(gl_FragCoord.xy-.5*uRes.xy)/uRes.y;
-      uv.x += uMouse.x*.045;
-      uv.y -= uMouse.y*.025;
-
-      float depth=uScroll*74.0;
-      vec3 ro=vec3(sin(uScroll*6.283)*.42, cos(uScroll*4.2)*.12, 10.0-depth);
-      vec3 rd=normalize(vec3(uv.x,uv.y,-1.22));
-      rd.xz*=rot(sin(uScroll*5.0)*.035);
-      rd.yz*=rot(cos(uScroll*3.0)*.018);
-
-      float travel=0.0;
-      float mat=0.0;
-      float glow=0.0;
-      bool hit=false;
-
-      for(int i=0;i<MAX_STEPS;i++){
-        vec3 p=ro+rd*travel;
-        vec2 h=mapScene(p);
-        float d=h.x;
-        glow += .0018/(.025+abs(d));
-        if(d<EPS){mat=h.y;hit=true;break;}
-        travel += max(d*.58,.012);
-        if(travel>FAR) break;
-      }
-
-      // Base environment: light blush -> deep berry as camera moves.
-      float darkPhase=smoothstep(.28,.58,uScroll);
-      vec3 top=mix(vec3(1.0,.90,.95),vec3(.09,.015,.045),darkPhase);
-      vec3 bot=mix(vec3(.92,.48,.68),vec3(.015,.006,.012),darkPhase);
-      vec3 col=mix(bot,top,clamp(vUv.y,0.0,1.0));
-
-      // radial atmospheric glow.
-      float halo=exp(-2.4*length(uv-vec2(.16,.08)));
-      col += vec3(1.0,.18,.55)*halo*.17;
-
-      if(hit){
-        vec3 p=ro+rd*travel;
-        vec3 n=normalAt(p);
-        vec3 l=normalize(vec3(.45,.7,.35));
-        float diff=.25+.75*max(dot(n,l),0.0);
-        float fres=pow(1.0-max(dot(-rd,n),0.0),2.2);
-        vec3 base=palette(mat);
-        col=mix(col,base*diff, mat>2.5?.52:.72);
-        col += base*fres*(mat>2.5?1.2:.58);
-      }
-
-      col += vec3(1.0,.10,.48)*min(glow,.72)*.33;
-
-      // sparkling particulate depth.
-      float stars=pow(max(0.0,sin((gl_FragCoord.x+uTime*17.0)*.071)*sin((gl_FragCoord.y-uTime*7.0)*.083)),42.0);
-      col += vec3(1.0,.65,.82)*stars*.32*(.25+darkPhase);
-
-      // cinematic edge darkening.
-      float vig=1.0-smoothstep(.45,.98,length(uv)*.78);
-      col*=.76+.24*vig;
-
-      float alpha=.96;
-      gl_FragColor=vec4(pow(col,vec3(.90)),alpha);
-    }
-  `;
-
-  function compile(type,src){
-    const sh=gl.createShader(type);
-    gl.shaderSource(sh,src);
-    gl.compileShader(sh);
-    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
-      console.error(gl.getShaderInfoLog(sh));
-      gl.deleteShader(sh);
-      return null;
-    }
-    return sh;
-  }
-
-  const vs=compile(gl.VERTEX_SHADER,vert);
-  const fs=compile(gl.FRAGMENT_SHADER,frag);
-  if(!vs || !fs){
-    canvas.style.display="none";
-    return;
-  }
-
-  const program=gl.createProgram();
-  gl.attachShader(program,vs); gl.attachShader(program,fs); gl.linkProgram(program);
-  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){
-    console.error(gl.getProgramInfoLog(program));
-    canvas.style.display="none";
-    return;
-  }
-  gl.useProgram(program);
-
-  const quad=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,quad);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),gl.STATIC_DRAW);
-  const pos=gl.getAttribLocation(program,"aPos");
-  gl.enableVertexAttribArray(pos);
-  gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
-
-  const uRes=gl.getUniformLocation(program,"uRes");
-  const uTime=gl.getUniformLocation(program,"uTime");
-  const uScroll=gl.getUniformLocation(program,"uScroll");
-  const uMouse=gl.getUniformLocation(program,"uMouse");
-
-  const fill=document.querySelector(".scene-progress .fill");
-  let target=0,smooth=0,mx=0,my=0;
-
-  function updateScroll(){
-    const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-    target=Math.min(1,Math.max(0,scrollY/max));
-    if(fill) fill.style.height=(target*100).toFixed(1)+"%";
-  }
-  updateScroll();
-  addEventListener("scroll",updateScroll,{passive:true});
-  addEventListener("pointermove",(e)=>{
-    mx=e.clientX/innerWidth-.5;
-    my=e.clientY/innerHeight-.5;
-  },{passive:true});
-
-  function resize(){
-    const dpr=Math.min(devicePixelRatio||1,isMobile?1.0:1.35);
-    const w=Math.max(1,Math.floor(innerWidth*dpr));
-    const h=Math.max(1,Math.floor(innerHeight*dpr));
-    if(canvas.width!==w || canvas.height!==h){
-      canvas.width=w;canvas.height=h;
-      canvas.style.width=innerWidth+"px";
-      canvas.style.height=innerHeight+"px";
-      gl.viewport(0,0,w,h);
-    }
-  }
-  resize();
-  addEventListener("resize",resize,{passive:true});
-
-  const started=performance.now();
-  function frame(now){
-    resize();
-    smooth += (target-smooth)*(reduceMotion?.035:.065);
-    gl.uniform2f(uRes,canvas.width,canvas.height);
-    gl.uniform1f(uTime,(now-started)/1000);
-    gl.uniform1f(uScroll,reduceMotion?target:smooth);
-    gl.uniform2f(uMouse,reduceMotion?0:mx,reduceMotion?0:my);
-    gl.drawArrays(gl.TRIANGLES,0,6);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
-</script>
 
 <script>
 (() => {
   const video = document.getElementById('tgm-cinematic');
-  if(!video) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced) return;
+  const sections = [...document.querySelectorAll('main > section')];
+  const immersiveCount = Math.min(15, sections.length);
+  const immersive = sections.slice(0, immersiveCount);
 
+  immersive.forEach((section, i) => {
+    section.classList.add('immersive-scene');
+    if ([4,5,8,9,10,11].includes(i)) section.classList.add('dark-copy');
+  });
+
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let duration = 10.083;
-  let target = 0;
-  let raf = 0;
   let ready = false;
+  let targetTime = 0;
+  let raf = 0;
 
-  const update = () => {
-    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    const p = Math.min(1, Math.max(0, scrollY / max));
+  const immersiveStart = immersive[0]?.offsetTop || 0;
+  const immersiveEnd = (immersive[immersive.length - 1]?.offsetTop || 0) + (immersive[immersive.length - 1]?.offsetHeight || innerHeight);
 
-    // Use Magnific cinematic for the first 43% of the journey.
-    const local = Math.min(1, Math.max(0, (p - .015) / .42));
-    const active = p < .445;
+  function progress(){
+    const start = immersiveStart;
+    const end = Math.max(start + 1, immersiveEnd - innerHeight);
+    return Math.min(1, Math.max(0, (scrollY - start) / (end - start)));
+  }
 
-    document.body.classList.toggle('cinematic-active', active);
-    video.classList.toggle('is-active', active);
-    target = local * Math.max(.1, duration - .05);
+  function updateVideo(){
+    if(!video || !ready || prefersReduced) return;
+    const p = progress();
+    // Cinematic easing: hold on opening, accelerate through middle, settle into end.
+    const eased = p < .12 ? (p/.12)*.08 : p > .86 ? .92 + ((p-.86)/.14)*.08 : .08 + ((p-.12)/.74)*.84;
+    targetTime = Math.min(duration-.04, Math.max(.01, eased*(duration-.04)));
+    if(!raf) raf = requestAnimationFrame(scrub);
+  }
 
-    if(!raf) raf = requestAnimationFrame(tick);
-  };
-
-  const tick = () => {
+  function scrub(){
     raf = 0;
-    if(!ready || !isFinite(video.duration)) return;
-    const current = video.currentTime || 0;
-    const delta = target - current;
-    if(Math.abs(delta) > .018){
-      // Smooth but responsive scroll scrubbing.
-      video.currentTime = current + delta * .22;
-      raf = requestAnimationFrame(tick);
+    const delta = targetTime - (video.currentTime || 0);
+    if(Math.abs(delta) > .012){
+      video.currentTime = (video.currentTime || 0) + delta * .28;
+      raf = requestAnimationFrame(scrub);
     }
-  };
+  }
 
-  video.addEventListener('loadedmetadata', () => {
-    duration = isFinite(video.duration) ? video.duration : duration;
+  function updateActive(){
+    const center = innerHeight * .52;
+    let best = null, bestDist = Infinity;
+    immersive.forEach(section => {
+      const r = section.getBoundingClientRect();
+      const mid = r.top + r.height/2;
+      const d = Math.abs(mid-center);
+      if(d < bestDist){best=section;bestDist=d;}
+    });
+    immersive.forEach(s=>s.classList.toggle('is-active',s===best));
+    document.body.classList.toggle('past-immersive', scrollY > immersiveEnd - innerHeight*.45);
+  }
+
+  video?.addEventListener('loadedmetadata',()=>{
+    duration = Number.isFinite(video.duration) ? video.duration : duration;
     ready = true;
-    try { video.currentTime = .01; } catch(e) {}
-    update();
+    try{ video.pause(); video.currentTime=.01; }catch(e){}
+    updateVideo();
   });
+  video?.addEventListener('canplay',()=>{ready=true; video.pause(); updateVideo();});
 
-  video.addEventListener('canplay', () => {
-    ready = true;
-    update();
-  });
-
-  addEventListener('scroll', update, {passive:true});
-  addEventListener('resize', update, {passive:true});
-  update();
+  function onScroll(){updateVideo();updateActive();}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll,{passive:true});
+  updateActive();
+  updateVideo();
 })();
 </script>
-
 </body>
 </html>
