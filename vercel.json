@@ -23,6 +23,14 @@
     {
       "source": "/theguidemethod/",
       "destination": "/theguidemethod/index.html"
+    },
+    {
+      "source": "/demotgm",
+      "destination": "/demotgm/index.html"
+    },
+    {
+      "source": "/demotgm/",
+      "destination": "/demotgm/index.html"
     }
   ]
 }
