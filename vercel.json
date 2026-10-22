@@ -15,6 +15,14 @@
     {
       "source": "/masterclass/",
       "destination": "/masterclass/index.html"
+    },
+    {
+      "source": "/theguidemethod",
+      "destination": "/theguidemethod/index.html"
+    },
+    {
+      "source": "/theguidemethod/",
+      "destination": "/theguidemethod/index.html"
     }
   ]
 }
