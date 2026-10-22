@@ -1,9 +1,11 @@
 {
   "name": "tgm-immersive-demo",
   "private": true,
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "build": "python3 src/build-page.py && esbuild src/experience.js --bundle --format=iife --target=es2020 --minify --outfile=experience.js --legal-comments=linked"
+    "build": "python3 src/build-page.py && esbuild src/experience.js --bundle --format=iife --target=es2020 --minify --outfile=experience.js --legal-comments=linked",
+    "test": "node --test src/model-geometry.test.mjs"
   },
   "dependencies": {"three": "0.180.0"},
   "devDependencies": {"esbuild": "0.25.10"}

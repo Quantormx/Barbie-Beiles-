@@ -31,3 +31,9 @@ Typography: Inter Tight, Manrope, and Bodoni Moda, from Google Fonts under their
 ## Verification record
 
 Verified all 18 original content sections against the previous production page, unique IDs, local assets, navigation targets, checkout URLs, GLB Meshopt decoding, and finite geometry coordinates. Verified desktop and 390px mobile layouts, menu navigation, video playback, FAQ opening, and motion controls in the cloud browser. The cloud browser disables WebGL: its six-scene image fallback was visually verified; the live WebGL scene still requires a visual check on a GPU-enabled browser.
+
+## Geometry and transition correction
+
+The first deployed renderer transformed normalized Int16 vertex attributes in place. Scaling wrote values outside their representable range, folding the jellyfish and crystal meshes into a two-unit cube. `src/model-geometry.js` now expands decoded positions and normals to Float32 before applying world transforms. `npm test` loads all three compressed production models and verifies target height, centering, original proportions, and finite floating-point vertices.
+
+The opening now gradually reveals the world as its introductory section leaves the viewport. Procedural foreground pyramids were removed; rings are thinner, dimmer, and fade before approaching the camera. Mobile framing keeps the jellyfish centered, and its rotation gently oscillates instead of continually turning away. Mobile image-backdrop crops and section gradients were adjusted for continuity.

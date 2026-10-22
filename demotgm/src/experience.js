@@ -6,6 +6,7 @@ import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {normalizeModel} from './model-geometry.js';
 
 const body=document.body;
 const chapters=[...document.querySelectorAll('.chapter')];
@@ -58,7 +59,10 @@ let scrollQueued=false;
 function updateScroll(){
   scrollQueued=false;
   body.classList.toggle('scrolled',scrollY>60);
-  const y=scrollY+innerHeight*.24;
+  const y=scrollY+innerHeight*.55;
+  const heroEnd=bounds[0]?.height||innerHeight*2;
+  const reveal=THREE.MathUtils.smoothstep(scrollY,heroEnd-innerHeight*1.05,heroEnd-innerHeight*.18);
+  body.style.setProperty('--world-reveal',reveal.toFixed(3));
   let idx=0;
   for(let i=0;i<bounds.length;i++)if(y>=bounds[i].top)idx=i;
   const b=bounds[idx];
@@ -108,7 +112,7 @@ async function buildWorld(){
   renderer.setSize(innerWidth,innerHeight);
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.15;
+  renderer.toneMappingExposure=1.08;
   renderer.setClearColor(0x140a13,0);
   const scene=new THREE.Scene();
   scene.fog=new THREE.FogExp2(0x1a0a16,.029);
@@ -130,39 +134,24 @@ async function buildWorld(){
   composer.addPass(bloom);composer.addPass(new OutputPass());
   const timeUniform={value:0};
   const crystalMat=new THREE.MeshPhysicalMaterial({color:0xd889ae,metalness:.12,roughness:.18,transmission:mobile?.08:.48,thickness:1.5,ior:1.45,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:1.8,attenuationColor:new THREE.Color(0xe0a3bd),attenuationDistance:2.2});
-  const darkGlass=crystalMat.clone();darkGlass.color.set(0x8a3e65);darkGlass.roughness=.22;darkGlass.transmission=.13;
   const paleGlass=crystalMat.clone();paleGlass.color.set(0xf1c7d3);paleGlass.transmission=mobile?.1:.6;
-  const edgeMat=new THREE.MeshBasicMaterial({color:new THREE.Color(0xffb6d4).multiplyScalar(1.4),transparent:true,opacity:.65});
-  const stages=[];const moving=[];
-  const portalGeometry=new THREE.TorusGeometry(3.15,.065,12,96);
+  const edgeMat=new THREE.MeshBasicMaterial({color:0xf6b2cf,transparent:true,opacity:.16,depthWrite:false});
+  const stages=[];const moving=[];const portals=[];
+  const portalGeometry=new THREE.TorusGeometry(3.15,.018,8,96);
   function portal(parent,{x=0,y=0,z=0,sx=1,sy=1,rot=0,bright=false}={}){
     const g=new THREE.Group();g.position.set(x,y,z);g.scale.set(sx,sy,1);g.rotation.z=rot;
-    const ring=new THREE.Mesh(portalGeometry,bright?edgeMat:paleGlass);g.add(ring);
-    const outer=new THREE.Mesh(new THREE.TorusGeometry(3.2,.018,6,96),edgeMat);outer.position.z=-.06;g.add(outer);
-    parent.add(g);return g;
+    const ring=new THREE.Mesh(portalGeometry,edgeMat.clone());g.add(ring);
+    const outer=new THREE.Mesh(new THREE.TorusGeometry(3.2,.006,6,96),edgeMat.clone());outer.position.z=-.06;g.add(outer);
+    parent.add(g);portals.push({group:g,opacity:bright?.28:.14});return g;
   }
-  function facetGeometry(){
-    const shape=new THREE.CylinderGeometry(.03,1,3,5,1,false);shape.translate(0,1.5,0);return shape;
-  }
-  const facet=facetGeometry();
   let rngSeed=21022;
   const random=()=>{rngSeed=(rngSeed*1664525+1013904223)>>>0;return rngSeed/4294967296;};
   for(let i=0;i<6;i++){
     const group=new THREE.Group();group.position.z=-i*18;scene.add(group);stages.push(group);
-    const count=mobile?5:8;
-    for(let j=0;j<count;j++){
-      const crystal=new THREE.Mesh(facet,j%3===0?paleGlass:darkGlass);
-      const side=j%2===0?1:-1;
-      crystal.position.set(side*(4+random()*4),-4-random()*2,-2-random()*13);
-      crystal.scale.setScalar(.6+random()*1.5);crystal.scale.y=1+random()*1.3;
-      crystal.rotation.set((random()-.5)*.7,random()*Math.PI,(random()-.5)*.8);
-      group.add(crystal);
-    }
   }
   // Six environments, composed around one uninterrupted camera path.
-  portal(stages[0],{x:2.1,y:.6,z:-9,sx:1.2,sy:1.65,rot:-.13});
-  portal(stages[1],{x:-3.3,y:.4,z:-4,sx:.8,sy:1.8,rot:.28});
-  portal(stages[1],{x:3.6,y:-.4,z:-10,sx:1.05,sy:1.8,rot:-.2});
+  portal(stages[0],{x:2.1,y:.6,z:-13,sx:1.2,sy:1.65,rot:-.13});
+  portal(stages[1],{x:.8,y:.4,z:-12,sx:1,sy:1.4,rot:.18});
   const ceiling=new THREE.Group();stages[2].add(ceiling);
   for(let i=0;i<13;i++){
     const shard=new THREE.Mesh(new THREE.BoxGeometry(.7+random()*.7,.17+random()*.24,2+random()*2),crystalMat);
@@ -190,22 +179,13 @@ async function buildWorld(){
   const jellyRig=new THREE.Group();scene.add(jellyRig);
   const modelLoader=new GLTFLoader();modelLoader.setMeshoptDecoder(MeshoptDecoder);
   const assetBase='/demotgm/assets/';
-  function normalizeModel(original,targetHeight){
-    original.updateMatrixWorld(true);
-    const box=new THREE.Box3().setFromObject(original),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
-    const output=new THREE.Group(),scale=targetHeight/Math.max(size.y,.001);
-    original.traverse(node=>{if(node.isMesh){
-      const geometry=node.geometry.clone().applyMatrix4(node.matrixWorld);geometry.translate(-center.x,-center.y,-center.z);geometry.scale(scale,scale,scale);
-      const mesh=new THREE.Mesh(geometry,node.material);output.add(mesh);
-    }});return output;
-  }
   let jellyLoaded=false;
   const models=await Promise.allSettled([
     modelLoader.loadAsync(assetBase+(mobile?'jelly-mobile.glb':'jelly.glb')).then(gltf=>{
       const model=normalizeModel(gltf.scene,5.8);
       model.traverse(mesh=>{if(!mesh.isMesh)return;
         const source=Array.isArray(mesh.material)?mesh.material[0]:mesh.material;
-        const material=new THREE.MeshPhysicalMaterial({color:0xf0bad0,normalMap:source?.normalMap||null,normalScale:new THREE.Vector2(.6,.6),metalness:.06,roughness:.21,transmission:mobile?.25:.63,thickness:.65,ior:1.34,clearcoat:1,clearcoatRoughness:.1,envMapIntensity:1.6,emissive:0x691534,emissiveIntensity:.23,attenuationColor:new THREE.Color(0xf0b1cf),attenuationDistance:1.6,side:THREE.DoubleSide});
+        const material=new THREE.MeshPhysicalMaterial({color:0xf0bad0,normalMap:source?.normalMap||null,normalScale:new THREE.Vector2(.35,.35),metalness:.02,roughness:.16,transmission:mobile?.48:.65,thickness:.3,ior:1.34,clearcoat:1,clearcoatRoughness:.1,envMapIntensity:1.25,emissive:0x691534,emissiveIntensity:.18,attenuationColor:new THREE.Color(0xf0b1cf),attenuationDistance:1.6,side:THREE.DoubleSide});
         material.onBeforeCompile=shader=>{
           shader.uniforms.uTgmTime=timeUniform;
           shader.vertexShader='uniform float uTgmTime;\n'+shader.vertexShader;
@@ -229,7 +209,6 @@ async function buildWorld(){
       model.traverse(node=>{if(node.isMesh)node.material=crystalMat;});
       stages.forEach((stage,i)=>{
         const cluster=model.clone(true);cluster.position.set(i%2===0?4.9:-5.8,-2.2,-4.5);cluster.rotation.z=i%2===0?-.24:.2;cluster.rotation.y=i*.8;cluster.scale.setScalar(i===5?1.4:1);stage.add(cluster);
-        if(!mobile){const second=model.clone(true);second.position.set(-6.4,2,-10);second.rotation.set(.4,1.2,Math.PI-.2);second.scale.setScalar(.75);stage.add(second);}
       });
     })
   ]);
@@ -238,7 +217,7 @@ async function buildWorld(){
   finishLoading();
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();fallback();});
   canvas.addEventListener('webglcontextrestored',()=>location.reload(),{once:true});
-  let current=sceneProgress,time=0,last=performance.now(),lastFrame=0,raf=0,firstFrame=true,jellyX=mobile?.85:3.6;
+  let current=sceneProgress,time=0,last=performance.now(),lastFrame=0,raf=0,firstFrame=true,jellyX=mobile?.08:3.4;
   const pointer=new THREE.Vector2(),smoothPointer=new THREE.Vector2();
   addEventListener('pointermove',event=>{if(event.pointerType==='mouse'){pointer.set((event.clientX/innerWidth-.5)*2,(event.clientY/innerHeight-.5)*2);renderOnDemand();}},{passive:true});
   const look=new THREE.Vector3();
@@ -255,11 +234,11 @@ async function buildWorld(){
     camera.position.set(Math.sin(angle)*.6+smoothPointer.x*.17,Math.sin(current*.8)*.35-smoothPointer.y*.1,z);
     look.set(Math.sin(angle+.3)*.6,Math.cos(current*.5)*.17,z-12);camera.lookAt(look);
     const inThreshold=(current%1)<.14&&current> .7;
-    const xGoal=mobile?.85:(inThreshold?1.2:3.6);
+    const xGoal=mobile?.08:(inThreshold?1.8:3.4);
     jellyX=THREE.MathUtils.lerp(jellyX,xGoal,paused?1:1-Math.exp(-dt*2.5));
-    jellyRig.position.set(jellyX+Math.sin(time*.21)*.12, (mobile?.9:.3)+Math.sin(time*.5)*.13,z-(mobile?7.4:9));
-    jellyRig.rotation.set(.07+Math.sin(time*.23)*.025,Math.sin(current*1.7)*.42+time*.025,-.15+Math.sin(time*.27)*.04);
-    jellyRig.scale.setScalar(mobile?.74:1.03);
+    jellyRig.position.set(camera.position.x+jellyX+Math.sin(time*.21)*.08, camera.position.y+(mobile?.55:.3)+Math.sin(time*.5)*.1,z-(mobile?7.9:10));
+    jellyRig.rotation.set(.05+Math.sin(time*.23)*.025,Math.sin(current*.6+time*.13)*.24,-.12+Math.sin(time*.27)*.04);
+    jellyRig.scale.setScalar(mobile?.65:1.03);
     timeUniform.value=time;
     jellyLight.position.copy(jellyRig.position).add(new THREE.Vector3(.5,.9,1.7));
     key.position.z=z+4;rim.position.z=z-6;
@@ -267,6 +246,7 @@ async function buildWorld(){
     moving.forEach(({object,kind,base,phase})=>{if(kind==='orb'){object.position.y=base.y+Math.sin(time*.4+phase)*.12;object.rotation.y=time*.08+phase;}else{const expand=THREE.MathUtils.smoothstep(current,2.05,2.8);object.position.y=base.y+expand*(1+Math.sin(phase)*.6);object.rotation.z=Math.sin(time*.17+phase)*.025+expand*.14;}});
     particles.rotation.z=Math.sin(time*.03)*.015;
     stages.forEach((stage,i)=>{stage.visible=Math.abs(current-i)<2.1;});
+    portals.forEach(({group,opacity})=>{const distance=camera.position.z-group.getWorldPosition(new THREE.Vector3()).z;const fade=THREE.MathUtils.smoothstep(distance,5,13);group.children.forEach(mesh=>{mesh.material.opacity=opacity*fade;});});
     composer.render();
     if(firstFrame){body.classList.add('world-ready');firstFrame=false;}
     body.dataset.graphics='ready';
