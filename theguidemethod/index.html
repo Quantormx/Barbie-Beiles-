@@ -430,292 +430,324 @@ main>section{isolation:isolate}
 </section>
 </main>
 
-<script type="module">
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js";
+<script>
+(() => {
+  const canvas = document.getElementById("tgm-webgl");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isMobile = window.matchMedia("(max-width: 859px)").matches;
 
-const canvas = document.getElementById("tgm-webgl");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isMobile = window.matchMedia("(max-width: 859px)").matches;
+  // Real scroll windows where the 3D world takes over visually.
+  const sections = [...document.querySelectorAll("main > section")];
+  [2,4,7,10,13,16].forEach((idx) => {
+    const section = sections[idx];
+    if (!section) return;
+    const spacer = document.createElement("div");
+    spacer.className = "scene-portal";
+    spacer.setAttribute("aria-hidden","true");
+    section.insertAdjacentElement("afterend", spacer);
+  });
 
-// Create breathing room for the 3D camera to visibly pass through transition planes.
-const contentSections = [...document.querySelectorAll("main > section")];
-[2,4,7,10,13,16].forEach((idx) => {
-  const section = contentSections[idx];
-  if (!section) return;
-  const spacer = document.createElement("div");
-  spacer.className = "scene-portal";
-  spacer.setAttribute("aria-hidden","true");
-  section.insertAdjacentElement("afterend", spacer);
-});
+  const gl = canvas.getContext("webgl", {
+    alpha:true, antialias:false, premultipliedAlpha:true, powerPreference:"high-performance"
+  });
 
-let renderer;
-try{
-  renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:!isMobile,powerPreference:"high-performance"});
-}catch(e){
-  canvas.style.display="none";
-  document.documentElement.classList.add("no-webgl");
-}
-if(renderer){
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.15 : 1.6));
-  renderer.setSize(innerWidth,innerHeight,false);
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  if (!gl) {
+    canvas.style.display = "none";
+    document.documentElement.classList.add("no-webgl");
+    return;
+  }
 
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x180711,0.017);
-
-  const camera = new THREE.PerspectiveCamera(44,innerWidth/innerHeight,.1,140);
-  camera.position.set(0,0,17);
-
-  scene.add(new THREE.HemisphereLight(0xffd6e7,0x180610,1.45));
-  const key = new THREE.PointLight(0xff3f9c,18,34,2);
-  key.position.set(4,5,8); scene.add(key);
-  const rim = new THREE.PointLight(0xffb8d5,10,26,2);
-  rim.position.set(-5,-2,-8); scene.add(rim);
-
-  const world = new THREE.Group();
-  scene.add(world);
-
-  const jellyfish = [];
-  const portals = [];
-  const crystals = [];
-
-  function makeJellyfish(x,y,z,s=1,phase=0){
-    const g = new THREE.Group();
-    g.position.set(x,y,z);
-    g.scale.setScalar(s);
-    g.userData.phase=phase;
-
-    const bellMat = new THREE.MeshPhysicalMaterial({
-      color:0xff7fb5,emissive:0xa60b51,emissiveIntensity:.32,
-      transparent:true,opacity:.48,roughness:.13,metalness:.02,
-      transmission:.35,thickness:1.1,side:THREE.DoubleSide,depthWrite:false
-    });
-    const bellGeo = new THREE.SphereGeometry(1.9,48,28,0,Math.PI*2,0,Math.PI*.52);
-    const bell = new THREE.Mesh(bellGeo,bellMat);
-    bell.rotation.x=Math.PI;
-    g.add(bell);
-
-    const ringMat = new THREE.MeshBasicMaterial({color:0xffb5d2,transparent:true,opacity:.52,depthWrite:false});
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.62,.055,10,72),ringMat);
-    ring.rotation.x=Math.PI/2; ring.position.y=-.12; g.add(ring);
-
-    const core = new THREE.Mesh(
-      new THREE.SphereGeometry(.92,32,18,0,Math.PI*2,0,Math.PI*.6),
-      new THREE.MeshBasicMaterial({color:0xff4e9b,transparent:true,opacity:.13,depthWrite:false})
-    );
-    core.scale.y=.55; core.position.y=-.05; g.add(core);
-
-    const tentMat = new THREE.MeshBasicMaterial({color:0xff9bc7,transparent:true,opacity:.35,depthWrite:false});
-    const count=isMobile?7:11;
-    for(let i=0;i<count;i++){
-      const a=(i/(count-1)-.5)*2.5;
-      const curve=new THREE.CatmullRomCurve3([
-        new THREE.Vector3(a*.55,-.12,Math.sin(i)*.15),
-        new THREE.Vector3(a*.68,-1.15,Math.cos(i*.7)*.35),
-        new THREE.Vector3(a*.36+Math.sin(i)*.35,-2.35,Math.sin(i*.9)*.45),
-        new THREE.Vector3(a*.55+Math.cos(i)*.45,-3.65,Math.cos(i*.8)*.55)
-      ]);
-      const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,28,.025+(i%3)*.008,6,false),tentMat);
-      g.add(tube);
+  const vert = `
+    attribute vec2 aPos;
+    varying vec2 vUv;
+    void main(){
+      vUv = aPos * .5 + .5;
+      gl_Position = vec4(aPos,0.0,1.0);
     }
-    world.add(g); jellyfish.push(g);
-    return g;
-  }
+  `;
 
-  function crystalCluster(x,y,z,scale=1,seed=0){
-    const g=new THREE.Group(); g.position.set(x,y,z); g.scale.setScalar(scale);
-    const mat=new THREE.MeshPhysicalMaterial({
-      color:0xff78b2,emissive:0x7d103e,emissiveIntensity:.16,
-      transparent:true,opacity:.42,roughness:.12,metalness:.06,transmission:.28,depthWrite:false
-    });
-    const n=isMobile?5:9;
-    for(let i=0;i<n;i++){
-      const h=1.2+((i*37+seed*13)%10)/5;
-      const r=.16+((i*19+seed)%7)/32;
-      const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,5),mat);
-      m.position.set((i-n/2)*.32+Math.sin(i*1.7)*.28,h*.45-1.0,Math.cos(i*.9)*.38);
-      m.rotation.z=(Math.sin(i+seed))*.18;
-      m.rotation.y=i*.7;
-      g.add(m);
+  const frag = `
+    precision highp float;
+    varying vec2 vUv;
+    uniform vec2 uRes;
+    uniform float uTime;
+    uniform float uScroll;
+    uniform vec2 uMouse;
+
+    #define MAX_STEPS 72
+    #define FAR 42.0
+    #define EPS .0025
+
+    mat2 rot(float a){ float c=cos(a),s=sin(a); return mat2(c,-s,s,c); }
+
+    float sdSphere(vec3 p,float r){ return length(p)-r; }
+    float sdBox(vec3 p, vec3 b){
+      vec3 q=abs(p)-b;
+      return length(max(q,0.0))+min(max(q.x,max(q.y,q.z)),0.0);
     }
-    world.add(g); crystals.push(g); return g;
+    float sdCapsule(vec3 p, vec3 a, vec3 b, float r){
+      vec3 pa=p-a, ba=b-a;
+      float h=clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0);
+      return length(pa-ba*h)-r;
+    }
+    float sdTorus(vec3 p, vec2 t){
+      vec2 q=vec2(length(p.xz)-t.x,p.y);
+      return length(q)-t.y;
+    }
+
+    // Crystal with faceted silhouette.
+    float sdCrystal(vec3 p,float h,float r){
+      p.y += h*.34;
+      p.xz = abs(p.xz);
+      float side = max(p.x+p.z-r, max(p.x,p.z)-r*.72);
+      float cap = abs(p.y)-h*.5;
+      float tip = (p.x+p.z)*.44 + p.y - h*.36;
+      return max(max(side,cap),tip);
+    }
+
+    // Jellyfish bell + rim + 5 flowing tentacles.
+    float jelly(vec3 p,float sc,float phase){
+      p /= sc;
+      p.y += .15;
+      float t=uTime*.55+phase;
+      p.xz *= rot(sin(t*.35)*.16);
+
+      vec3 b=p;
+      b.y *= 1.26;
+      float bell=sdSphere(b-vec3(0.0,.38,0.0),1.16);
+      bell=max(bell,-(p.y+.10)); // cut underside
+      float rim=sdTorus(vec3(p.x,p.y+.08,p.z),vec2(.91,.055));
+      float d=min(bell,rim);
+
+      for(int i=0;i<5;i++){
+        float fi=float(i)-2.0;
+        vec3 q=p;
+        q.x -= fi*.28;
+        q.z -= sin(fi*1.7)*.12;
+        float wiggle=sin(q.y*2.0+t*1.3+fi)*.16;
+        q.x += wiggle;
+        float tent=sdCapsule(q,vec3(0.0,-.08,0.0),vec3(fi*.05,-2.65,cos(fi)*.18),.032+abs(fi)*.004);
+        d=min(d,tent);
+      }
+      return d*sc;
+    }
+
+    float crystalCluster(vec3 p,float sc,float seed){
+      p/=sc;
+      float d=99.0;
+      for(int i=0;i<5;i++){
+        float fi=float(i);
+        vec3 q=p;
+        q.x -= (fi-2.0)*.34 + sin(fi*2.1+seed)*.10;
+        q.z -= cos(fi*1.4+seed)*.18;
+        q.y += .55;
+        q.xz*=rot(fi*.55+seed*.2);
+        float h=1.0+mod(fi*1.37+seed,1.0)*1.05;
+        d=min(d,sdCrystal(q,h,.22+mod(fi*.33,1.0)*.10));
+      }
+      return d*sc;
+    }
+
+    // Scene repeats in real depth. Scroll advances the camera through it.
+    vec2 mapScene(vec3 p){
+      float mat=0.0;
+      float d=99.0;
+
+      float depth = uScroll * 74.0;
+      vec3 q=p;
+      q.z += depth;
+
+      // six authored depth planes.
+      for(int i=0;i<6;i++){
+        float fi=float(i);
+        float z=4.0-fi*14.5;
+        vec3 j=q-vec3(
+          mix(3.2,-3.0,mod(fi,2.0)),
+          sin(fi*1.4)*.45,
+          z
+        );
+        float jd=jelly(j, 1.0+mod(fi*.37,1.0)*.34, fi*.8);
+        if(jd<d){d=jd;mat=1.0;}
+
+        vec3 c=q-vec3(
+          mix(-4.2,4.0,mod(fi+1.0,2.0)),
+          -2.0,
+          z-4.5
+        );
+        float cd=crystalCluster(c,1.05+mod(fi*.29,1.0)*.38,fi);
+        if(cd<d){d=cd;mat=2.0;}
+      }
+
+      // translucent portal planes / tunnel rings.
+      float localZ = mod(q.z+7.0,14.5)-7.25;
+      vec3 rp=vec3(q.x,q.y,localZ);
+      float ring=abs(length(rp.xy)-4.6)-.032;
+      ring=max(ring,abs(rp.z)-.028);
+      if(ring<d){d=ring;mat=3.0;}
+
+      return vec2(d,mat);
+    }
+
+    vec3 normalAt(vec3 p){
+      vec2 e=vec2(EPS,0.0);
+      float d=mapScene(p).x;
+      return normalize(vec3(
+        mapScene(p+e.xyy).x-d,
+        mapScene(p+e.yxy).x-d,
+        mapScene(p+e.yyx).x-d
+      ));
+    }
+
+    vec3 palette(float m){
+      if(m<1.5) return vec3(1.0,.30,.62);
+      if(m<2.5) return vec3(.98,.38,.68);
+      return vec3(1.0,.62,.79);
+    }
+
+    void main(){
+      vec2 uv=(gl_FragCoord.xy-.5*uRes.xy)/uRes.y;
+      uv.x += uMouse.x*.045;
+      uv.y -= uMouse.y*.025;
+
+      float depth=uScroll*74.0;
+      vec3 ro=vec3(sin(uScroll*6.283)*.42, cos(uScroll*4.2)*.12, 10.0-depth);
+      vec3 rd=normalize(vec3(uv.x,uv.y,-1.22));
+      rd.xz*=rot(sin(uScroll*5.0)*.035);
+      rd.yz*=rot(cos(uScroll*3.0)*.018);
+
+      float travel=0.0;
+      float mat=0.0;
+      float glow=0.0;
+      bool hit=false;
+
+      for(int i=0;i<MAX_STEPS;i++){
+        vec3 p=ro+rd*travel;
+        vec2 h=mapScene(p);
+        float d=h.x;
+        glow += .0018/(.025+abs(d));
+        if(d<EPS){mat=h.y;hit=true;break;}
+        travel += max(d*.58,.012);
+        if(travel>FAR) break;
+      }
+
+      // Base environment: light blush -> deep berry as camera moves.
+      float darkPhase=smoothstep(.28,.58,uScroll);
+      vec3 top=mix(vec3(1.0,.90,.95),vec3(.09,.015,.045),darkPhase);
+      vec3 bot=mix(vec3(.92,.48,.68),vec3(.015,.006,.012),darkPhase);
+      vec3 col=mix(bot,top,clamp(vUv.y,0.0,1.0));
+
+      // radial atmospheric glow.
+      float halo=exp(-2.4*length(uv-vec2(.16,.08)));
+      col += vec3(1.0,.18,.55)*halo*.17;
+
+      if(hit){
+        vec3 p=ro+rd*travel;
+        vec3 n=normalAt(p);
+        vec3 l=normalize(vec3(.45,.7,.35));
+        float diff=.25+.75*max(dot(n,l),0.0);
+        float fres=pow(1.0-max(dot(-rd,n),0.0),2.2);
+        vec3 base=palette(mat);
+        col=mix(col,base*diff, mat>2.5?.52:.72);
+        col += base*fres*(mat>2.5?1.2:.58);
+      }
+
+      col += vec3(1.0,.10,.48)*min(glow,.72)*.33;
+
+      // sparkling particulate depth.
+      float stars=pow(max(0.0,sin((gl_FragCoord.x+uTime*17.0)*.071)*sin((gl_FragCoord.y-uTime*7.0)*.083)),42.0);
+      col += vec3(1.0,.65,.82)*stars*.32*(.25+darkPhase);
+
+      // cinematic edge darkening.
+      float vig=1.0-smoothstep(.45,.98,length(uv)*.78);
+      col*=.76+.24*vig;
+
+      float alpha=.96;
+      gl_FragColor=vec4(pow(col,vec3(.90)),alpha);
+    }
+  `;
+
+  function compile(type,src){
+    const sh=gl.createShader(type);
+    gl.shaderSource(sh,src);
+    gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
+      console.error(gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
   }
 
-  function makePortal(z,scale=1){
-    const g=new THREE.Group(); g.position.z=z; g.scale.setScalar(scale);
-    const ring=new THREE.Mesh(
-      new THREE.TorusGeometry(5.1,.055,12,128),
-      new THREE.MeshBasicMaterial({color:0xff66a6,transparent:true,opacity:.28,depthWrite:false})
-    );
-    g.add(ring);
-
-    const planeMat = new THREE.ShaderMaterial({
-      transparent:true,depthWrite:false,side:THREE.DoubleSide,
-      uniforms:{uTime:{value:0},uIntensity:{value:0},uColor:{value:new THREE.Color(0xff5fa5)}},
-      vertexShader:`
-        uniform float uTime;
-        varying vec2 vUv;
-        void main(){
-          vUv=uv;
-          vec3 p=position;
-          float wave=sin((uv.x*8.0)+(uTime*.65))*0.11 + cos((uv.y*7.0)-(uTime*.5))*0.09;
-          p.z += wave * sin(uv.x*3.14159) * sin(uv.y*3.14159);
-          gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);
-        }
-      `,
-      fragmentShader:`
-        uniform float uTime;
-        uniform float uIntensity;
-        uniform vec3 uColor;
-        varying vec2 vUv;
-        void main(){
-          vec2 q=vUv-.5;
-          float r=length(q);
-          float waves=.5+.5*sin((r*28.0)-(uTime*1.5));
-          float glow=smoothstep(.72,.08,r);
-          float edge=smoothstep(.52,.12,r);
-          float a=(.035 + waves*.08)*glow*uIntensity + edge*.035*uIntensity;
-          vec3 col=mix(vec3(1.0,.76,.86),uColor,.62+waves*.22);
-          gl_FragColor=vec4(col,a);
-        }
-      `
-    });
-    const plane=new THREE.Mesh(new THREE.PlaneGeometry(14,10,48,36),planeMat);
-    g.add(plane);
-    world.add(g);
-    portals.push({group:g,plane,mat:planeMat});
+  const vs=compile(gl.VERTEX_SHADER,vert);
+  const fs=compile(gl.FRAGMENT_SHADER,frag);
+  if(!vs || !fs){
+    canvas.style.display="none";
+    return;
   }
 
-  // Spatial story: hero -> desire -> method -> offer -> closing.
-  makeJellyfish(3.2,.4,3.0,1.22,.2);
-  crystalCluster(-5,-2.4,-1,1.4,1);
-  crystalCluster(5.2,-2.5,-5,1.15,2);
-  makePortal(-7,1.05);
-
-  makeJellyfish(-3.8,.2,-14,1.0,1.1);
-  crystalCluster(4,-2.7,-17,1.35,3);
-  makePortal(-21,1.08);
-
-  makeJellyfish(3.5,-.4,-28,.88,2.0);
-  crystalCluster(-4.8,-2.5,-31,1.45,4);
-  makePortal(-36,1.14);
-
-  makeJellyfish(-2.9,.8,-43,1.18,3.2);
-  crystalCluster(4.7,-2.4,-46,1.2,5);
-  makePortal(-52,1.10);
-
-  makeJellyfish(3.4,.1,-59,.92,4.1);
-  crystalCluster(-4.7,-2.5,-63,1.55,6);
-  makePortal(-68,1.18);
-
-  makeJellyfish(0,.2,-76,1.45,5.0);
-  crystalCluster(4.2,-2.5,-79,1.25,7);
-
-  const particleCount=isMobile?180:420;
-  const pGeo=new THREE.BufferGeometry();
-  const pos=new Float32Array(particleCount*3);
-  for(let i=0;i<particleCount;i++){
-    pos[i*3]=(Math.random()-.5)*18;
-    pos[i*3+1]=(Math.random()-.5)*10;
-    pos[i*3+2]=10-Math.random()*98;
+  const program=gl.createProgram();
+  gl.attachShader(program,vs); gl.attachShader(program,fs); gl.linkProgram(program);
+  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){
+    console.error(gl.getProgramInfoLog(program));
+    canvas.style.display="none";
+    return;
   }
-  pGeo.setAttribute("position",new THREE.BufferAttribute(pos,3));
-  const points=new THREE.Points(pGeo,new THREE.PointsMaterial({
-    color:0xff9bc5,size:isMobile?.028:.038,transparent:true,opacity:.55,depthWrite:false
-  }));
-  world.add(points);
+  gl.useProgram(program);
 
-  const stops=[
-    {x:0.0,y:0.0,z:17,rx:0,ry:0},
-    {x:1.2,y:.45,z:5,rx:-.02,ry:.06},
-    {x:-1.6,y:-.2,z:-9,rx:.015,ry:-.08},
-    {x:1.8,y:.25,z:-23,rx:-.02,ry:.09},
-    {x:-1.25,y:-.45,z:-38,rx:.02,ry:-.06},
-    {x:1.35,y:.25,z:-54,rx:-.015,ry:.07},
-    {x:0,y:0,z:-72,rx:0,ry:0}
-  ];
+  const quad=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,quad);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),gl.STATIC_DRAW);
+  const pos=gl.getAttribLocation(program,"aPos");
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+
+  const uRes=gl.getUniformLocation(program,"uRes");
+  const uTime=gl.getUniformLocation(program,"uTime");
+  const uScroll=gl.getUniformLocation(program,"uScroll");
+  const uMouse=gl.getUniformLocation(program,"uMouse");
 
   const fill=document.querySelector(".scene-progress .fill");
-  let targetProgress=0,smoothProgress=0,mouseX=0,mouseY=0;
-  function updateTarget(){
+  let target=0,smooth=0,mx=0,my=0;
+
+  function updateScroll(){
     const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-    targetProgress=Math.min(1,Math.max(0,scrollY/max));
-    if(fill) fill.style.height=(targetProgress*100).toFixed(1)+"%";
+    target=Math.min(1,Math.max(0,scrollY/max));
+    if(fill) fill.style.height=(target*100).toFixed(1)+"%";
   }
-  updateTarget();
-  addEventListener("scroll",updateTarget,{passive:true});
+  updateScroll();
+  addEventListener("scroll",updateScroll,{passive:true});
   addEventListener("pointermove",(e)=>{
-    mouseX=(e.clientX/innerWidth-.5);
-    mouseY=(e.clientY/innerHeight-.5);
+    mx=e.clientX/innerWidth-.5;
+    my=e.clientY/innerHeight-.5;
   },{passive:true});
 
-  function lerpStop(p){
-    const f=p*(stops.length-1);
-    const i=Math.min(stops.length-2,Math.floor(f));
-    const t=f-i;
-    const a=stops[i],b=stops[i+1];
-    const ease=t*t*(3-2*t);
-    return {
-      x:THREE.MathUtils.lerp(a.x,b.x,ease),
-      y:THREE.MathUtils.lerp(a.y,b.y,ease),
-      z:THREE.MathUtils.lerp(a.z,b.z,ease),
-      rx:THREE.MathUtils.lerp(a.rx,b.rx,ease),
-      ry:THREE.MathUtils.lerp(a.ry,b.ry,ease)
-    };
-  }
-
-  const clock=new THREE.Clock();
-  function render(){
-    const time=clock.getElapsedTime();
-    smoothProgress += (targetProgress-smoothProgress)*(reduceMotion?.025:.055);
-    const s=lerpStop(smoothProgress);
-
-    camera.position.x=s.x + (reduceMotion?0:mouseX*.22);
-    camera.position.y=s.y + (reduceMotion?0:-mouseY*.12);
-    camera.position.z=s.z;
-    camera.rotation.x=s.rx;
-    camera.rotation.y=s.ry;
-    camera.rotation.z=Math.sin(smoothProgress*Math.PI*2)*.007;
-
-    jellyfish.forEach((g,i)=>{
-      const ph=g.userData.phase||0;
-      g.rotation.y=Math.sin(time*.22+ph)*.14;
-      g.rotation.z=Math.sin(time*.32+ph)*.035;
-      g.position.y += Math.sin(time*.7+ph)*.0009;
-      const pulse=1+Math.sin(time*1.05+ph)*.018;
-      g.scale.multiplyScalar(pulse);
-      g.scale.divideScalar(pulse);
-    });
-    crystals.forEach((g,i)=>{g.rotation.y=Math.sin(time*.12+i)*.045;});
-    points.rotation.z=time*.008;
-    points.position.y=Math.sin(time*.12)*.15;
-
-    portals.forEach((p,i)=>{
-      p.mat.uniforms.uTime.value=time;
-      const dist=Math.abs(camera.position.z-p.group.position.z);
-      const intensity=THREE.MathUtils.clamp(1-dist/8.5,0,1);
-      p.mat.uniforms.uIntensity.value=intensity;
-      p.group.rotation.z=Math.sin(time*.08+i)*.035;
-    });
-
-    key.position.x=4+Math.sin(time*.35)*1.1;
-    key.position.y=4.5+Math.cos(time*.28)*.8;
-
-    renderer.render(scene,camera);
-    requestAnimationFrame(render);
-  }
-  render();
-
   function resize(){
-    const w=innerWidth,h=innerHeight;
-    camera.aspect=w/h; camera.updateProjectionMatrix();
-    renderer.setSize(w,h,false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,w<860?1.15:1.6));
+    const dpr=Math.min(devicePixelRatio||1,isMobile?1.0:1.35);
+    const w=Math.max(1,Math.floor(innerWidth*dpr));
+    const h=Math.max(1,Math.floor(innerHeight*dpr));
+    if(canvas.width!==w || canvas.height!==h){
+      canvas.width=w;canvas.height=h;
+      canvas.style.width=innerWidth+"px";
+      canvas.style.height=innerHeight+"px";
+      gl.viewport(0,0,w,h);
+    }
   }
+  resize();
   addEventListener("resize",resize,{passive:true});
-}
+
+  const started=performance.now();
+  function frame(now){
+    resize();
+    smooth += (target-smooth)*(reduceMotion?.035:.065);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,(now-started)/1000);
+    gl.uniform1f(uScroll,reduceMotion?target:smooth);
+    gl.uniform2f(uMouse,reduceMotion?0:mx,reduceMotion?0:my);
+    gl.drawArrays(gl.TRIANGLES,0,6);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
