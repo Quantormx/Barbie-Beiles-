@@ -1,307 +1,355 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Guide Method — Barbie Beiles</title>
-  <meta name="description" content="The Guide Method de Barbie Beiles — experiencia editorial mobile-first." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Inter+Tight:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --ink:#111011;--muted:#62575b;--paper:#fffafc;--rose-050:#fff5f8;--rose-100:#fde8f0;
-      --rose-200:#f8cedd;--rose-300:#eca5bd;--rose-500:#d33a75;--rose-600:#b91f59;--wine:#6d1536;
-      --line:rgba(37,19,25,.14);--impact:"Inter Tight",Arial,sans-serif;--serif:"Bodoni Moda",Georgia,serif;
-      --sans:"Manrope",Arial,sans-serif;--pad:clamp(22px,6vw,94px);--max:1240px;--magnific-bg-light:none;--magnific-bg-dark:none;--magnific-cta:none
-    }
-    *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--paper)}
-    body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.58;-webkit-font-smoothing:antialiased}
-    img{display:block;width:100%;height:auto}a{color:inherit;text-decoration:none}button,input{font:inherit}
-    .shell{width:min(var(--max),100%);margin:0 auto;padding-inline:var(--pad)}
-    .eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-600)}
-    .impact{font-family:var(--impact);font-weight:900;text-transform:uppercase;letter-spacing:-.065em;line-height:.84;margin:0}
-    .serif{font-family:var(--serif);font-weight:500;letter-spacing:-.035em;line-height:1.02;margin:0}
-    .body-lg{font-size:clamp(1rem,2vw,1.2rem);line-height:1.68;color:#31292c}.measure{max-width:680px}
-    .cta{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.65rem;min-height:50px;padding:14px 24px;border-radius:999px;background:linear-gradient(135deg,#9d1548 0%,#d6427b 52%,#b91f59 100%);background-size:100% 100%;background-position:center;color:white;font-weight:700;font-size:.92rem;border:1px solid rgba(255,255,255,.28);box-shadow:0 15px 38px rgba(132,16,60,.22),inset 0 1px 0 rgba(255,255,255,.35);transition:.22s ease;text-shadow:0 1px 12px rgba(87,10,42,.2)}
-    .cta:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.16),transparent 42%);pointer-events:none;z-index:-1}
-    .cta:hover{transform:translateY(-2px) scale(1.01);filter:saturate(1.05) brightness(1.02);box-shadow:0 18px 46px rgba(132,16,60,.28),inset 0 1px 0 rgba(255,255,255,.42)}
-    .section{padding-block:clamp(100px,17vw,210px);position:relative;overflow:hidden}
-    .section-mid{padding-block:clamp(84px,12vw,150px)}
-    .section-tight{padding-block:clamp(64px,9vw,112px)}
-    .soft{background:var(--rose-050)}.pink-field{background:var(--rose-100)}
-    .nav{position:sticky;top:0;z-index:30;background:rgba(255,250,252,.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(111,21,53,.08)}
-    .nav-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-    .brand{display:flex;flex-direction:column;line-height:1}.brand strong{font-family:var(--serif);font-size:1rem;letter-spacing:.09em;color:var(--wine)}
-    .brand span{font-size:.49rem;letter-spacing:.18em;margin-top:5px;color:var(--muted);text-transform:uppercase}.nav .cta{min-height:40px;padding:9px 17px;font-size:.76rem;box-shadow:0 8px 22px rgba(132,16,60,.16)}
-
-    /* HERO */
-    .hero{padding-top:28px;padding-bottom:96px;position:relative;isolation:isolate;background-image:radial-gradient(circle at 82% 18%,rgba(231,114,158,.28),transparent 28%),radial-gradient(circle at 92% 72%,rgba(122,19,58,.14),transparent 32%),linear-gradient(180deg,#fff9fb 0%,#fff2f7 100%);background-size:cover;background-position:center}
-    .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 14%,rgba(255,255,255,.55),transparent 28%),linear-gradient(90deg,rgba(255,250,252,.96) 0%,rgba(255,250,252,.74) 44%,rgba(255,250,252,.22) 75%,rgba(255,250,252,.05) 100%);pointer-events:none;z-index:-1}
-    .hero-grid{display:grid;gap:36px}.hero-copy{padding-top:30px}
-    .hero-title{font-size:clamp(3.8rem,17vw,10rem);color:var(--ink);max-width:9ch}
-    .hero-serif{font-size:clamp(2rem,8vw,4.8rem);color:var(--rose-600);max-width:12ch;margin-top:24px}
-    .hero-sub{margin:24px 0 0;max-width:58ch;font-size:1rem;line-height:1.72;color:#362e31}
-    .hero-actions{margin-top:30px}.hero-photo{position:relative;min-height:510px;overflow:hidden;background:#e8c3d0;border-radius:30px;box-shadow:0 28px 80px rgba(109,21,54,.16);border:1px solid rgba(255,255,255,.58)}
-    .hero-photo img{height:100%;object-fit:cover;object-position:50% 30%}
-    .hero-photo:after{content:"";position:absolute;inset:auto 0 0 0;height:23%;background:linear-gradient(180deg,transparent,rgba(255,239,246,.8))}
-    .hero-note{padding-top:54px;text-align:center}.hero-note p{max-width:820px;margin:0 auto;font-family:var(--serif);font-size:clamp(1.45rem,5vw,2.7rem);line-height:1.28;color:var(--wine)}
-    .hero-note strong{font-weight:500;color:var(--rose-600)}
-
-    /* STATEMENT */
-    .statement{text-align:center}.statement .impact{font-size:clamp(4rem,16vw,10.8rem);max-width:10ch;margin:20px auto 0}
-    .statement .serif{font-size:clamp(2.2rem,8vw,5.2rem);color:var(--rose-600);max-width:11ch;margin:28px auto 0}
-    .statement .copy{margin:42px auto 0;max-width:720px}
-    .compare{margin-top:72px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left}
-    .compare-head,.compare-row{display:grid;grid-template-columns:1fr 24px 1fr;gap:14px;align-items:start}
-    .compare-head{padding:22px 0;font-family:var(--serif);font-size:1.42rem;color:var(--wine)}
-    .compare-row{padding:22px 0;border-top:1px solid var(--line);font-size:.92rem}.compare-row span:nth-child(2){text-align:center;color:var(--rose-600)}
-
-    /* FULL QUOTE */
-    .belief-screen{min-height:88svh;display:flex;align-items:center;background:var(--ink);color:white;text-align:center}
-    .belief-screen .impact{font-size:clamp(4.1rem,16vw,11rem);max-width:10ch;margin-inline:auto;color:#ffdfe9}
-    .belief-screen .serif{font-size:clamp(2rem,8vw,5rem);margin:34px auto 0;color:white}
-    .belief-small{margin:16px 0 0;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;color:#f0a8c2}
-
-    /* QUALIFY */
-    .qualify{background:#fffafc}.qualify-intro{text-align:center;margin-bottom:70px}.qualify-intro .impact{font-size:clamp(3.5rem,14vw,8.8rem);max-width:9ch;margin-inline:auto}
-    .qualify-stack{display:grid;gap:72px}.qualify-card{border-top:1px solid var(--line);padding-top:28px}
-    .qualify-card .serif{font-size:clamp(1.6rem,6vw,3rem);color:var(--wine);margin-bottom:22px}
-    .qualify-line{padding:24px 0;border-top:1px solid var(--line)}
-    .qualify-line:first-of-type{border-top:0}.qualify-line .mini{font-family:var(--serif);font-size:1.1rem;color:var(--muted);margin-bottom:7px}
-    .qualify-line .big{font-family:var(--impact);font-weight:800;font-size:clamp(1.8rem,7vw,3.8rem);line-height:.98;text-transform:uppercase;letter-spacing:-.045em}
-
-    /* LEARNING */
-    .learn{background:var(--rose-050)}.learn-head{text-align:center;margin-bottom:84px}.learn-head .impact{font-size:clamp(3.6rem,14vw,9rem);max-width:10ch;margin:16px auto 0;color:var(--wine)}
-    .learn-head .serif{font-size:clamp(1.55rem,5vw,2.6rem);color:var(--rose-600);margin-top:20px}
-    .learn-list{border-top:1px solid var(--line)}
-    .learn-item{padding:70px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:18px}
-    .learn-num{font-family:var(--serif);font-size:clamp(4.6rem,18vw,8rem);line-height:.8;color:var(--rose-500)}
-    .learn-title{font-family:var(--impact);font-weight:900;text-transform:uppercase;letter-spacing:-.055em;line-height:.91;font-size:clamp(2.6rem,10vw,5.7rem);max-width:10ch}
-    .learn-item p{margin:4px 0 0;max-width:610px;font-size:1rem;line-height:1.68;color:#3c3236}
-    .bonus{margin-top:54px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--serif);font-size:clamp(1.35rem,4.5vw,2rem);color:var(--wine)}
-
-    /* WHY NOW */
-    .founder{background:linear-gradient(180deg,#fff9fb 0%,#fde8f0 100%)}.founder-grid{display:grid;gap:50px}
-    .founder-photo{aspect-ratio:4/5;overflow:hidden}.founder-photo img{height:100%;object-fit:cover;object-position:center 20%}
-    .founder-copy .impact{font-size:clamp(3.3rem,13vw,7.8rem);max-width:10ch}.founder-copy .serif{font-size:clamp(1.8rem,6vw,3.2rem);color:var(--rose-600);margin-top:20px}
-    .founder-copy p{max-width:650px;margin:30px 0 0;color:#3e3438}.founder-lines{margin-top:34px;border-top:1px solid var(--line)}
-    .founder-lines div{padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--serif);font-size:1.12rem}
-
-    /* DETAILS */
-    .details-grid{display:grid;gap:58px}.details .impact,.quote .impact{font-size:clamp(2.9rem,10vw,5.7rem);margin-bottom:28px}
-    .details dl{margin:0;display:grid;gap:18px}.details div{display:grid;grid-template-columns:86px 1fr;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-    .details dt{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rose-600);font-weight:700}.details dd{margin:0}
-    .quote blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.8rem,6vw,3.2rem);line-height:1.16;color:var(--wine)}.quote cite{display:block;margin-top:20px;font-style:normal;color:var(--muted);font-size:.9rem}
-
-    /* FINAL */
-    .final{text-align:center;position:relative;isolation:isolate;background-image:radial-gradient(circle at 18% 20%,rgba(211,58,117,.34),transparent 30%),radial-gradient(circle at 82% 78%,rgba(132,16,60,.46),transparent 32%),linear-gradient(135deg,#0c090b 0%,#37101f 48%,#16090f 100%);background-size:cover;background-position:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-    .final:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(212,58,117,.22),transparent 42%);pointer-events:none;z-index:-1}
-    .final .eyebrow{color:#f2a8c2}.final .impact{font-size:clamp(3.7rem,14vw,9rem);max-width:10ch;margin:20px auto 0;color:#ffe5ee}
-    .final .serif{font-size:clamp(2rem,7vw,4.4rem);max-width:11ch;margin:30px auto 0;color:#fff7fa}
-    .form{max-width:700px;margin:50px auto 0;display:grid;gap:12px}.form input{width:100%;height:57px;padding:0 18px;border:1px solid rgba(255,255,255,.22);background:rgba(255,248,251,.92);border-radius:999px;color:var(--ink);outline:none;box-shadow:0 14px 38px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.72)}
-    .form .cta{width:100%;min-height:59px}.form-note{margin:15px 0 0;color:#f1c1d3;font-size:.82rem}
-    .faq{max-width:920px;margin:0 auto}.faq .impact{font-size:clamp(2.8rem,9vw,5.5rem);margin:16px 0 36px}
-    details{border-top:1px solid var(--line);padding:22px 0}details:last-child{border-bottom:1px solid var(--line)}
-    summary{cursor:pointer;list-style:none;font-weight:700;display:flex;justify-content:space-between;gap:20px}summary::-webkit-details-marker{display:none}
-    summary:after{content:"+";color:var(--rose-600);font-size:1.3rem}details[open] summary:after{content:"−"}details p{margin:14px 0 0;color:var(--muted)}
-    footer{padding:36px var(--pad);text-align:center;color:#6a5660;background:#fffafd;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase}
-
-    @media(min-width:860px){
-      body{font-size:17px}.nav-inner{height:78px}.hero{padding-top:54px;padding-bottom:120px}
-      .hero-grid{grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr);align-items:center;gap:72px}.hero-copy{padding-top:0}.hero-photo{min-height:720px}
-      .qualify-stack{grid-template-columns:1fr 1fr;gap:90px}.learn-item{grid-template-columns:160px minmax(280px,.8fr) minmax(0,1fr);align-items:start;gap:36px}
-      .learn-item p{padding-top:8px}.founder-grid{grid-template-columns:.92fr 1.08fr;align-items:center;gap:84px}.details-grid{grid-template-columns:.8fr 1.2fr;gap:90px}
-      .form{grid-template-columns:1fr 1fr}.form .cta{grid-column:1/-1}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Guide Method — Barbie Beiles</title>
+<meta name="description" content="The Guide Method de Barbie Beiles. Un proceso guiado para transformar creencias, patrones, identidad y decisiones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Inter+Tight:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#101010;--muted:#5e5559;--paper:#fffafc;--pink0:#fff6f9;--pink1:#fde8f0;--pink2:#f6c6d8;--pink3:#ec9fbc;--rose:#cf356f;--rose2:#b91f59;--wine:#6f1738;--line:rgba(31,18,24,.14);--impact:"Inter Tight",Arial,sans-serif;--serif:"Bodoni Moda",Georgia,serif;--sans:"Manrope",Arial,sans-serif;--pad:clamp(22px,6vw,96px);--max:1240px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}img{display:block;width:100%}a{text-decoration:none;color:inherit}.shell{width:min(var(--max),100%);margin:auto;padding-inline:var(--pad)}.section{padding-block:clamp(92px,15vw,190px);position:relative;overflow:hidden}.section-mid{padding-block:clamp(72px,11vw,140px)}.soft{background:var(--pink0)}.pink{background:var(--pink1)}.dark{background:#0c090b;color:#fff}.eyebrow{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--rose2)}.impact{font-family:var(--impact);font-weight:900;letter-spacing:-.06em;line-height:.86;text-transform:uppercase;margin:0}.serif{font-family:var(--serif);font-weight:500;letter-spacing:-.035em;line-height:1.03;margin:0}.body-lg{font-size:clamp(1rem,2vw,1.17rem);line-height:1.7}.cta{display:inline-flex;justify-content:center;align-items:center;min-height:52px;padding:14px 24px;border-radius:999px;color:#fff;font-weight:700;background:linear-gradient(135deg,#991447,#d43d79 55%,#b61e58);box-shadow:0 16px 38px rgba(145,19,67,.2),inset 0 1px 0 rgba(255,255,255,.35);transition:.2s}.cta:hover{transform:translateY(-2px)}.nav{position:sticky;top:0;z-index:40;background:rgba(255,250,252,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(111,23,56,.08)}.navin{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand strong{font-family:var(--serif);color:var(--wine);letter-spacing:.09em}.brand small{display:block;font-size:.48rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:3px}.navlinks{display:none;gap:26px;font-size:.78rem}.nav .cta{min-height:40px;padding:9px 17px;font-size:.76rem}
+.hero{padding-block:48px 96px;background:radial-gradient(circle at 88% 14%,rgba(228,101,149,.24),transparent 27%),linear-gradient(180deg,#fff9fb,#fff1f6)}.hero-grid{display:grid;gap:38px}.hero-title{font-size:clamp(3.8rem,16vw,9.5rem);max-width:9ch}.hero-sub{font-family:var(--serif);font-size:clamp(1.65rem,6.4vw,3.8rem);color:var(--rose2);margin:28px 0 0;max-width:12ch}.hero-copy p{max-width:650px;margin:28px 0 0}.hero-photo{min-height:540px;overflow:hidden;border-radius:30px;box-shadow:0 30px 80px rgba(110,24,58,.16);background:#e8c5d2}.hero-photo img{height:100%;object-fit:cover;object-position:center 28%}.hero .cta{margin-top:30px}.center{text-align:center}.center .impact{font-size:clamp(3.7rem,14vw,9.7rem);max-width:11ch;margin:20px auto 0}.center .serif{font-size:clamp(1.9rem,7vw,4.5rem);color:var(--rose2);max-width:12ch;margin:26px auto 0}.prose{max-width:730px;margin:38px auto 0}.stack{display:grid;gap:0;margin-top:50px;border-top:1px solid var(--line)}.stack p{margin:0;padding:18px 0;border-bottom:1px solid var(--line)}.split{display:grid;gap:60px}.panel{border-top:1px solid var(--line);padding-top:24px}.panel .serif{font-size:clamp(1.7rem,5vw,3rem);color:var(--wine);margin-bottom:24px}.panel p{margin:0 0 16px}.four{display:grid;gap:24px;margin-top:58px}.four article{padding:28px 0;border-top:1px solid var(--line)}.four h3{font-family:var(--impact);font-weight:900;text-transform:uppercase;letter-spacing:-.045em;font-size:clamp(2rem,8vw,4rem);line-height:.92;margin:0 0 20px}.quote-screen{min-height:88svh;display:flex;align-items:center;text-align:center;background:radial-gradient(circle at 15% 18%,rgba(211,58,117,.28),transparent 28%),radial-gradient(circle at 82% 72%,rgba(123,18,58,.42),transparent 30%),linear-gradient(135deg,#0b090a,#37101f 50%,#16090f);color:#fff}.quote-screen .impact{font-size:clamp(4rem,16vw,10rem);max-width:11ch;margin:auto;color:#ffe4ee}.quote-screen .serif{font-size:clamp(2rem,7vw,4.8rem);margin:34px auto 0;color:#fff}.cycle{margin:56px auto 0;max-width:520px}.cycle div{font-family:var(--impact);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;font-size:clamp(1.7rem,6vw,3rem);padding:18px 0;border-bottom:1px solid rgba(255,255,255,.18)}.cycle div:after{content:"↓";display:block;font-family:var(--sans);font-size:1rem;color:var(--pink3);margin-top:14px}.cycle div:last-child:after{content:""}.photo-split{display:grid;gap:52px;align-items:center}.photo{overflow:hidden;border-radius:24px}.photo img{height:100%;object-fit:cover}.story .impact,.intro .impact{font-size:clamp(3.4rem,13vw,8rem);max-width:10ch}.story p{max-width:660px}.beliefs{display:grid;gap:22px;margin-top:50px}.beliefs article{padding:34px 0;border-top:1px solid var(--line)}.beliefs h3{font-family:var(--impact);font-weight:900;text-transform:uppercase;letter-spacing:-.05em;font-size:clamp(2rem,8vw,4rem);line-height:.92;margin:0 0 14px}.beliefs .serif{color:var(--rose2);font-size:clamp(1.5rem,5vw,2.7rem);margin-bottom:18px}.method{display:grid;gap:0;margin-top:60px;border-top:1px solid var(--line)}.method article{padding:48px 0;border-bottom:1px solid var(--line)}.method-num{font-family:var(--serif);font-size:clamp(4rem,16vw,7.2rem);line-height:.8;color:var(--rose)}.method h3{font-family:var(--impact);font-size:clamp(2.4rem,9vw,5rem);text-transform:uppercase;letter-spacing:-.05em;line-height:.92;margin:24px 0 12px}.method strong{display:block;color:var(--rose2);margin-bottom:10px}.includes{display:grid;gap:0;margin-top:56px;border-top:1px solid var(--line)}.include{padding:30px 0;border-bottom:1px solid var(--line)}.include h3{font-family:var(--impact);text-transform:uppercase;letter-spacing:-.035em;font-size:clamp(1.55rem,5vw,2.4rem);margin:0 0 9px}.include p{margin:0;color:#3b3236}.bonus-grid{display:grid;gap:18px;margin-top:48px}.bonus{padding:28px;border:1px solid rgba(111,23,56,.15);background:rgba(255,255,255,.55)}.bonus h3{font-family:var(--impact);font-size:1.65rem;text-transform:uppercase;letter-spacing:-.035em;margin:0 0 10px}.bonus .value{font-family:var(--serif);font-size:1.3rem;color:var(--rose2)}.faq{max-width:900px;margin:auto}.faq .impact{font-size:clamp(3.2rem,11vw,6.5rem);margin:18px 0 40px}details{border-top:1px solid var(--line);padding:22px 0}details:last-child{border-bottom:1px solid var(--line)}summary{list-style:none;cursor:pointer;font-weight:700;display:flex;justify-content:space-between;gap:20px}summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var(--rose2);font-size:1.3rem}details[open] summary:after{content:"−"}details p{color:var(--muted);margin:14px 0 0}.price-grid{display:grid;gap:22px;margin-top:50px}.price{padding:34px;border:1px solid rgba(111,23,56,.16);background:#fff}.price.featured{background:var(--ink);color:#fff}.price .amount{font-family:var(--impact);font-weight:900;font-size:clamp(3.4rem,12vw,6.5rem);line-height:.9;letter-spacing:-.055em;margin:18px 0}.price small{color:var(--muted)}.price.featured small{color:#f1c5d5}.price .cta{margin-top:24px;width:100%}.guarantee{margin-top:52px;padding:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.close{background:linear-gradient(180deg,#fde6ef,#f8cadd);text-align:center}.close .impact{font-size:clamp(3.5rem,14vw,9rem);max-width:11ch;margin:auto}.close .serif{font-size:clamp(1.8rem,6vw,3.8rem);color:var(--wine);max-width:13ch;margin:28px auto}.close .prose{font-size:1.05rem}.close .cta{margin-top:36px}.signoff{font-family:var(--serif);font-size:1.8rem;color:var(--wine);margin-top:34px}
+@media(min-width:860px){body{font-size:17px}.navlinks{display:flex}.hero-grid{grid-template-columns:1.05fr .95fr;align-items:center;gap:74px}.hero-photo{min-height:720px}.split{grid-template-columns:1fr 1fr;gap:90px}.four{grid-template-columns:repeat(4,1fr);gap:28px}.photo-split{grid-template-columns:.9fr 1.1fr;gap:84px}.beliefs{grid-template-columns:1fr 1fr;gap:36px}.method article{display:grid;grid-template-columns:150px .8fr 1fr;gap:34px;align-items:start}.method h3{margin:0}.includes{grid-template-columns:1fr 1fr}.include:nth-child(odd){padding-right:36px;border-right:1px solid var(--line)}.include:nth-child(even){padding-left:36px}.bonus-grid{grid-template-columns:1fr 1fr}.price-grid{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
 <header class="nav">
-  <div class="shell nav-inner">
-    <a class="brand" href="#top"><strong>BARBIE BEILES</strong><span>Manifestación · Mentalidad · Vida real</span></a>
-    <a class="cta" href="#registro">Reservar mi lugar</a>
+  <div class="shell navin">
+    <a class="brand" href="#top"><strong>THE GUIDE METHOD</strong><small>by Barbie Beiles</small></a>
+    <nav class="navlinks"><a href="#metodo">El método</a><a href="#incluye">Qué incluye</a><a href="#inversion">Tu inversión</a></nav>
+    <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">Quiero entrar</a>
   </div>
 </header>
 
 <main id="top">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div class="hero-copy">
-        <div class="eyebrow">Masterclass gratis · En vivo</div>
-        <h1 class="impact hero-title" style="margin-top:18px">Descubre<br>la pieza<br>que falta.</h1>
-        <h2 class="serif hero-serif">Cómo manifestar desde la abundancia...</h2>
-        <p class="hero-sub">y romper el techo mental que te impide vivir la vida que deseas — sin empezar desde cero.</p>
-        <p class="hero-sub" style="font-size:.93rem">Rompe tu techo mental, deja de esforzarte para merecer, y empieza a vivir la vida que deseas — sin empezar desde cero.</p>
-        <div class="hero-actions"><a class="cta" href="#registro">Reservar mi lugar — Gratis →</a></div>
-      </div>
-      <figure class="hero-photo"><img src="/assets/barbara-beiles-photo.png" alt="Barbie Beiles"></figure>
+<section class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">The Guide Method</div>
+      <h1 class="impact hero-title" style="margin-top:18px">Es hora de vivir a la altura de todo lo que sabes que es posible para ti.</h1>
+      <h2 class="hero-sub">Cierra la distancia entre la vida que sabes que eres capaz de crear y la vida que realmente estás viviendo.</h2>
+      <p>Un proceso guiado para transformar las creencias que hoy definen tus límites, cambiar los patrones que te siguen llevando al mismo lugar y empezar a pensar, decidir y actuar como la mujer capaz de sostener mucho más.</p>
+      <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">QUIERO CONOCER THE GUIDE METHOD →</a>
     </div>
-    <div class="shell hero-note">
-      <p>Haces todo bien. Das más de lo que recibes. Y aun así, nada fluye.<br><strong>No te falta esfuerzo. No estás fallando. Te falta romper el techo mental que te frena.</strong><br>Y esa pieza la vas a encontrar el [fecha].</p>
+    <figure class="hero-photo"><img src="/assets/barbara-beiles-photo.png" alt="Barbie Beiles"></figure>
+  </div>
+</section>
+
+<section class="section center">
+  <div class="shell">
+    <div class="eyebrow">El deseo</div>
+    <h2 class="impact">Hay una parte de ti que sabe que estás hecha para más.</h2>
+    <div class="stack prose">
+      <p>Más libertad.</p><p>Más dinero.</p><p>Más amor.</p><p>Más confianza.</p><p>Más experiencias.</p><p>Más oportunidades.</p><p>Más de ti.</p>
     </div>
-  </section>
-
-  <section class="section statement">
-    <div class="shell">
-      <div class="eyebrow">Dominio Belief</div>
-      <h2 class="impact">El problema no es tu esfuerzo.</h2>
-      <h3 class="serif">Es tu techo mental.</h3>
-      <div class="copy body-lg">
-        Tu mente está programada para un resultado por debajo de lo que tu alma sabe que puedes ser. Esa es la pieza que falta.<br><br>
-        Aquí no vas a “querer más.” Vas a convertirte en la mujer que manifiesta desde la abundancia:
-      </div>
-
-      <div class="compare">
-        <div class="compare-head"><span>De (hoy)</span><span></span><span>A (quien te conviertes)</span></div>
-        <div class="compare-row"><span>Te esfuerzas para merecer</span><span>→</span><span>Sabes que mereces sin luchar</span></div>
-        <div class="compare-row"><span>Dudas de tu poder</span><span>→</span><span>Confías en tu poder</span></div>
-        <div class="compare-row"><span>Cargas todo sola</span><span>→</span><span>Te sientes sostenida</span></div>
-        <div class="compare-row"><span>Mente de escasez</span><span>→</span><span>Mente abundante</span></div>
-      </div>
+    <div class="prose body-lg">
+      <p>Una vida que no solamente se vea bien. Una vida que se sienta genuinamente tuya.</p>
+      <p>Y probablemente ya puedes verla.</p>
+      <p>Has pensado en ella. Has trabajado por ella. Has intentado convertirte en esa mujer.</p>
+      <p>Hay algo dentro de ti que sigue diciendo:</p>
+      <p class="serif" style="font-size:2rem;color:var(--rose2)">“Mi vida puede ser mucho más que esto.”</p>
+      <p>Y tiene razón.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section belief-screen">
-    <div class="shell">
-      <h2 class="impact">La abundancia es mi estado natural.</h2>
-      <p class="serif">Merezco sin luchar.</p>
-      <p class="belief-small">Puedo recibir.</p>
+<section class="section pink">
+  <div class="shell">
+    <div class="eyebrow center">La brecha</div>
+    <h2 class="impact center" style="font-size:clamp(3.3rem,13vw,8rem);max-width:12ch;margin:20px auto 70px">Y aun así, hay una distancia entre lo que sabes que puedes vivir y lo que hoy estás viviendo.</h2>
+    <div class="split">
+      <article class="panel">
+        <h3 class="serif">Sabes que eres capaz de más.</h3>
+        <p>Tienes ideas que todavía no ejecutas.</p>
+        <p>Decisiones que sabes que necesitas tomar.</p>
+        <p>Una versión de tu vida que puedes imaginar perfectamente…</p>
+        <p>pero que sigue sintiéndose un poco demasiado lejos.</p>
+      </article>
+      <article class="panel">
+        <h3 class="serif">Y empiezas a preguntarte qué te falta.</h3>
+        <p>“¿Qué estoy haciendo mal?”</p>
+        <p>“¿Por qué sigo en el mismo lugar?”</p>
+        <p>“¿Por qué otras personas avanzan y yo siento que sigo intentando?”</p>
+        <p>“¿Qué más tengo que trabajar?”</p>
+        <p>“¿Cuándo voy a ver todo esto reflejado en mi vida?”</p>
+      </article>
     </div>
-  </section>
 
-  <section class="section qualify">
-    <div class="shell">
-      <div class="qualify-intro">
-        <div class="eyebrow">Reconócete aquí</div>
-        <h2 class="impact">Esto es para ti si...</h2>
-      </div>
-      <div class="qualify-stack">
-        <article class="qualify-card">
-          <p class="serif">Lo que hoy se siente familiar</p>
-          <div class="qualify-line"><div class="mini">Haces todo bien.</div><div class="big">Y, aun así, nada fluye.</div></div>
-          <div class="qualify-line"><div class="mini">Das más de lo que recibes</div><div class="big">y tu esfuerzo se siente invisible.</div></div>
-          <div class="qualify-line"><div class="mini">No puedes parar sin culpa</div><div class="big">y el dinero siempre es una amenaza.</div></div>
-          <div class="qualify-line"><div class="mini">Sientes la presión en el pecho,</div><div class="big">no solo los domingos.</div></div>
-          <div class="qualify-line"><div class="mini">Te preguntas:</div><div class="big">“¿Esto es todo?”</div><div class="mini">— y ya no quieres que sea la respuesta.</div></div>
-        </article>
-
-        <article class="qualify-card">
-          <p class="serif">No es para ti si...</p>
-          <div class="qualify-line"><div class="big">Buscas un “truco rápido” o más hustle.</div></div>
-          <div class="qualify-line"><div class="big">No estás lista para mirar hacia adentro y cuestionar lo que crees.</div></div>
-          <div class="qualify-line"><div class="big">Prefieres seguir empujando aunque te agote, en vez de cambiar el sistema.</div></div>
-        </article>
-      </div>
+    <div class="four">
+      <article><h3>Has intentado</h3><p>Has leído. Has hecho terapia. Has tomado cursos. Has meditado. Has escrito. Has visualizado. Has trabajado en ti.</p><p>Y tienes muchísimo más conocimiento que hace unos años.</p><p>Pero sigues preguntándote por qué saber tanto todavía no se traduce en vivir diferente.</p></article>
+      <article><h3>Ves</h3><p>Ves a otras mujeres crear cosas que tú también quieres.</p><p>El negocio. El dinero. La relación. La seguridad. La libertad.</p><p>Y aunque te inspires, a veces aparece esa pregunta incómoda:</p><p>“¿Qué tienen ellas que yo todavía no?”</p></article>
+      <article><h3>Te esfuerzas</h3><p>Intentas ser más disciplinada. Más constante. Más positiva. Hacer más. Entender más. Encontrar qué te falta.</p><p>Y terminas agotada de sentir que siempre existe una cosa más que tienes que arreglar antes de poder avanzar.</p></article>
+      <article><h3>Temes</h3><p>Que pase otro año.</p><p>Que sigas sabiendo muchísimo y viviendo prácticamente lo mismo.</p><p>Que esa vida que imaginas siga siendo algo que “algún día” vas a tener.</p><p>“¿Y si realmente nunca llego hasta donde sé que podría llegar?”</p></article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section learn">
-    <div class="shell">
-      <div class="learn-head">
-        <div class="eyebrow">Lo que aprenderás</div>
-        <h2 class="impact">Lo que aprenderás</h2>
-        <p class="serif">(y cómo aplicarlo ahora)</p>
-      </div>
-
-      <div class="learn-list">
-        <article class="learn-item">
-          <div class="learn-num">01</div>
-          <div class="learn-title">Tu techo mental</div>
-          <p>El filtro invisible entre lo que deseas y lo que recibes. → Lo detectas en ti, en vivo, con una guía simple.</p>
-        </article>
-        <article class="learn-item">
-          <div class="learn-num">02</div>
-          <div class="learn-title">Cómo romperlo</div>
-          <p>El primer paso del protocolo para reprogramar tu mente. → Sales con un ejercicio concreto que aplicas esa misma noche.</p>
-        </article>
-        <article class="learn-item">
-          <div class="learn-num">03</div>
-          <div class="learn-title">Manifestar desde la abundancia</div>
-          <p>El cambio de SER: de esforzarte para merecer a merecer sin luchar. → Un cambio que aplicas a tu negocio desde el día siguiente.</p>
-        </article>
-        <article class="learn-item">
-          <div class="learn-num">04</div>
-          <div class="learn-title">Por qué quedarte te cuesta más de lo que crees</div>
-          <p>Y cómo evitar empezar de cero. → Un marco para decidir hoy, sin esperar el “momento perfecto.”</p>
-        </article>
-      </div>
-      <div class="bonus"><strong>BONO:</strong> “Tu techo mental: guía para detectar las creencias que te frenan” (al registrarte).</div>
+<section class="section center">
+  <div class="shell">
+    <div class="eyebrow">Aquí está lo que cambia todo…</div>
+    <h2 class="impact">Quizá no te falta hacer más.</h2>
+    <h3 class="serif">Quizá necesitas cambiar lo que tu mente ha aprendido a considerar posible para ti.</h3>
+    <div class="prose body-lg">
+      <p>Puedes desear una vida extraordinaria conscientemente y seguir tomando decisiones desde creencias que aprendiste hace años.</p>
+      <p>Puedes querer más dinero y asociarlo con sacrificio.</p>
+      <p>Puedes querer crecer y asociar el éxito con más presión.</p>
+      <p>Puedes querer una relación extraordinaria y seguir creyendo que “todos son iguales”.</p>
+      <p>Puedes querer mostrarte completamente y tener miedo de lo que ocurrirá si dejas de complacer.</p>
+      <p>Puedes decir: “Sé que soy capaz.”</p>
+      <p>Y descubrir en tus decisiones que todavía existe una parte de ti que pregunta: “¿Pero será posible para mí?”</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section founder">
-    <div class="shell founder-grid">
-      <figure class="founder-photo"><img src="/assets/barbara-beiles.jpg" alt="Retrato de Barbie Beiles"></figure>
-      <div class="founder-copy">
-        <div class="eyebrow">Por qué asistir ahora</div>
-        <h2 class="impact" style="margin-top:18px">Por qué asistir ahora</h2>
-        <h3 class="serif">— y no dejarlo.</h3>
-        <p>Porque no decidir también es decidir. Y lo que no decides, se acumula en silencio.</p>
-        <div class="founder-lines">
-          <div>El proyecto que sigue sin nacer.</div>
-          <div>El esfuerzo que sigue invisible.</div>
-          <div>El sueño que se encoge.</div>
-          <div>Y “¿esto es todo?” dejando de ser pregunta... para volverse respuesta.</div>
-        </div>
-        <p>Cada día que dejas el techo mental intacto, te cuesta más. No es “cuando tenga tiempo.” Es que el costo de quedarte crece todos los días.</p>
-        <p>Además, la masterclass es en vivo y gratuita, por tiempo limitado. Después de [fecha], ya no estará disponible de esta forma.</p>
-        <p class="serif" style="font-size:1.75rem;color:var(--rose-600);margin-top:34px">El momento perfecto no existe. Romper el techo mental, sí.</p>
-      </div>
+<section class="section quote-screen">
+  <div class="shell">
+    <div class="eyebrow" style="color:#efa7c1">La big idea</div>
+    <h2 class="impact" style="margin-top:22px">Tu deseo marca la dirección. Tus creencias marcan el límite.</h2>
+    <p class="serif">Ese límite invisible es tu techo mental.</p>
+    <div class="cycle">
+      <div>Creencias</div><div>Techo mental</div><div>Identidad</div><div>Decisiones</div><div>Acciones</div><div>Evidencia</div>
     </div>
-  </section>
+    <div class="prose body-lg" style="color:#f5dbe5">
+      <p>La evidencia que creas termina reforzando lo que ya creías.</p>
+      <p>Por eso puedes trabajar muchísimo y seguir regresando al mismo punto.</p>
+      <p>Por eso puedes saber exactamente qué hacer y postergarlo.</p>
+      <p>Por eso puedes acercarte a algo que deseas y retroceder justo cuando empieza a sentirse real.</p>
+      <p>Por eso puedes recibir más y después volver al nivel que te resulta familiar.</p>
+    </div>
+    <h3 class="impact" style="font-size:clamp(3.2rem,12vw,7rem);max-width:11ch;margin:70px auto 0;color:#fff">Todo cambia cuando cambia lo que crees posible para ti.</h3>
+  </div>
+</section>
 
-  <section class="section-mid">
-    <div class="shell details-grid">
-      <div class="details">
-        <h2 class="impact">Detalles</h2>
-        <dl>
-          <div><dt>Fecha</dt><dd>[Día, Mes, Año]</dd></div>
-          <div><dt>Hora</dt><dd>[Hora]</dd></div>
-          <div><dt>Modalidad</dt><dd>En vivo por Zoom (grabación 48h)</dd></div>
-          <div><dt>Bono</dt><dd>Guía “Tu techo mental” al registrarte.</dd></div>
-        </dl>
-      </div>
-      <div class="quote">
-        <div class="eyebrow">Testimonio</div>
-        <blockquote style="margin-top:20px">“Llegué pensando que me faltaba disciplina. Salí entendiendo que me faltaba romper un techo mental. Por primera vez en años, sentí que no era yo la que estaba mal.”</blockquote>
-        <cite>— [Nombre], [resultado]</cite>
+<section class="section soft center">
+  <div class="shell">
+    <div class="eyebrow">El cambio comienza aquí</div>
+    <h2 class="impact">¿Qué cambia cuando dejas de vivir dentro de tus límites actuales?</h2>
+    <div class="prose body-lg">
+      <p>Empiezas a tomar decisiones que antes te daban miedo.</p>
+      <p>Dejas de aceptar lo que en realidad nunca quisiste.</p>
+      <p>Te atreves a pedir más. A cobrar más. A mostrarte más.</p>
+      <p>A dejar relaciones, trabajos, hábitos y versiones de ti que ya te quedaron pequeñas.</p>
+      <p>Dejas de necesitar garantías para dar cada paso.</p>
+      <p>Y empiezas a construir una cosa que ninguna afirmación puede fabricar por ti:</p>
+      <p class="serif" style="font-size:2rem;color:var(--rose2)">Evidencia de que eres capaz de más.</p>
+      <p class="impact" style="font-size:clamp(2.8rem,10vw,6rem);margin-top:42px">La vida que quieres empieza a sentirse posible antes de empezar a sentirse normal.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section story">
+  <div class="shell photo-split">
+    <figure class="photo" style="aspect-ratio:4/5"><img src="/assets/barbara-beiles.jpg" alt="Barbie Beiles"></figure>
+    <div>
+      <div class="eyebrow">Mi historia</div>
+      <h2 class="impact" style="margin-top:18px">Yo también viví años dentro de un techo que no sabía que existía.</h2>
+      <div class="body-lg" style="margin-top:32px">
+        <p>Yo creía que las cosas había que ganárselas.</p>
+        <p>Que para conseguir algo grande tenía que esforzarme muchísimo.</p>
+        <p>Que la vida era una lucha.</p>
+        <p>Que muchas veces era injusta.</p>
+        <p>Y mi realidad parecía confirmármelo una y otra vez.</p>
+        <p>Veía personas que, desde mi perspectiva, tenían menos experiencia o talento consiguiendo cosas que yo deseaba.</p>
+        <p>Yo trabajaba más. Intentaba más. Me exigía más.</p>
+        <p>Y seguía sintiendo que no me elegían. Que no me valoraban. Que algo siempre se me escapaba.</p>
+        <p>Hasta que me cansé de esperar a que mi vida cambiara para empezar a elegirme yo.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section final" id="registro">
-    <div class="shell">
-      <div class="eyebrow">Reserva tu lugar</div>
-      <h2 class="impact">Rompe tu techo mental.</h2>
-      <p class="serif">Manifiesta desde la abundancia.<br>Sin empezar desde cero.</p>
-      <form class="form" id="mock-form">
-        <input aria-label="Nombre" name="nombre" placeholder="NOMBRE" required>
-        <input aria-label="Correo" name="correo" type="email" placeholder="CORREO" required>
-        <button class="cta" type="submit">RESERVAR MI LUGAR — GRATIS</button>
-      </form>
-      <p class="form-note" id="form-note">Las puertas se cierran el [fecha]. Cupos limitados.</p>
+<section class="section pink">
+  <div class="shell">
+    <div class="beliefs">
+      <article><h3>Yo creía que tenía que esforzarme</h3><p class="serif">para merecer las cosas buenas.</p><p>Durante años confundí esfuerzo con valor. Si algo llegaba fácilmente, casi parecía que no contaba. Aprender a detectar esa asociación cambió la manera en la que trabajaba, elegía y recibía.</p></article>
+      <article><h3>Yo sentía que no me elegían</h3><p class="serif">y buscaba afuera la validación que todavía no me estaba dando a mí.</p><p>Cuando empecé a elegirme en mis decisiones, mis estándares dejaron de depender de quién estaba dispuesto a reconocer mi valor.</p></article>
+      <article><h3>Yo pensaba que necesitaba más fuerza de voluntad</h3><p class="serif">para finalmente convertirme en esa mujer.</p><p>Hasta que entendí que repetir una vida diferente requiere mucho más que obligarte a actuar distinto durante tres días. Tenía que entender qué creencias seguían haciendo que mi versión anterior se sintiera más segura y familiar.</p></article>
+      <article><h3>Yo creía que la vida era una lucha</h3><p class="serif">y encontraba evidencia de esa historia por todas partes.</p><p>Cuando empecé a cuestionar las creencias desde las que llevaba años interpretando mi vida, también empezaron a cambiar las decisiones que tomaba frente a ella.</p></article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section-tight soft">
-    <div class="shell faq">
-      <div class="eyebrow">Preguntas frecuentes</div>
-      <h2 class="impact">Antes de reservar.</h2>
-      <details open><summary>¿Necesito experiencia en manifestación?</summary><p>No. Solo necesitas estar lista para mirar hacia adentro.</p></details>
-      <details><summary>¿Qué pasa si no puedo asistir en vivo?</summary><p>Te dejo la grabación por 48 horas.</p></details>
+<section class="section center">
+  <div class="shell">
+    <div class="eyebrow">El descubrimiento</div>
+    <h2 class="impact">El día que entendí que mi subconsciente estaba dirigiendo mucho más de mi vida de lo que yo creía, todo cambió.</h2>
+    <div class="prose body-lg">
+      <p>Empecé a observar los patrones que se repetían.</p>
+      <p>Las historias que me contaba. Lo que esperaba que ocurriera. Lo que toleraba. Las decisiones que tomaba cuando tenía miedo.</p>
+      <p>Las cosas que decía querer y las que realmente me permitía recibir.</p>
+      <p>Y entendí algo que hoy está en el corazón de todo lo que enseño:</p>
+      <p class="impact" style="font-size:clamp(2.8rem,10vw,6rem);margin-top:42px">Puedes querer una vida nueva y seguir tomando decisiones desde las creencias de tu vida actual.</p>
+      <p>Ahí entendí que el trabajo no terminaba en saber qué quería.</p>
+      <p>Tenía que aprender a reconocer qué creía sobre eso que quería, cuestionarlo, crear nuevas asociaciones y empezar a actuar desde una versión de mí capaz de sostener algo diferente.</p>
     </div>
-  </section>
+  </div>
+</section>
+
+<section class="section dark center">
+  <div class="shell">
+    <div class="eyebrow" style="color:#efa7c1">Esto es lo que sé ahora…</div>
+    <h2 class="impact" style="color:#ffe5ee">Tus creencias crean el techo. Tus decisiones deciden si vives debajo de él.</h2>
+    <div class="prose body-lg" style="color:#f6dfe8">
+      <p>Cuando cambia lo que consideras posible, empiezas a ver opciones que antes descartabas.</p>
+      <p>Cuando cambia lo que consideras merecido, cambian tus estándares.</p>
+      <p>Cuando cambia lo que consideras seguro, puedes dejar de retroceder frente a lo desconocido.</p>
+      <p>Cuando cambia quién crees que eres, cambian las decisiones que estás dispuesta a tomar.</p>
+      <p>Y esas decisiones empiezan a crear evidencia nueva.</p>
+      <p class="serif" style="font-size:2rem;color:#fff">Y esa es la clase de cambio que quiero enseñarte a crear.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section intro center" id="metodo">
+  <div class="shell">
+    <div class="eyebrow">Introduciendo</div>
+    <h2 class="impact">The Guide Method</h2>
+    <p class="serif" style="font-size:clamp(1.9rem,7vw,4rem);color:var(--rose2);max-width:12ch;margin:30px auto">El método para cerrar la distancia entre la vida que sabes que eres capaz de crear y la vida que realmente estás viviendo.</p>
+    <div class="prose body-lg"><p>Un proceso guiado para identificar y transformar las creencias que están definiendo tu techo actual, cambiar los patrones que siguen llevándote al mismo lugar y aprender a pensar, decidir y actuar como la mujer capaz de sostener mucho más.</p></div>
+    <a class="cta" style="margin-top:34px" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">ESTOY LISTA PARA MI SIGUIENTE NIVEL →</a>
+  </div>
+</section>
+
+<section class="section pink center">
+  <div class="shell">
+    <div class="eyebrow">About the method</div>
+    <h2 class="impact">Esto no es más información para guardar en una libreta.</h2>
+    <div class="prose body-lg">
+      <p>The Guide Method fue creado para ayudarte a convertir todo lo que ya sabes en una transformación que puedas empezar a ver y vivir.</p>
+      <p>A lo largo de 8 semanas, vas a trabajar de manera guiada en las creencias, asociaciones, patrones, identidad y decisiones que participan en cómo estás creando tu vida hoy.</p>
+      <p>Vas a aprender a reconocer dónde está tu techo actual.</p>
+      <p>A cuestionar lo que has dado por verdad durante años.</p>
+      <p>A construir nuevas asociaciones con aquello que quieres.</p>
+      <p>A desarrollar mayor confianza en ti.</p>
+      <p>A tomar acción incluso antes de sentirte 100% lista.</p>
+      <p class="impact" style="font-size:clamp(2.8rem,10vw,6rem);margin-top:46px">A sostener a la mujer que dijiste que querías ser.</p>
+    </div>
+
+    <div class="method">
+      <article><div class="method-num">01</div><h3>Reconoce</h3><div><strong>Lee tu realidad actual.</strong><p>Identifica patrones, asociaciones y creencias que hoy están definiendo lo que consideras posible.</p></div></article>
+      <article><div class="method-num">02</div><h3>Reprograma</h3><div><strong>Cambia la raíz.</strong><p>Cuestiona creencias antiguas y empieza a construir nuevas asociaciones con dinero, éxito, amor, merecimiento, visibilidad, seguridad y aquello que deseas.</p></div></article>
+      <article><div class="method-num">03</div><h3>Expande</h3><div><strong>Eleva tu techo mental.</strong><p>Entrena a tu mente para dejar de tratar tu siguiente nivel como algo ajeno, peligroso o reservado para otras personas.</p></div></article>
+      <article><div class="method-num">04</div><h3>Encarna</h3><div><strong>Empieza a elegir como ella.</strong><p>Trabaja identidad, estándares, confianza y la capacidad de sostener decisiones diferentes.</p></div></article>
+      <article><div class="method-num">05</div><h3>Actúa</h3><div><strong>Convierte el cambio interno en evidencia.</strong><p>Toma acciones alineadas con lo que quieres y empieza a demostrarte, en la vida real, que puedes crear algo diferente.</p></div></article>
+    </div>
+    <p class="serif" style="font-size:clamp(1.6rem,5vw,2.8rem);color:var(--wine);margin-top:50px">Creencia → Identidad → Decisión → Acción → Evidencia</p>
+    <p>Y la evidencia fortalece una nueva creencia.</p>
+  </div>
+</section>
+
+<section class="section" id="incluye">
+  <div class="shell">
+    <div class="eyebrow center">Todo lo que recibirás</div>
+    <h2 class="impact center" style="font-size:clamp(3.5rem,14vw,9rem);max-width:11ch;margin:20px auto">8 semanas. Una experiencia completa.</h2>
+    <p class="serif center" style="font-size:clamp(1.8rem,6vw,3.8rem);color:var(--rose2);max-width:13ch;margin:28px auto">Todo lo que necesitas para hacer el cambio y aprender a sostenerlo.</p>
+    <div class="prose body-lg center">
+      <p>The Guide Method no fue creado para darte otra carpeta llena de información que algún día vas a revisar.</p>
+      <p>Durante 8 semanas vas a tener un proceso completo para trabajar tu mente, tus creencias, tu identidad, tu estado y tus decisiones desde distintos niveles.</p>
+    </div>
+
+    <div class="includes">
+      <article class="include"><h3>📚 7 módulos · Manifestación Nivel Experta</h3><p>El sistema completo, paso a paso, para entender qué está creando tus patrones actuales y aprender a manifestar desde un lugar diferente.</p></article>
+      <article class="include"><h3>📝 7 workbooks de transformación</h3><p>Preguntas, ejercicios y procesos para llevar cada concepto a tu vida, tus creencias y las situaciones que hoy quieres transformar.</p></article>
+      <article class="include"><h3>🎥 8 llamadas de coaching grupal en vivo</h3><p>Una llamada cada semana para profundizar, hacer preguntas, trabajar bloqueos y recibir coaching real durante el proceso.</p></article>
+      <article class="include"><h3>🌬️ Breathwork semanal</h3><p>Prácticas para regular tu sistema nervioso y trabajar con lo que ocurre en tu cuerpo mientras empiezas a hacer cambios diferentes.</p></article>
+      <article class="include"><h3>🎧 Audio subliminal 24/7</h3><p>Un recurso que puedes incorporar a tu día como apoyo a tu práctica de reprogramación.</p></article>
+      <article class="include"><h3>🌀 Hipnosis guiada</h3><p>Una práctica diseñada para trabajar las creencias y asociaciones que has repetido durante años.</p></article>
+      <article class="include"><h3>🧘 Meditaciones + visualizaciones</h3><p>Para ensayar mentalmente nuevas posibilidades, conectar con tu visión y practicar una identidad diferente.</p></article>
+      <article class="include"><h3>✍️ Escritura psicomágica</h3><p>Ejercicios de escritura para explorar lo que llevas dentro, darle lenguaje y generar nuevas perspectivas.</p></article>
+      <article class="include"><h3>🕯️ Rituales energéticos</h3><p>Prácticas para llevar intención y presencia al trabajo que estás haciendo durante estas 8 semanas.</p></article>
+      <article class="include"><h3>🎵 2 playlists de manifestadoras</h3><p>La banda sonora oficial de tu siguiente nivel. Porque aparentemente también necesitábamos musicalizar la transformación.</p></article>
+      <article class="include"><h3>🧰 Caja de herramientas de una manifestadora nivel experta</h3><p>Recursos prácticos para esos momentos en los que aparece la duda, el miedo, la urgencia o el impulso de volver a hacer lo mismo.</p></article>
+      <article class="include"><h3>👯 TGM Collective</h3><p>Tu comunidad privada de mujeres haciendo este trabajo contigo. Para compartir el proceso, recibir apoyo y recordar algo importante: no tienes que transformarte aislándote del mundo.</p></article>
+    </div>
+    <div class="center" style="margin-top:60px"><h3 class="impact" style="font-size:clamp(2.8rem,10vw,6rem)">Y todo es tuyo de por vida.</h3><p class="body-lg">Vuelves cuando lo necesites. Repites una práctica. Revisitas un módulo. Profundizas en una creencia distinta.</p><p>Porque tu siguiente nivel no termina en la semana 8.</p></div>
+  </div>
+</section>
+
+<section class="section pink">
+  <div class="shell">
+    <div class="eyebrow center">Y aún hay más</div>
+    <h2 class="impact center" style="font-size:clamp(3.4rem,13vw,8.5rem);max-width:11ch;margin:20px auto">Entra ahora y recibe más de $1,000 USD en bonos.</h2>
+    <div class="prose center body-lg"><p>No son “extras” puestos aquí para hacer una lista más larga.</p><p>Cada uno fue elegido para ayudarte a seguir trabajando las áreas que más suelen aparecer cuando una mujer empieza a expandir lo que cree posible para ella.</p></div>
+    <div class="bonus-grid">
+      <article class="bonus"><h3>🎁 Bonus 01 · Afirmaciones de poder</h3><div class="value">Valor $97 USD</div><p>Una colección descargable de wallpapers con afirmaciones para mantener las nuevas ideas presentes en tu día a día.</p><p>Para que tu teléfono deje de servir únicamente para abrir Instagram sin darte cuenta.</p></article>
+      <article class="bonus"><h3>🎁 Bonus 02 · Activador de riqueza</h3><div class="value">Valor $197 USD</div><p>Subliminal nocturno enfocado en trabajar tu relación mental con la riqueza, el recibir y las posibilidades económicas mientras descansas.</p></article>
+      <article class="bonus"><h3>🎁 Bonus 03 · Acceso VIP a TGM Collective</h3><div class="value">Valor $497 USD</div><p>Acceso a la comunidad exclusiva de manifestadoras PRO para continuar rodeándote de mujeres que también están expandiendo sus estándares, decisiones y visión.</p></article>
+      <article class="bonus"><h3>🎁 Bonus 04 · Mentalidad millonaria</h3><div class="value">Valor $297 USD</div><p>31 días dedicados a observar y transformar tu relación con el dinero. Merecimiento. Recibir. Riqueza. Creencias. Decisiones.</p><p>Para dejar de tratar el dinero como un tema separado del resto de tu trabajo interno.</p></article>
+    </div>
+    <div class="center" style="margin-top:58px"><p class="serif" style="font-size:clamp(2rem,7vw,4rem);color:var(--wine)">Valor total de los bonos: $1,088 USD</p><h3 class="impact" style="font-size:clamp(2.7rem,10vw,5.8rem)">Tuyo sin costo extra al entrar ahora.</h3><a class="cta" style="margin-top:28px" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">QUIERO THE GUIDE METHOD + TODOS LOS BONOS →</a></div>
+  </div>
+</section>
+
+<section class="section center">
+  <div class="shell">
+    <div class="eyebrow">Prueba social</div>
+    <h2 class="impact">Mujeres reales. Cambios reales.</h2>
+    <p class="serif" style="font-size:clamp(1.8rem,6vw,3.8rem);color:var(--rose2);max-width:13ch;margin:28px auto">Cuando cambia lo que crees posible, empiezas a moverte diferente.</p>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="shell faq">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="impact">Antes de decidir.</h2>
+    <details><summary>¿Y si no sé exactamente qué quiero?</summary><p>Parte del proceso es ayudarte a separar lo que realmente deseas de lo que aprendiste que “deberías” querer y empezar a crear una dirección más clara.</p></details>
+    <details><summary>¿Y si me cuesta ser constante?</summary><p>No necesitas llegar siendo la mujer perfectamente disciplinada. Trabajaremos precisamente las asociaciones, patrones y decisiones que hacen que vuelvas a abandonar cuando desaparece la motivación.</p></details>
+    <details><summary>¿Y si ya sé mucho de manifestación y mindset?</summary><p>Saber no es el objetivo. Integrarlo hasta que cambie cómo eliges y actúas, sí.</p></details>
+    <details><summary>¿Necesito ser espiritual?</summary><p>No. Puedes tener tus propias creencias espirituales, religiosas o ninguna. El trabajo de TGM se centra en tus creencias, patrones, identidad, decisiones y acciones.</p></details>
+    <details><summary>¿Y si tengo miedo de volver a intentar algo y seguir igual?</summary><p>Tiene sentido que exista esa duda después de haber probado otras cosas. TGM no depende de prometerte un resultado externo específico. Te da un proceso para trabajar las variables internas y conductuales sobre las que sí puedes intervenir.</p></details>
+    <details><summary>¿Cuánto tiempo debo dedicarle?</summary><p>El contenido está pensado para 2 meses, con lecciones semanales. Con unas horas a la semana basta. Y como el acceso es de por vida, puedes ir a tu ritmo.</p></details>
+    <details><summary>¿Qué tipo de apoyo recibiré?</summary><p>Llamadas semanales de coaching grupal en vivo, comunidad privada de Facebook para apoyo diario, y acceso de por vida al contenido.</p></details>
+  </div>
+</section>
+
+<section class="section" id="inversion">
+  <div class="shell">
+    <div class="eyebrow center">Tu inversión</div>
+    <h2 class="impact center" style="font-size:clamp(3.5rem,14vw,9rem);max-width:10ch;margin:20px auto">Elige cómo entrar.</h2>
+    <div class="price-grid">
+      <article class="price featured">
+        <div class="eyebrow" style="color:#efa7c1">Pago único</div>
+        <div class="amount">$997 USD</div>
+        <p>Acceso completo de por vida + todos los bonos.</p>
+        <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">ENTRAR CON PAGO ÚNICO</a>
+      </article>
+      <article class="price">
+        <div class="eyebrow">Plan de pago</div>
+        <div class="amount">3 × $367 USD</div>
+        <p>Empiezas hoy, y el dinero fluye mientras te transformas.</p>
+        <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">ENTRAR CON PLAN DE 3 PAGOS</a>
+      </article>
+    </div>
+    <div class="guarantee center">
+      <div class="eyebrow">Prueba el método</div>
+      <h3 class="impact" style="font-size:clamp(2.8rem,10vw,6rem);margin:18px auto;max-width:11ch">Tienes 21 días para experimentar The Guide Method.</h3>
+      <p>Si durante tus primeros 21 días cumples con las condiciones de participación establecidas y el programa no cumple con lo prometido, puedes solicitar la devolución de tu inversión de acuerdo con nuestra política de garantía.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section close">
+  <div class="shell">
+    <div class="eyebrow">This is your decision</div>
+    <h2 class="impact">Imagina dónde podrías estar dentro de un año si hoy dejaras de asumir que tus límites actuales son permanentes.</h2>
+    <p class="serif">Quiero que tengas una vida extraordinaria.</p>
+    <div class="prose body-lg">
+      <p>Quiero que tengas dinero. Amor. Libertad. Experiencias. Un trabajo que te emocione. Relaciones que estén a la altura de lo que deseas. Tiempo para disfrutar lo que construyes.</p>
+      <p>Quiero que puedas querer MÁS sin sentir culpa por quererlo.</p>
+      <p>Y quiero que dejes de hacer tus deseos más pequeños para que parezcan más posibles.</p>
+      <p>Porque una mujer poderosa puede ser profundamente agradecida por su vida y todavía saber que quiere expandirla.</p>
+      <p>Puede querer paz y ambición. Dinero y propósito. Amor y libertad. Éxito y una vida que tenga tiempo de disfrutar.</p>
+    </div>
+    <h3 class="impact" style="font-size:clamp(3rem,11vw,6.7rem);max-width:11ch;margin:48px auto 0">No tienes que elegir una vida “suficientemente buena”.</h3>
+    <p class="serif">Puedes descubrir qué tan extraordinaria puede llegar a ser.</p>
+    <p class="impact" style="font-size:clamp(2.8rem,10vw,6rem);max-width:11ch;margin:48px auto 0">Todo cambia cuando cambia lo que crees posible para ti.</p>
+    <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">SÍ, ESTE ES MI MOMENTO. ENTRAR AHORA</a>
+    <div class="signoff">Nos vemos al otro lado.<br>Xo, Barbie</div>
+  </div>
+</section>
 </main>
-
-<footer>BARBIE BEILES · Mockup editorial para revisión</footer>
-<script>
-  document.getElementById('mock-form').addEventListener('submit',function(e){
-    e.preventDefault();
-    const note=document.getElementById('form-note');
-    note.textContent='Mockup: el formulario todavía no envía datos. La interacción está lista para conectar después.';
-    note.style.fontWeight='700';
-  });
-</script>
 </body>
 </html>
