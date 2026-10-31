@@ -1,0 +1,48 @@
+/* Final QA fixes for the approved TGM document adjustments */
+
+.hero-copy{overflow:visible!important}
+.hero-title.tgm-hero-split{overflow:visible!important;padding-bottom:.08em}
+.navlinks a{font-family:var(--sans)!important;font-weight:600;text-rendering:optimizeLegibility}
+
+@media(max-width:859px){
+  .navlinks{display:none!important}
+  .navin{min-width:0}
+  .brand{max-width:54%!important}
+  .brand strong{font-size:.93rem}
+  .nav .cta{flex:0 0 auto}
+}
+
+@media(max-width:420px){
+  .hero{padding-top:24px!important;padding-bottom:66px!important}
+  .hero-grid{gap:24px!important}
+  .hero-title.tgm-hero-split .tgm-impact-part{
+    font-size:clamp(2.35rem,11.25vw,2.95rem)!important;
+    line-height:.93!important;
+    letter-spacing:-.052em!important;
+  }
+  .hero-title.tgm-hero-split .tgm-editorial-part{
+    margin-top:15px!important;
+    font-size:clamp(1.48rem,7vw,1.85rem)!important;
+    line-height:1.04!important;
+  }
+  .hero-sub.tgm-hero-sub{
+    font-size:clamp(1.42rem,6.5vw,1.78rem)!important;
+    max-width:18ch!important;
+  }
+  .hero-copy>p.tgm-hero-body{font-size:.96rem!important;line-height:1.65!important}
+}
+
+/* Keep the closing chapter at the end and prevent accidental early duplication. */
+main>.tgm-close{order:9999}
+.tgm-close{position:relative!important}
+
+/* Honest placeholders until approved testimonial assets/copy are supplied. */
+.tgm-testimonials article span{
+  display:block;
+  margin-top:12px;
+  font-size:.75rem;
+  line-height:1.4;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
