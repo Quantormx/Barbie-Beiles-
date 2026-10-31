@@ -25,6 +25,14 @@
       "destination": "/theguidemethod/index.html"
     },
     {
+      "source": "/theguidemethod-mobile",
+      "destination": "/theguidemethod/mobile-first.html"
+    },
+    {
+      "source": "/theguidemethod-mobile/",
+      "destination": "/theguidemethod/mobile-first.html"
+    },
+    {
       "source": "/demotgm",
       "destination": "/demotgm/index.html"
     },
