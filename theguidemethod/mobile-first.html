@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>The Guide Method — Mobile-first preview</title>
+  <style>
+    html,body{margin:0;min-height:100%;background:#fff6f9;font-family:Arial,sans-serif}
+    .loader{min-height:100svh;display:grid;place-items:center;color:#6f1738;letter-spacing:.16em;text-transform:uppercase;font-size:.72rem}
+  </style>
+</head>
+<body>
+  <div class="loader">Cargando The Guide Method…</div>
+  <script>
+    (async () => {
+      try {
+        const response = await fetch('/theguidemethod/index.html', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        let html = await response.text();
+        html = html.replace(
+          '</head>',
+          '<link rel="stylesheet" href="/assets/tgm-mobile-first.css?v=1"></head>'
+        );
+        html = html.replace(
+          '</body>',
+          '<script src="/assets/tgm-mobile-first.js?v=1" defer><\\/script></body>'
+        );
+        document.open();
+        document.write(html);
+        document.close();
+      } catch (error) {
+        document.body.innerHTML = '<div class="loader">No fue posible cargar el preview.</div>';
+        console.error(error);
+      }
+    })();
+  </script>
+</body>
+</html>

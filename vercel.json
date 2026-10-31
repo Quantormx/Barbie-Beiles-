@@ -18,11 +18,19 @@
     },
     {
       "source": "/theguidemethod",
-      "destination": "/theguidemethod/index.html"
+      "destination": "/theguidemethod/mobile-first.html"
     },
     {
       "source": "/theguidemethod/",
-      "destination": "/theguidemethod/index.html"
+      "destination": "/theguidemethod/mobile-first.html"
+    },
+    {
+      "source": "/theguidemethod-mobile",
+      "destination": "/theguidemethod/mobile-first.html"
+    },
+    {
+      "source": "/theguidemethod-mobile/",
+      "destination": "/theguidemethod/mobile-first.html"
     },
     {
       "source": "/demotgm",
