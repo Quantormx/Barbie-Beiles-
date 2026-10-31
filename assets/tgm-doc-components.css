@@ -1,0 +1,85 @@
+/* TGM review-document component styles */
+.tgm-social-intro{
+  max-width:34ch;
+  margin:34px auto 0;
+  font-family:var(--serif);
+  font-size:clamp(1.45rem,6.4vw,2.2rem);
+  line-height:1.08;
+  color:var(--wine);
+}
+.tgm-testimonials{
+  display:grid;
+  gap:12px;
+  margin:40px auto 0;
+  max-width:920px;
+  text-align:left;
+}
+.tgm-testimonials article{
+  position:relative;
+  min-height:150px;
+  padding:24px;
+  border:1px solid rgba(111,23,56,.11);
+  border-radius:22px;
+  background:linear-gradient(145deg,#fff,#fff1f6);
+  box-shadow:0 16px 44px rgba(91,18,49,.075);
+  overflow:hidden;
+}
+.tgm-testimonials article:after{
+  content:"“";
+  position:absolute;
+  right:14px;
+  bottom:-34px;
+  font-family:var(--serif);
+  font-size:9rem;
+  line-height:1;
+  color:rgba(199,35,98,.09);
+}
+.tgm-testimonials strong{
+  position:relative;
+  z-index:1;
+  display:block;
+  max-width:23ch;
+  font-family:var(--impact);
+  font-size:clamp(1.55rem,7vw,2.3rem);
+  line-height:.96;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+}
+.tgm-testimonials span{
+  position:relative;
+  z-index:1;
+  display:block;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:.8rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.tgm-social-closing{
+  max-width:42ch;
+  margin:38px auto 0;
+  line-height:1.7;
+  font-weight:700;
+}
+
+.tgm-investment>.shell>.eyebrow{color:var(--tgm-rose)}
+.tgm-investment .guarantee .eyebrow{color:var(--tgm-rose)}
+
+/* Keep the document's requested visual contrast without changing official fonts. */
+.tgm-gap .panel{background:rgba(255,255,255,.88)!important}
+.tgm-mechanism,.tgm-discovery{background:#fff!important}
+.tgm-change{background:linear-gradient(180deg,#fff8fb,#fff)!important}
+.tgm-includes{background:#fffafc}
+.tgm-bonuses{background:linear-gradient(180deg,#fdeaf2,#fff5f8)!important}
+.tgm-social-proof{background:#fff!important}
+.tgm-close{background:linear-gradient(180deg,#fff8fb 0%,#f8cada 100%)!important}
+
+@media(min-width:700px){
+  .tgm-testimonials{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tgm-testimonials article{min-height:180px;padding:30px}
+}
+
+@media(min-width:860px){
+  .tgm-social-proof .tgm-section-cta{width:auto}
+  .tgm-social-closing{font-size:1.05rem}
+}
