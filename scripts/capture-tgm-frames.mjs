@@ -19,7 +19,8 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 await page.goto(URL, { waitUntil: 'networkidle', timeout: 120000 });
-await page.waitForFunction(() => document.documentElement.dataset.tgmDocAdjusted === 'true', null, { timeout: 60000 });
+await page.waitForSelector('.hero-title', { timeout: 60000 });
+await page.waitForTimeout(6000);
 await page.evaluate(async () => {
   if (document.fonts?.ready) await document.fonts.ready;
   document.documentElement.style.scrollBehavior = 'auto';
