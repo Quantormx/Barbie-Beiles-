@@ -1,0 +1,150 @@
+/* TGM — ONLY the last two requested frame refinements */
+
+/* Frame: “Puedes querer una vida nueva…”
+   First half: wide impact title font.
+   Second half: existing editorial serif, gently widened for legibility. */
+.tgm-final-discovery-core.tgm-last-mixed-statement{
+  display:block!important;
+  width:min(100%,21ch)!important;
+  max-width:21ch!important;
+  margin:48px auto 0!important;
+  color:var(--tgm-final-rose)!important;
+  text-align:left!important;
+  text-transform:uppercase;
+}
+.tgm-last-mixed-statement > span,
+.tgm-last-mixed-statement > span > span{
+  display:block;
+}
+.tgm-last-mixed-impact{
+  font-family:var(--impact)!important;
+  font-size:clamp(2.42rem,10.4vw,3.35rem)!important;
+  font-weight:900!important;
+  line-height:.91!important;
+  letter-spacing:-.052em!important;
+  color:var(--tgm-final-rose)!important;
+}
+.tgm-last-mixed-editorial{
+  margin-top:10px;
+  font-family:var(--serif)!important;
+  font-size:clamp(2.26rem,9.75vw,3.15rem)!important;
+  font-weight:500!important;
+  line-height:.92!important;
+  letter-spacing:-.034em!important;
+  color:var(--tgm-final-rose)!important;
+  transform:scaleX(1.055);
+  transform-origin:left center;
+}
+
+/* Frame: closing mix and alignment */
+.tgm-final-good-enough.tgm-last-close-good{
+  display:block!important;
+  width:min(100%,18ch)!important;
+  max-width:18ch!important;
+  margin:58px auto 0!important;
+  font-family:var(--serif)!important;
+  font-size:clamp(2rem,8.55vw,2.95rem)!important;
+  font-weight:500!important;
+  line-height:.98!important;
+  letter-spacing:-.025em!important;
+  color:var(--tgm-final-rose)!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  transform:scaleX(1.035);
+  transform-origin:center;
+}
+.tgm-last-close-good > span{display:block}
+.tgm-last-close-good > span + span{margin-top:7px}
+
+.tgm-final-discover.tgm-last-close-discover{
+  display:block!important;
+  width:min(100%,20ch)!important;
+  max-width:20ch!important;
+  margin:42px auto 0!important;
+  text-align:center!important;
+}
+.tgm-last-close-impact,
+.tgm-last-close-impact > span,
+.tgm-last-close-editorial,
+.tgm-last-close-editorial > span{
+  display:block!important;
+}
+.tgm-last-close-impact{
+  margin:0 auto!important;
+  font-family:var(--impact)!important;
+  font-size:clamp(2.7rem,11.3vw,3.9rem)!important;
+  font-weight:900!important;
+  line-height:.88!important;
+  letter-spacing:-.052em!important;
+  color:var(--tgm-final-black)!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+}
+.tgm-last-close-editorial{
+  width:min(100%,16.5ch)!important;
+  margin:22px auto 0!important;
+  font-family:var(--serif)!important;
+  font-size:clamp(1.92rem,8.25vw,2.75rem)!important;
+  font-weight:500!important;
+  line-height:.99!important;
+  letter-spacing:-.028em!important;
+  color:var(--wine)!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  transform:scaleX(1.045);
+  transform-origin:center;
+}
+
+@media(max-width:420px){
+  .tgm-final-discovery-core.tgm-last-mixed-statement{
+    width:100%!important;
+    max-width:100%!important;
+    padding-inline:1px;
+  }
+  .tgm-last-mixed-impact{
+    font-size:clamp(2.18rem,9.9vw,2.72rem)!important;
+  }
+  .tgm-last-mixed-editorial{
+    font-size:clamp(2rem,9.25vw,2.55rem)!important;
+    transform:scaleX(1.035);
+  }
+  .tgm-final-good-enough.tgm-last-close-good{
+    font-size:clamp(1.82rem,8.1vw,2.36rem)!important;
+  }
+  .tgm-last-close-impact{
+    font-size:clamp(2.45rem,10.8vw,3.15rem)!important;
+  }
+  .tgm-last-close-editorial{
+    font-size:clamp(1.75rem,7.9vw,2.3rem)!important;
+  }
+}
+
+@media(min-width:860px){
+  .tgm-final-discovery-core.tgm-last-mixed-statement{
+    width:min(100%,18ch)!important;
+    max-width:18ch!important;
+    margin-top:62px!important;
+  }
+  .tgm-last-mixed-impact{
+    font-size:clamp(4.2rem,5.35vw,5.65rem)!important;
+  }
+  .tgm-last-mixed-editorial{
+    font-size:clamp(3.95rem,5vw,5.3rem)!important;
+    transform:scaleX(1.035);
+  }
+  .tgm-final-good-enough.tgm-last-close-good{
+    max-width:20ch!important;
+    font-size:clamp(3.15rem,4.1vw,4.4rem)!important;
+  }
+  .tgm-final-discover.tgm-last-close-discover{
+    max-width:24ch!important;
+  }
+  .tgm-last-close-impact{
+    font-size:clamp(4.3rem,5.55vw,5.9rem)!important;
+  }
+  .tgm-last-close-editorial{
+    max-width:18ch!important;
+    font-size:clamp(3.15rem,4vw,4.35rem)!important;
+    transform:scaleX(1.025);
+  }
+}
