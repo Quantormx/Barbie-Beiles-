@@ -1,0 +1,237 @@
+/* TGM — Canva-inspired materials and 3D glass icons
+   Scoped only to the deliverables and bonuses sections represented by Frames 33–36 and 38–40. */
+
+.tgm-final-includes .tgm-final-materials-visual{
+  position:relative;
+  width:min(100%,900px);
+  aspect-ratio:1.54;
+  margin:34px auto 54px!important;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 76% 18%,rgba(255,255,255,.64),transparent 26%),
+    linear-gradient(145deg,#fff8fb,#f2b9cf 62%,#c84d7f);
+  box-shadow:0 28px 78px rgba(91,18,49,.18);
+}
+.tgm-final-includes .tgm-final-materials-visual:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -24px 38px rgba(111,23,56,.09);
+}
+.tgm-final-includes .tgm-final-materials-visual img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  transform:scale(1.015);
+}
+
+.tgm-final-includes .tgm-final-includes-grid,
+.tgm-final-bonuses .bonus-grid{
+  gap:16px!important;
+}
+.tgm-final-includes .tgm-final-include-card,
+.tgm-final-bonuses .tgm-final-bonus-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.95)!important;
+  background:
+    radial-gradient(circle at 92% 2%,rgba(244,163,195,.24),transparent 30%),
+    linear-gradient(145deg,rgba(255,255,255,.96),rgba(255,240,246,.86))!important;
+  box-shadow:
+    0 16px 42px rgba(91,18,49,.085),
+    inset 0 1px 0 rgba(255,255,255,1)!important;
+}
+.tgm-final-includes .tgm-final-include-card:after,
+.tgm-final-bonuses .tgm-final-bonus-card:before{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  right:-58px;
+  bottom:-62px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(222,91,143,.20),transparent 68%);
+  pointer-events:none;
+}
+.tgm-final-includes .tgm-final-include-card h3{
+  align-items:center!important;
+  gap:18px!important;
+}
+
+.tgm-canva-icon{
+  position:relative!important;
+  isolation:isolate;
+  flex:0 0 76px!important;
+  display:grid!important;
+  place-items:center!important;
+  width:76px!important;
+  height:76px!important;
+  margin:0!important;
+  padding:4px!important;
+  overflow:visible!important;
+  border:1px solid rgba(255,255,255,.98)!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(circle at 26% 17%,rgba(255,255,255,.98),rgba(255,255,255,.42) 22%,transparent 46%),
+    linear-gradient(145deg,rgba(255,255,255,.9),rgba(250,190,215,.52) 52%,rgba(181,39,96,.19))!important;
+  color:#9c194b!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -11px 20px rgba(111,23,56,.10),
+    0 14px 28px rgba(111,23,56,.16)!important;
+  backdrop-filter:blur(12px) saturate(1.35);
+  -webkit-backdrop-filter:blur(12px) saturate(1.35);
+  transform:perspective(460px) rotateX(5deg) rotateY(-5deg);
+  transform-origin:center;
+}
+.tgm-canva-icon:before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  top:7px;
+  left:12px;
+  width:44px;
+  height:15px;
+  border-radius:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.02));
+  filter:blur(.2px);
+  transform:rotate(-14deg);
+  pointer-events:none;
+}
+.tgm-canva-icon:after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:15%;
+  right:4%;
+  bottom:-13px;
+  height:18px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(85,10,40,.25),rgba(85,10,40,0) 72%);
+  filter:blur(5px);
+  pointer-events:none;
+}
+.tgm-canva-object-svg{
+  position:relative;
+  z-index:3;
+  display:block;
+  width:70px!important;
+  height:70px!important;
+  overflow:visible;
+  filter:saturate(1.04) contrast(1.02);
+}
+.tgm-canva-icon--bonus{
+  width:86px!important;
+  height:86px!important;
+  margin-bottom:20px!important;
+  border-radius:28px!important;
+}
+.tgm-canva-icon--bonus .tgm-canva-object-svg{
+  width:80px!important;
+  height:80px!important;
+}
+
+.tgm-final-bonuses .tgm-final-bonus-number{
+  color:var(--tgm-final-rose)!important;
+}
+.tgm-final-bonuses .tgm-final-bonus-name,
+.tgm-final-includes .tgm-final-include-card h3 > span:last-child{
+  position:relative;
+  z-index:2;
+}
+
+@media(max-width:420px){
+  .tgm-final-includes .tgm-final-materials-visual{
+    width:calc(100% + 8px);
+    margin-inline:-4px!important;
+    margin-bottom:42px!important;
+    border-radius:24px;
+  }
+  .tgm-final-includes .tgm-final-include-card{
+    padding:19px!important;
+  }
+  .tgm-final-includes .tgm-final-include-card h3{
+    align-items:flex-start!important;
+    gap:15px!important;
+  }
+  .tgm-canva-icon{
+    flex-basis:68px!important;
+    width:68px!important;
+    height:68px!important;
+    border-radius:21px!important;
+  }
+  .tgm-canva-object-svg{
+    width:63px!important;
+    height:63px!important;
+  }
+  .tgm-canva-icon--bonus{
+    width:78px!important;
+    height:78px!important;
+  }
+  .tgm-canva-icon--bonus .tgm-canva-object-svg{
+    width:72px!important;
+    height:72px!important;
+  }
+}
+
+@media(min-width:600px){
+  .tgm-final-includes .tgm-final-includes-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .tgm-final-bonuses .bonus-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(min-width:860px){
+  .tgm-final-includes .tgm-final-materials-visual{
+    max-width:960px;
+    margin-top:48px!important;
+    margin-bottom:66px!important;
+  }
+  .tgm-final-includes .tgm-final-include-card{
+    min-height:205px;
+    padding:26px!important;
+  }
+  .tgm-final-bonuses .tgm-final-bonus-card{
+    min-height:340px;
+    padding:30px!important;
+  }
+  .tgm-canva-icon{
+    flex-basis:84px!important;
+    width:84px!important;
+    height:84px!important;
+    border-radius:27px!important;
+  }
+  .tgm-canva-object-svg{
+    width:78px!important;
+    height:78px!important;
+  }
+  .tgm-canva-icon--bonus{
+    width:94px!important;
+    height:94px!important;
+    border-radius:30px!important;
+  }
+  .tgm-canva-icon--bonus .tgm-canva-object-svg{
+    width:87px!important;
+    height:87px!important;
+  }
+}
+
+@media(prefers-reduced-motion:no-preference){
+  .tgm-canva-icon{
+    transition:transform .28s ease,filter .28s ease;
+  }
+  .tgm-final-include-card:hover .tgm-canva-icon,
+  .tgm-final-bonus-card:hover .tgm-canva-icon{
+    transform:perspective(460px) rotateX(2deg) rotateY(-1deg) translateY(-4px);
+    filter:saturate(1.15) contrast(1.03);
+  }
+}
