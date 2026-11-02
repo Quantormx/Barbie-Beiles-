@@ -1,0 +1,222 @@
+/* THE GUIDE METHOD — FRAME-SPECIFIC POLISH
+   Only visual adjustments requested for Frames 01, 02, 05–10, 17, 22, 33–40 and 46.
+   No copy is changed in this layer. */
+
+:root{
+  --tgm-polish-wine:#6f1738;
+  --tgm-polish-wine-deep:#531127;
+  --tgm-polish-rose:#c62562;
+  --tgm-polish-blush:#fdebf2;
+}
+
+/* FRAME 01 — quieter hero scale, tighter editorial rhythm */
+.tgm-final-hero-title{
+  max-width:12.8ch!important;
+}
+.tgm-final-hero-title .tgm-final-impact{
+  font-size:clamp(2.22rem,10.35vw,3.55rem)!important;
+  line-height:.92!important;
+  letter-spacing:-.052em!important;
+}
+.tgm-final-hero-title .tgm-final-editorial{
+  margin-top:14px!important;
+  font-size:clamp(1.5rem,6.65vw,2.05rem)!important;
+  line-height:1.04!important;
+  max-width:18ch!important;
+}
+.tgm-final-hero-sub{
+  width:min(100%,23ch)!important;
+  max-width:23ch!important;
+  margin:22px auto 0!important;
+  text-align:center!important;
+  line-height:1.08!important;
+  text-wrap:balance!important;
+}
+.tgm-final-hero-body{
+  margin-top:22px!important;
+}
+
+/* FRAME 02 — CTA label truly centered */
+.tgm-final-hero-cta{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:normal!important;
+  text-wrap:balance!important;
+  padding-inline:20px!important;
+}
+
+/* FRAME 05 — wider quote without changing typeface */
+.tgm-final-desire-quote{
+  width:min(100%,20ch)!important;
+  max-width:20ch!important;
+  margin-inline:auto!important;
+  text-wrap:balance!important;
+}
+
+/* FRAME 06 — reduce saturation and open the first subtitle */
+.tgm-final-gap-title .tgm-final-impact{
+  font-size:clamp(2.32rem,10.65vw,4rem)!important;
+  line-height:.93!important;
+  max-width:14ch!important;
+  margin-inline:auto!important;
+}
+.tgm-final-gap-panel:first-child .serif{
+  width:100%!important;
+  max-width:22ch!important;
+  font-size:clamp(1.55rem,6.5vw,2.15rem)!important;
+  line-height:1.08!important;
+  text-wrap:balance!important;
+}
+
+/* FRAMES 07–09 — wine subtitles */
+.tgm-final-gap-card h3{
+  color:var(--tgm-polish-wine)!important;
+}
+
+/* FRAME 10 — wider, easier-to-read mechanism subtitle */
+.tgm-final-mechanism-subtitle{
+  width:min(100%,24ch)!important;
+  max-width:24ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(1.72rem,7.25vw,2.8rem)!important;
+  line-height:1.02!important;
+  text-align:center!important;
+  text-wrap:balance!important;
+}
+
+/* FRAME 17 — story headline smaller and centered */
+.tgm-final-story h2.impact{
+  width:min(100%,14ch)!important;
+  max-width:14ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(2.5rem,10.6vw,4.15rem)!important;
+  line-height:.94!important;
+  text-align:center!important;
+  text-wrap:balance!important;
+}
+.tgm-final-story .eyebrow{
+  display:block!important;
+  text-align:center!important;
+}
+
+/* FRAME 22 — discovery headline smaller and wine */
+.tgm-final-discovery-title .tgm-final-editorial{
+  font-size:clamp(2.22rem,9.5vw,3.75rem)!important;
+  line-height:.94!important;
+  color:var(--tgm-polish-wine)!important;
+  max-width:15ch!important;
+  margin-inline:auto!important;
+}
+
+/* FRAMES 33–40 — premium 3D glass icon system */
+.tgm-final-sticker,
+.tgm-final-bonus-icon{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:visible!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:inherit!important;
+  isolation:isolate;
+}
+.tgm-final-sticker{
+  flex:0 0 68px!important;
+  width:68px!important;
+  height:68px!important;
+  border-radius:0!important;
+}
+.tgm-final-bonus-icon{
+  width:82px!important;
+  height:82px!important;
+  margin:0 0 16px!important;
+  border-radius:0!important;
+}
+.tgm-glass-icon{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  transform:translateZ(0) rotate(-2deg);
+  transform-origin:center;
+  filter:drop-shadow(0 13px 14px rgba(78,12,38,.18));
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),filter .32s ease;
+}
+.tgm-final-include-card,
+.tgm-final-bonus-card{
+  overflow:visible!important;
+}
+.tgm-final-include-card:hover .tgm-glass-icon,
+.tgm-final-bonus-card:hover .tgm-glass-icon{
+  transform:translateY(-5px) rotate(2deg) scale(1.035);
+  filter:drop-shadow(0 18px 18px rgba(78,12,38,.23));
+}
+.tgm-final-include-card h3{
+  align-items:center!important;
+  gap:14px!important;
+}
+.tgm-final-bonus-card h3{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+}
+.tgm-final-bonus-card{
+  background:
+    radial-gradient(circle at 85% 6%,rgba(255,255,255,.95),transparent 25%),
+    linear-gradient(145deg,rgba(255,255,255,.92),rgba(253,230,240,.82))!important;
+  border:1px solid rgba(255,255,255,.92)!important;
+  box-shadow:0 24px 58px rgba(91,18,49,.12),inset 0 1px 0 rgba(255,255,255,.95)!important;
+}
+
+/* FRAME 46 — calmer closing statement, deep-wine instead of black */
+.tgm-final-close-title .tgm-final-editorial{
+  width:min(100%,18ch)!important;
+  max-width:18ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(1.78rem,7.45vw,2.85rem)!important;
+  line-height:1.02!important;
+  color:var(--tgm-polish-wine)!important;
+  text-align:center!important;
+  text-wrap:balance!important;
+}
+
+@media(max-width:420px){
+  .tgm-final-hero-title .tgm-final-impact{
+    font-size:clamp(2.12rem,10.05vw,2.72rem)!important;
+  }
+  .tgm-final-hero-title .tgm-final-editorial{
+    font-size:clamp(1.42rem,6.4vw,1.72rem)!important;
+  }
+  .tgm-final-hero-sub{
+    font-size:clamp(1.34rem,5.95vw,1.63rem)!important;
+  }
+  .tgm-final-story h2.impact{
+    font-size:clamp(2.32rem,9.85vw,3rem)!important;
+  }
+  .tgm-final-discovery-title .tgm-final-editorial{
+    font-size:clamp(2.08rem,8.85vw,2.72rem)!important;
+  }
+}
+
+@media(min-width:700px){
+  .tgm-final-hero-sub{
+    margin-inline:0!important;
+    text-align:left!important;
+  }
+  .tgm-final-gap-title .tgm-final-impact{
+    max-width:12ch!important;
+  }
+  .tgm-final-story h2.impact{
+    font-size:clamp(3.3rem,6vw,5.25rem)!important;
+  }
+  .tgm-final-close-title .tgm-final-editorial{
+    font-size:clamp(2.2rem,3.2vw,3.4rem)!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .tgm-glass-icon{transition:none!important}
+}
