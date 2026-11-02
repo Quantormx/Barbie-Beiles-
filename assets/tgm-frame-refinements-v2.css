@@ -1,0 +1,148 @@
+/* TGM frame-refinement QA pass: stronger mobile balance and unmistakable glass icons */
+
+/* Frame 1: remove any residual label, reduce the black block and optically center the rose copy. */
+.tgm-final-hero .hero-copy > .eyebrow{display:none!important}
+@media(max-width:599px){
+  .tgm-final-hero-title{
+    max-width:13ch!important;
+    margin-inline:auto!important;
+  }
+  .tgm-final-hero-title .tgm-final-impact{
+    max-width:13ch!important;
+    margin-inline:auto!important;
+    font-size:clamp(1.96rem,9.1vw,2.48rem)!important;
+    line-height:.97!important;
+    letter-spacing:-.043em!important;
+    text-align:left!important;
+  }
+  .tgm-final-hero-sub{
+    width:min(100%,25ch)!important;
+    max-width:25ch!important;
+    margin:17px auto 0!important;
+    font-size:clamp(1.2rem,5.35vw,1.52rem)!important;
+    line-height:1.09!important;
+    letter-spacing:-.02em!important;
+    text-align:center!important;
+    text-wrap:balance!important;
+  }
+}
+
+/* Frames 33–36 and 38–40: large sculpted glass medallions rather than flat icon badges. */
+.tgm-final-include-card h3,
+.tgm-final-bonus-card h3{align-items:center!important}
+
+.tgm-final-sticker,
+.tgm-final-bonus-icon{
+  position:relative!important;
+  z-index:1;
+  display:grid!important;
+  place-items:center!important;
+  overflow:visible!important;
+  color:#fff!important;
+  border:2px solid rgba(255,255,255,.92)!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(circle at 25% 18%,rgba(255,255,255,1) 0 7%,rgba(255,255,255,.63) 8% 21%,transparent 35%),
+    radial-gradient(circle at 72% 76%,rgba(103,10,48,.55) 0,rgba(154,20,71,.38) 28%,transparent 58%),
+    linear-gradient(145deg,rgba(255,239,246,.96) 0%,rgba(248,151,190,.78) 42%,rgba(195,40,101,.74) 76%,rgba(103,13,52,.72) 100%)!important;
+  box-shadow:
+    inset 10px 11px 17px rgba(255,255,255,.82),
+    inset -12px -15px 22px rgba(89,8,42,.34),
+    inset 0 -3px 7px rgba(255,255,255,.22),
+    0 19px 28px rgba(94,13,47,.24),
+    0 5px 8px rgba(94,13,47,.18)!important;
+  filter:saturate(1.12) contrast(1.02);
+  transform:perspective(460px) rotateX(13deg) rotateY(-10deg) translateZ(0)!important;
+  transform-style:preserve-3d;
+}
+.tgm-final-sticker{
+  flex:0 0 72px!important;
+  width:72px!important;
+  height:72px!important;
+}
+.tgm-final-bonus-icon{
+  width:82px!important;
+  height:82px!important;
+  margin-bottom:22px!important;
+}
+.tgm-final-sticker:before,
+.tgm-final-bonus-icon:before{
+  content:"";
+  position:absolute;
+  z-index:3;
+  top:8%;
+  left:17%;
+  width:51%;
+  height:24%;
+  border-radius:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.06));
+  filter:blur(.4px);
+  transform:rotate(-18deg) translateZ(18px);
+  pointer-events:none;
+}
+.tgm-final-sticker:after,
+.tgm-final-bonus-icon:after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:13%;
+  right:4%;
+  bottom:-17%;
+  height:28%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(75,8,34,.34),rgba(75,8,34,0) 70%);
+  filter:blur(5px);
+  transform:rotate(-7deg);
+  pointer-events:none;
+}
+.tgm-final-sticker svg,
+.tgm-final-bonus-icon svg{
+  position:relative!important;
+  z-index:4!important;
+  width:34px!important;
+  height:34px!important;
+  color:#fff!important;
+  stroke:currentColor!important;
+  stroke-width:2!important;
+  filter:
+    drop-shadow(0 2px 1px rgba(255,255,255,.38))
+    drop-shadow(0 6px 4px rgba(78,7,37,.42))!important;
+  transform:translateZ(24px)!important;
+}
+.tgm-final-bonus-icon svg{width:39px!important;height:39px!important}
+
+/* Slight depth and balance for cards housing the glass objects. */
+.tgm-final-include-card,
+.tgm-final-bonus-card{
+  border-color:rgba(151,28,77,.12)!important;
+  background:
+    radial-gradient(circle at 88% 5%,rgba(246,184,208,.2),transparent 29%),
+    linear-gradient(145deg,#fff,#fff7fa)!important;
+  box-shadow:0 17px 44px rgba(91,18,49,.085)!important;
+}
+.tgm-final-include-card h3{gap:17px!important}
+
+@media(max-width:420px){
+  .tgm-final-sticker{flex-basis:66px!important;width:66px!important;height:66px!important}
+  .tgm-final-bonus-icon{width:76px!important;height:76px!important}
+  .tgm-final-sticker svg{width:31px!important;height:31px!important}
+  .tgm-final-bonus-icon svg{width:36px!important;height:36px!important}
+  .tgm-final-include-card h3{align-items:flex-start!important}
+}
+
+@media(min-width:860px){
+  .tgm-final-sticker{flex-basis:78px!important;width:78px!important;height:78px!important}
+  .tgm-final-bonus-icon{width:88px!important;height:88px!important}
+  .tgm-final-sticker svg{width:37px!important;height:37px!important}
+  .tgm-final-bonus-icon svg{width:42px!important;height:42px!important}
+}
+
+@media(prefers-reduced-motion:no-preference){
+  .tgm-final-sticker,
+  .tgm-final-bonus-icon{transition:transform .3s ease,filter .3s ease}
+  .tgm-final-include-card:hover .tgm-final-sticker,
+  .tgm-final-bonus-card:hover .tgm-final-bonus-icon{
+    transform:perspective(460px) rotateX(8deg) rotateY(-4deg) translateY(-3px)!important;
+    filter:saturate(1.22) contrast(1.03);
+  }
+}
