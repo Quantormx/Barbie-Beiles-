@@ -1,0 +1,58 @@
+/* TGM hotfix — complete materials image + centered mobile hero copy */
+
+/* Keep the approved materials image proportional and remove any empty/gray fill. */
+.tgm-final-includes .tgm-final-materials-visual{
+  width:min(100%,760px)!important;
+  max-width:760px!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:247 / 238!important;
+  overflow:hidden!important;
+  background:#f7e5e0!important;
+}
+.tgm-final-includes .tgm-final-materials-visual img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:247 / 238!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:#f7e5e0!important;
+  transform:none!important;
+}
+
+/* Center the complete hero copy on the mobile composition shown in the review. */
+@media(max-width:859px){
+  .tgm-final-hero .hero-copy{
+    text-align:center!important;
+  }
+  .tgm-final-hero-title{
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  .tgm-final-hero-title .tgm-final-impact,
+  .tgm-final-hero-title .tgm-final-editorial{
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+  .tgm-final-hero-sub{
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+  .tgm-final-hero-body{
+    max-width:35ch!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+}
+
+@media(min-width:860px){
+  .tgm-final-includes .tgm-final-materials-visual{
+    width:min(78vw,820px)!important;
+    max-width:820px!important;
+  }
+}
