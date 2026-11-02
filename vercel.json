@@ -1,44 +1,48 @@
 {
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
     {
-      "source": "/masterclass/gracias",
-      "destination": "/masterclass/gracias/index.html"
+      "src": "/masterclass/gracias",
+      "dest": "/masterclass/gracias/index.html"
     },
     {
-      "source": "/masterclass/gracias/",
-      "destination": "/masterclass/gracias/index.html"
+      "src": "/masterclass/gracias/",
+      "dest": "/masterclass/gracias/index.html"
     },
     {
-      "source": "/masterclass",
-      "destination": "/masterclass/index.html"
+      "src": "/masterclass",
+      "dest": "/masterclass/index.html"
     },
     {
-      "source": "/masterclass/",
-      "destination": "/masterclass/index.html"
+      "src": "/masterclass/",
+      "dest": "/masterclass/index.html"
     },
     {
-      "source": "/theguidemethod",
-      "destination": "/theguidemethod/mobile-first.html"
+      "src": "/theguidemethod",
+      "dest": "/theguidemethod/mobile-first.html"
     },
     {
-      "source": "/theguidemethod/",
-      "destination": "/theguidemethod/mobile-first.html"
+      "src": "/theguidemethod/",
+      "dest": "/theguidemethod/mobile-first.html"
     },
     {
-      "source": "/theguidemethod-mobile",
-      "destination": "/theguidemethod/mobile-first.html"
+      "src": "/theguidemethod-mobile",
+      "dest": "/theguidemethod/mobile-first.html"
     },
     {
-      "source": "/theguidemethod-mobile/",
-      "destination": "/theguidemethod/mobile-first.html"
+      "src": "/theguidemethod-mobile/",
+      "dest": "/theguidemethod/mobile-first.html"
     },
     {
-      "source": "/demotgm",
-      "destination": "/demotgm/index.html"
+      "src": "/demotgm",
+      "dest": "/demotgm/index.html"
     },
     {
-      "source": "/demotgm/",
-      "destination": "/demotgm/index.html"
+      "src": "/demotgm/",
+      "dest": "/demotgm/index.html"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }
