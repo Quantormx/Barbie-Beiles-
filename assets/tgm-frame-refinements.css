@@ -1,0 +1,231 @@
+/* TGM — frame-specific refinements requested against the 49-frame mobile review deck */
+:root{
+  --tgm-frame-wine:#6f1738;
+  --tgm-frame-wine-deep:#561029;
+  --tgm-frame-glass:#f6b9d0;
+}
+
+/* Frame 1 — reduce saturation of the hero headline; center and tighten the rose text */
+.tgm-final-hero-title .tgm-final-impact{
+  font-size:clamp(2.08rem,9.9vw,2.72rem)!important;
+  line-height:.95!important;
+  letter-spacing:-.047em!important;
+  max-width:12.2ch;
+}
+.tgm-final-hero-sub{
+  max-width:22ch!important;
+  margin:22px auto 0!important;
+  font-size:clamp(1.28rem,5.7vw,1.62rem)!important;
+  line-height:1.11!important;
+  text-align:center!important;
+  text-wrap:balance;
+}
+
+/* Frame 2 — true optical centering; arrow no longer displaces the label */
+.tgm-final-hero-cta{
+  position:relative!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  padding-inline:46px!important;
+  text-align:center!important;
+}
+.tgm-final-hero-cta .tgm-cta-label{display:block;text-align:center;line-height:1.12}
+.tgm-final-hero-cta .tgm-cta-arrow{
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-51%);
+  font-size:1.3em;
+  line-height:1;
+}
+
+/* Frame 5 — wider, more editorial quote */
+.tgm-final-desire-quote{
+  display:inline-block!important;
+  max-width:21ch!important;
+  width:auto!important;
+  padding-inline:.25em;
+  letter-spacing:-.012em!important;
+  transform:scaleX(1.045);
+  transform-origin:center;
+}
+
+/* Frame 6 — smaller gap statement and wider first panel subtitle */
+.tgm-final-gap-title .tgm-final-editorial{
+  max-width:19ch!important;
+  font-size:clamp(1.32rem,5.9vw,2rem)!important;
+  line-height:1.08!important;
+}
+.tgm-final-gap-title .tgm-final-impact{
+  max-width:13.3ch!important;
+  font-size:clamp(2.18rem,9.55vw,3.45rem)!important;
+  line-height:.95!important;
+}
+.tgm-final-gap-panel:first-child .serif{
+  max-width:20ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(1.72rem,6.8vw,2.25rem)!important;
+  line-height:1.08!important;
+  text-align:center!important;
+}
+
+/* Frames 7–9 — wine subtitles */
+.tgm-final-gap-card h3{
+  color:var(--tgm-frame-wine)!important;
+}
+
+/* Frame 10 — wider and more readable mechanism subtitle */
+.tgm-final-mechanism-subtitle{
+  max-width:25ch!important;
+  font-size:clamp(1.62rem,6.9vw,2.45rem)!important;
+  line-height:1.07!important;
+  letter-spacing:-.027em!important;
+  text-wrap:balance;
+}
+
+/* Frame 17 — smaller centered story headline, same typeface */
+.tgm-final-story .eyebrow{
+  display:block;
+  text-align:center;
+}
+.tgm-final-story h2.impact{
+  max-width:13.5ch!important;
+  margin:18px auto 0!important;
+  font-size:clamp(2.28rem,9.65vw,3.42rem)!important;
+  line-height:.94!important;
+  text-align:center!important;
+}
+
+/* Frame 22 — smaller discovery headline in wine, same display typeface */
+.tgm-final-discovery-title .tgm-final-editorial{
+  max-width:13.5ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(2.08rem,8.95vw,3.25rem)!important;
+  line-height:.95!important;
+  color:var(--tgm-frame-wine)!important;
+}
+
+/* Frames 33–36 and 38–40 — premium glass 3D icon system */
+.tgm-final-sticker,
+.tgm-final-bonus-icon{
+  position:relative!important;
+  isolation:isolate;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.92)!important;
+  background:
+    radial-gradient(circle at 28% 18%,rgba(255,255,255,.98),rgba(255,255,255,.38) 28%,transparent 48%),
+    linear-gradient(145deg,rgba(255,255,255,.88) 0%,rgba(255,194,219,.58) 45%,rgba(186,33,94,.26) 100%)!important;
+  color:#9e174b!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -10px 18px rgba(115,18,57,.16),
+    0 12px 26px rgba(111,23,56,.19),
+    0 2px 4px rgba(255,255,255,.75)!important;
+  backdrop-filter:blur(11px) saturate(1.45);
+  -webkit-backdrop-filter:blur(11px) saturate(1.45);
+  transform:perspective(420px) rotateX(7deg) rotateY(-6deg);
+  transform-origin:center;
+}
+.tgm-final-sticker{width:56px!important;height:56px!important;border-radius:19px!important;flex-basis:56px!important}
+.tgm-final-bonus-icon{width:62px!important;height:62px!important;border-radius:21px!important}
+.tgm-final-sticker:before,
+.tgm-final-bonus-icon:before{
+  content:"";
+  position:absolute;
+  inset:4px 5px auto 5px;
+  height:39%;
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.06));
+  filter:blur(.5px);
+  z-index:-1;
+}
+.tgm-final-sticker:after,
+.tgm-final-bonus-icon:after{
+  content:"";
+  position:absolute;
+  left:14%;
+  right:14%;
+  bottom:4px;
+  height:18%;
+  border-radius:999px;
+  background:rgba(126,21,61,.18);
+  filter:blur(5px);
+  z-index:-1;
+}
+.tgm-final-sticker svg,
+.tgm-final-bonus-icon svg{
+  position:relative;
+  z-index:2;
+  width:29px!important;
+  height:29px!important;
+  stroke-width:1.9!important;
+  filter:drop-shadow(0 4px 3px rgba(92,17,48,.24));
+}
+.tgm-final-include-card,
+.tgm-final-bonus-card{
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+
+/* Frame 46 — smaller, sophisticated wine closing headline */
+.tgm-final-close-title .tgm-final-editorial{
+  max-width:15ch!important;
+  margin-inline:auto!important;
+  font-size:clamp(2rem,8.55vw,3.25rem)!important;
+  line-height:.97!important;
+  color:var(--tgm-frame-wine)!important;
+  text-align:center!important;
+}
+
+@media(min-width:600px){
+  .tgm-final-hero-title .tgm-final-impact{font-size:clamp(3rem,8.2vw,4.55rem)!important}
+  .tgm-final-hero-sub{max-width:27ch!important}
+  .tgm-final-gap-title .tgm-final-impact{font-size:clamp(3rem,7.5vw,4.5rem)!important}
+  .tgm-final-mechanism-subtitle{max-width:23ch!important}
+  .tgm-final-story h2.impact{font-size:clamp(3rem,7.6vw,4.3rem)!important}
+  .tgm-final-discovery-title .tgm-final-editorial{font-size:clamp(3rem,7.5vw,4.45rem)!important}
+  .tgm-final-close-title .tgm-final-editorial{font-size:clamp(2.9rem,7vw,4.1rem)!important}
+}
+
+@media(min-width:860px){
+  .tgm-final-hero-title .tgm-final-impact{
+    font-size:clamp(4rem,5.75vw,6.05rem)!important;
+    max-width:10.5ch;
+  }
+  .tgm-final-hero-sub{
+    max-width:25ch!important;
+    margin:26px 0 0!important;
+    font-size:clamp(1.9rem,2.65vw,2.8rem)!important;
+    text-align:left!important;
+  }
+  .tgm-final-gap-title .tgm-final-editorial{font-size:clamp(1.9rem,2.55vw,3rem)!important}
+  .tgm-final-gap-title .tgm-final-impact{font-size:clamp(3.85rem,5.5vw,5.65rem)!important}
+  .tgm-final-gap-panel:first-child .serif{font-size:clamp(2rem,2.65vw,3rem)!important}
+  .tgm-final-mechanism-subtitle{
+    max-width:23ch!important;
+    font-size:clamp(2.2rem,3vw,3.05rem)!important;
+  }
+  .tgm-final-story h2.impact{
+    max-width:12.5ch!important;
+    font-size:clamp(3.6rem,4.9vw,5.1rem)!important;
+  }
+  .tgm-final-discovery-title .tgm-final-editorial{
+    max-width:12.5ch!important;
+    font-size:clamp(3.9rem,5.2vw,5.35rem)!important;
+  }
+  .tgm-final-close-title .tgm-final-editorial{
+    max-width:14ch!important;
+    font-size:clamp(3.45rem,4.65vw,4.8rem)!important;
+  }
+  .tgm-final-sticker,
+  .tgm-final-bonus-icon{transform:perspective(520px) rotateX(6deg) rotateY(-5deg)}
+  .tgm-final-include-card:hover,
+  .tgm-final-bonus-card:hover{transform:translateY(-4px);box-shadow:0 20px 52px rgba(91,18,49,.12)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .tgm-final-sticker,
+  .tgm-final-bonus-icon,
+  .tgm-final-include-card,
+  .tgm-final-bonus-card{transform:none!important;transition:none!important}
+}
