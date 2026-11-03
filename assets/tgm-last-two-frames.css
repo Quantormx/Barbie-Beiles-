@@ -153,6 +153,9 @@
 
 /* Keep the closing promise readable without splitting EXTRAORDINARIA. */
 .tgm-final-close .tgm-final-extraordinary{
+  width:100%!important;
+  max-width:45rem!important;
+  padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px)!important;
   font-size:clamp(1rem,6.3vw,3rem)!important;
   line-height:1.04!important;
   overflow-wrap:normal!important;
