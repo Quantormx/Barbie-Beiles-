@@ -2,14 +2,14 @@
 
 /* Frame: “Puedes querer una vida nueva…”
    First half: wide impact title font.
-   Second half: existing editorial serif, gently widened for legibility. */
+   Second half: readable Manrope, with a centered composition. */
 .tgm-final-discovery-core.tgm-last-mixed-statement{
   display:block!important;
-  width:min(100%,21ch)!important;
-  max-width:21ch!important;
+  width:100%!important;
+  max-width:36rem!important;
   margin:48px auto 0!important;
   color:var(--tgm-final-rose)!important;
-  text-align:left!important;
+  text-align:center!important;
   text-transform:uppercase;
 }
 .tgm-last-mixed-statement > span,
@@ -25,15 +25,19 @@
   color:var(--tgm-final-rose)!important;
 }
 .tgm-last-mixed-editorial{
-  margin-top:10px;
-  font-family:var(--serif)!important;
-  font-size:clamp(2.26rem,9.75vw,3.15rem)!important;
-  font-weight:500!important;
-  line-height:.92!important;
-  letter-spacing:-.034em!important;
+  margin-top:18px;
+  font-family:var(--sans)!important;
+  font-size:clamp(1.4rem,5.8vw,2rem)!important;
+  font-weight:700!important;
+  line-height:1.24!important;
+  letter-spacing:0!important;
   color:var(--tgm-final-rose)!important;
-  transform:scaleX(1.055);
-  transform-origin:left center;
+  text-align:center!important;
+  transform:none;
+}
+.tgm-final-discovery .prose,
+.tgm-final-discovery .prose > p{
+  text-align:center!important;
 }
 
 /* Frame: closing mix and alignment */
@@ -105,8 +109,7 @@
     font-size:clamp(2.18rem,9.9vw,2.72rem)!important;
   }
   .tgm-last-mixed-editorial{
-    font-size:clamp(2rem,9.25vw,2.55rem)!important;
-    transform:scaleX(1.035);
+    font-size:clamp(1.4rem,5.8vw,1.55rem)!important;
   }
   .tgm-final-good-enough.tgm-last-close-good{
     font-size:clamp(1.82rem,8.1vw,2.36rem)!important;
@@ -121,16 +124,15 @@
 
 @media(min-width:860px){
   .tgm-final-discovery-core.tgm-last-mixed-statement{
-    width:min(100%,18ch)!important;
-    max-width:18ch!important;
+    width:100%!important;
+    max-width:36rem!important;
     margin-top:62px!important;
   }
   .tgm-last-mixed-impact{
     font-size:clamp(4.2rem,5.35vw,5.65rem)!important;
   }
   .tgm-last-mixed-editorial{
-    font-size:clamp(3.95rem,5vw,5.3rem)!important;
-    transform:scaleX(1.035);
+    font-size:clamp(2rem,3.2vw,2.5rem)!important;
   }
   .tgm-final-good-enough.tgm-last-close-good{
     max-width:20ch!important;
