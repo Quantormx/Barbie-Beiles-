@@ -6,7 +6,8 @@
   if (!image) return;
 
   const wrapper = image.closest('.tgm-final-materials-visual');
-  const fallback = '/assets/tgm-materials-mockup.svg?v=2';
+  const source = '/assets/tgm-materials-remade.svg?v=4';
+  const fallback = '/assets/tgm-materials-mockup.svg?v=4';
 
   image.removeAttribute('srcset');
   image.removeAttribute('sizes');
@@ -16,7 +17,7 @@
 
   image.addEventListener('load', () => {
     wrapper?.classList.add('tgm-materials-loaded');
-  });
+  }, { once: true });
 
   image.addEventListener('error', () => {
     if (image.dataset.fallbackApplied === 'true') return;
@@ -24,5 +25,5 @@
     image.src = fallback;
   });
 
-  image.src = '/assets/tgm-materials-approved.webp?v=2';
+  image.src = source;
 })();
