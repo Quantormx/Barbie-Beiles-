@@ -167,6 +167,31 @@
   transition:transform .25s ease,box-shadow .25s ease;
 }
 
+/* Closing introduction — centered subtitle and both headline blocks. */
+.tgm-final-close > .shell > .eyebrow{
+  display:block!important;
+  width:100%;
+  margin:0 auto 32px!important;
+  font-family:var(--serif);
+  font-size:clamp(1.45rem,6vw,2.15rem)!important;
+  font-weight:600!important;
+  line-height:1.25!important;
+  letter-spacing:.08em!important;
+  text-align:center!important;
+  text-wrap:balance;
+}
+.tgm-final-close .tgm-final-close-title{
+  margin-inline:auto!important;
+  text-align:center!important;
+}
+.tgm-final-close-title .tgm-final-impact{
+  width:100%;
+  max-width:24ch!important;
+  margin-inline:auto!important;
+  text-align:center!important;
+  text-wrap:balance!important;
+}
+
 /* Frame 46 — smaller, sophisticated wine closing headline */
 .tgm-final-close-title .tgm-final-editorial{
   max-width:15ch!important;
