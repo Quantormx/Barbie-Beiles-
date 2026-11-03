@@ -60,3 +60,6 @@
   .tgm-countdown-card{flex-direction:row;justify-content:space-between;padding:18px 26px;text-align:left;gap:28px}
   .tgm-countdown-clock{grid-template-columns:repeat(3,68px)}
 }
+
+/* Center the date notice while no running clock is displayed. */
+.tgm-countdown:not([data-state="active"]) .tgm-countdown-card{justify-content:center;text-align:center}
