@@ -131,10 +131,12 @@
   document.querySelectorAll('.tgm-final-bonuses .tgm-final-bonus-card').forEach((card, index) => {
     const old = card.querySelector('.tgm-final-bonus-icon');
     if (!old) return;
-    if (index < 2) {
+    if (index < 4) {
       const mockups = [
         { src: '/assets/tgm-bonus-afirmaciones.png', alt: 'Mockup de tres teléfonos con Afirmaciones de Poder' },
-        { src: '/assets/tgm-bonus-riqueza.png', alt: 'Mockup del Audio Activador de Riqueza con teléfono y audífonos' }
+        { src: '/assets/tgm-bonus-riqueza.png', alt: 'Mockup del Audio Activador de Riqueza con teléfono y audífonos' },
+        { src: '/assets/tgm-bonus-collective.png', alt: 'Mockup de la comunidad VIP The Collective en una computadora' },
+        { src: '/assets/tgm-bonus-libro.png', alt: 'Mockup del libro y edición digital de Mentalidad Millonaria' }
       ];
       old.className = 'tgm-bonus-mockup';
       old.style.cssText = 'display:block;width:min(100%,360px);margin:0 auto 24px;';
