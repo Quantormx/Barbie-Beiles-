@@ -1,0 +1,62 @@
+/* Scheduled 48-hour campaign — independent of the rest of the landing page. */
+.tgm-countdown[hidden],.tgm-countdown [hidden]{display:none!important}
+.tgm-countdown{padding-top:18px;padding-bottom:0}
+.tgm-countdown-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:17px;
+  padding:20px 18px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:20px;
+  background:radial-gradient(ellipse at 95% 0,rgba(229,123,165,.25),transparent 55%),linear-gradient(115deg,#631633,#8a2048);
+  color:#fff7fa;
+  box-shadow:0 10px 28px rgba(111,23,56,.1);
+  text-align:center;
+}
+.tgm-countdown-copy{min-width:0}
+.tgm-countdown-label{
+  display:block;
+  color:#f4bfd2;
+  font-family:var(--sans);
+  font-size:.62rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  line-height:1.5;
+}
+.tgm-countdown-title{
+  margin:7px 0 0;
+  font-family:var(--sans);
+  font-size:clamp(.98rem,4vw,1.12rem);
+  font-weight:700;
+  line-height:1.4;
+  text-wrap:balance;
+}
+.tgm-countdown-note{
+  margin:7px 0 0;
+  color:#f3d6e0;
+  font-family:var(--sans);
+  font-size:.7rem;
+  line-height:1.5;
+  text-wrap:balance;
+}
+.tgm-countdown-clock{display:grid;grid-template-columns:repeat(3,65px);gap:12px;flex-shrink:0}
+.tgm-countdown-unit{
+  position:relative;
+  display:grid;
+  justify-items:center;
+  gap:4px;
+  padding:10px 4px 8px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:12px;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
+}
+.tgm-countdown-unit:not(:last-child)::after{content:':';position:absolute;right:-9px;top:13px;font:500 22px/1 var(--sans);color:#dca3b9}
+.tgm-countdown-unit b{font-family:var(--sans);font-size:1.85rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.tgm-countdown-unit small{font-family:var(--sans);font-size:.5rem;font-weight:600;letter-spacing:.11em;line-height:1.3}
+.tgm-countdown-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(min-width:860px){
+  .tgm-countdown-card{flex-direction:row;justify-content:space-between;padding:18px 26px;text-align:left;gap:28px}
+  .tgm-countdown-clock{grid-template-columns:repeat(3,68px)}
+}

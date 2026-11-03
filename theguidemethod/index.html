@@ -15,6 +15,7 @@
 @media(min-width:860px){body{font-size:17px}.navlinks{display:flex}.hero-grid{grid-template-columns:1.05fr .95fr;align-items:center;gap:74px}.hero-photo{min-height:720px}.split{grid-template-columns:1fr 1fr;gap:90px}.four{grid-template-columns:repeat(4,1fr);gap:28px}.photo-split{grid-template-columns:.9fr 1.1fr;gap:84px}.beliefs{grid-template-columns:1fr 1fr;gap:36px}.method article{display:grid;grid-template-columns:150px .8fr 1fr;gap:34px;align-items:start}.method h3{margin:0}.includes{grid-template-columns:1fr 1fr}.include:nth-child(odd){padding-right:36px;border-right:1px solid var(--line)}.include:nth-child(even){padding-left:36px}.bonus-grid{grid-template-columns:1fr 1fr}.price-grid{grid-template-columns:1fr 1fr}}
 </style>
 <link rel="stylesheet" href="/assets/tgm-whatsapp.css?v=1">
+<link rel="stylesheet" href="/assets/tgm-countdown.css?v=1">
 </head>
 <body>
 <header class="nav">
@@ -24,6 +25,22 @@
     <a class="cta" href="https://pay.hotmart.com/C99222275C?off=415iu72d&checkoutMode=10">Quiero entrar</a>
   </div>
 </header>
+<aside class="tgm-countdown shell" id="tgm-countdown" hidden aria-label="Ventana de 48 horas de The Guide Method">
+  <div class="tgm-countdown-card">
+    <div class="tgm-countdown-copy">
+      <span class="tgm-countdown-label">THE GUIDE METHOD · 48 HORAS</span>
+      <p class="tgm-countdown-title">Comienza el 4 de noviembre a las 9:00 p. m.</p>
+      <p class="tgm-countdown-note">Hora de Ciudad de México · Finaliza el 6 de noviembre, 9:00 p. m.</p>
+    </div>
+    <div class="tgm-countdown-clock" role="timer" aria-live="off" aria-label="Tiempo restante" hidden>
+      <span class="tgm-countdown-unit" aria-hidden="true"><b data-tgm-hours>48</b><small>HORAS</small></span>
+      <span class="tgm-countdown-unit" aria-hidden="true"><b data-tgm-minutes>00</b><small>MINUTOS</small></span>
+      <span class="tgm-countdown-unit" aria-hidden="true"><b data-tgm-seconds>00</b><small>SEGUNDOS</small></span>
+    </div>
+    <span class="tgm-countdown-status" role="status" aria-live="polite"></span>
+  </div>
+</aside>
+
 
 <main id="top">
 <section class="hero">
@@ -356,5 +373,6 @@
   <span class="tgm-whatsapp-label">¿Tienes dudas?</span>
   <img src="/assets/whatsapp-contact.webp" width="64" height="64" alt="" aria-hidden="true">
 </a>
+<script src="/assets/tgm-countdown.js?v=1" defer></script>
 </body>
 </html>
