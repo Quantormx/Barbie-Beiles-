@@ -55,7 +55,17 @@
 .tgm-video-start[hidden] { display: none; }
 .tgm-video-start:disabled { cursor: wait; }
 .tgm-video-start:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-.tgm-video-play-icon { font-size: 1.7rem; line-height: 1; }
+.tgm-video-play-icon {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  font-size: 0;
+  line-height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid currentColor;
+}
 
 .tgm-video-card video:focus-visible {
   outline: 3px solid var(--rose2, #b91f59);
