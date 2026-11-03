@@ -16,6 +16,7 @@
 </style>
 <link rel="stylesheet" href="/assets/tgm-whatsapp.css?v=1">
 <link rel="stylesheet" href="/assets/tgm-countdown.css?v=2">
+<link rel="stylesheet" href="/assets/tgm-testimonial-videos.css?v=1">
 </head>
 <body>
 <header class="nav">
@@ -301,11 +302,38 @@
   </div>
 </section>
 
-<section class="section center">
+<section class="section center" id="testimonios" aria-labelledby="testimonios-title">
   <div class="shell">
     <div class="eyebrow">Prueba social</div>
-    <h2 class="impact">Mujeres reales. Cambios reales.</h2>
+    <h2 class="impact" id="testimonios-title">Mujeres reales. Cambios reales.</h2>
     <p class="serif" style="font-size:clamp(1.8rem,6vw,3.8rem);color:var(--rose2);max-width:13ch;margin:28px auto">Cuando cambia lo que crees posible, empiezas a moverte diferente.</p>
+    <div class="tgm-video-testimonials">
+      <figure class="tgm-video-card">
+        <div class="tgm-video-frame">
+          <video id="testimonio-marce" controls playsinline tabindex="0" preload="none" width="1080" height="1920" poster="/assets/testimonials/marce.webp" data-stream="/assets/testimonials/marce/index.m3u8" aria-label="Testimonio de Marce" aria-describedby="marce-caption"></video>
+          <button class="tgm-video-start" type="button" aria-controls="testimonio-marce"><span class="tgm-video-play-icon" aria-hidden="true">▶</span><span>Ver testimonio de Marce</span></button>
+        </div>
+        <figcaption id="marce-caption"><span>En sus propias palabras</span><h3>Marce</h3></figcaption>
+        <p class="tgm-video-error" role="status" hidden>No fue posible reproducir el video. Pulsa Reintentar para volver a cargarlo.</p>
+      </figure>
+      <figure class="tgm-video-card">
+        <div class="tgm-video-frame">
+          <video id="testimonio-edith" controls playsinline tabindex="0" preload="none" width="1080" height="1920" poster="/assets/testimonials/edith.webp" data-stream="/assets/testimonials/edith/index.m3u8" aria-label="Testimonio de Edith" aria-describedby="edith-caption"></video>
+          <button class="tgm-video-start" type="button" aria-controls="testimonio-edith"><span class="tgm-video-play-icon" aria-hidden="true">▶</span><span>Ver testimonio de Edith</span></button>
+        </div>
+        <figcaption id="edith-caption"><span>En sus propias palabras</span><h3>Edith</h3></figcaption>
+        <p class="tgm-video-error" role="status" hidden>No fue posible reproducir el video. Pulsa Reintentar para volver a cargarlo.</p>
+      </figure>
+      <figure class="tgm-video-card">
+        <div class="tgm-video-frame">
+          <video id="testimonio-luisa" controls playsinline tabindex="0" preload="none" width="1080" height="1920" poster="/assets/testimonials/luisa.webp" data-stream="/assets/testimonials/luisa/index.m3u8" aria-label="Testimonio de Luisa" aria-describedby="luisa-caption"></video>
+          <button class="tgm-video-start" type="button" aria-controls="testimonio-luisa"><span class="tgm-video-play-icon" aria-hidden="true">▶</span><span>Ver testimonio de Luisa</span></button>
+        </div>
+        <figcaption id="luisa-caption"><span>En sus propias palabras</span><h3>Luisa</h3></figcaption>
+        <p class="tgm-video-error" role="status" hidden>No fue posible reproducir el video. Pulsa Reintentar para volver a cargarlo.</p>
+      </figure>
+    </div>
+    <noscript><p>Activa JavaScript para reproducir los testimonios.</p></noscript>
   </div>
 </section>
 
@@ -374,5 +402,6 @@
   <img src="/assets/whatsapp-contact.webp" width="64" height="64" alt="" aria-hidden="true">
 </a>
 <script src="/assets/tgm-countdown.js?v=1" defer></script>
+<script src="/assets/tgm-testimonial-videos.js?v=1" defer></script>
 </body>
 </html>

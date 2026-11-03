@@ -1,0 +1,97 @@
+/* Full portrait testimonials. Keep the original titles/subtitles inside frame. */
+.tgm-video-testimonials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(20px, 3vw, 28px);
+  margin: clamp(34px, 6vw, 56px) auto 0;
+  max-width: 1080px;
+}
+
+.tgm-video-card {
+  flex: 1 1 260px;
+  width: 100%;
+  min-width: 0;
+  max-width: 340px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(111, 23, 56, .12);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(91, 18, 49, .09);
+}
+
+.tgm-video-frame { position: relative; background: #000; }
+
+.tgm-video-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  object-position: center;
+  background: #000;
+}
+
+.tgm-video-start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: 90%;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 18px;
+  background: rgba(34, 10, 21, .82);
+  color: #fff;
+  font: 700 .85rem/1.35 var(--sans, Arial, sans-serif);
+  cursor: pointer;
+}
+.tgm-video-start[hidden] { display: none; }
+.tgm-video-start:disabled { cursor: wait; }
+.tgm-video-start:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+.tgm-video-play-icon { font-size: 1.7rem; line-height: 1; }
+
+.tgm-video-card video:focus-visible {
+  outline: 3px solid var(--rose2, #b91f59);
+  outline-offset: -3px;
+}
+
+.tgm-video-card figcaption {
+  padding: 20px 18px 24px;
+  text-align: center;
+  background: linear-gradient(145deg, #fff, #fff6f9);
+}
+
+.tgm-video-card figcaption span {
+  display: block;
+  font-size: .61rem;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted, #5e5559);
+}
+
+.tgm-video-card h3 {
+  margin: 7px 0 0;
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--wine, #6f1738);
+}
+
+.tgm-video-error {
+  margin: 0;
+  padding: 0 18px 20px;
+  font-size: .85rem;
+  line-height: 1.5;
+}
+
+.tgm-video-error[hidden] { display: none; }
+.tgm-video-error a { color: var(--rose2, #b91f59); text-decoration: underline; }
