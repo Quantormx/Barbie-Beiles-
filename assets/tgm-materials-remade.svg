@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1540" viewBox="0 0 1600 1540">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e9e5"/><stop offset="0.5" stop-color="#f4d8d9"/><stop offset="1" stop-color="#efc7d2"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff9f5"/><stop offset="0.55" stop-color="#f7e9e4"/><stop offset="1" stop-color="#edd6d4"/></linearGradient>
+    <linearGradient id="bookPink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9a8ae"/><stop offset="0.45" stop-color="#c98f9d"/><stop offset="1" stop-color="#b06b7d"/></linearGradient>
+    <linearGradient id="wine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4e0d27"/><stop offset="0.5" stop-color="#7d153b"/><stop offset="1" stop-color="#a52a59"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8fb"/><stop offset="0.48" stop-color="#f7dce7"/><stop offset="1" stop-color="#efb8cf"/></linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#efb5c8" stop-opacity="0.25"/><stop offset="0.3" stop-color="#f7d0dc" stop-opacity="0.9"/><stop offset="0.58" stop-color="#ca6f91" stop-opacity="0.85"/><stop offset="0.86" stop-color="#f2bdcf" stop-opacity="0.7"/><stop offset="1" stop-color="#a94e73" stop-opacity="0.35"/></linearGradient>
+    <linearGradient id="ribbonHi" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="0.45" stop-color="#ffffff" stop-opacity="0.7"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#5a1830" flood-opacity="0.28"/></filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#6b233c" flood-opacity="0.20"/></filter>
+    <filter id="blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="shine" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+  <rect width="1600" height="1540" rx="54" fill="url(#bg)"/>
+  <path d="M-100 650 C160 420 360 260 640 290 C940 324 1100 610 1360 520 C1510 468 1640 300 1730 240" fill="none" stroke="url(#ribbon)" stroke-width="165" stroke-linecap="round" opacity="0.92"/>
+  <path d="M-90 642 C180 428 360 300 645 323 C920 345 1115 605 1360 530 C1510 484 1620 330 1710 282" fill="none" stroke="url(#ribbonHi)" stroke-width="34" stroke-linecap="round" opacity="0.6" filter="url(#shine)"/>
+  <path d="M850 -120 C1060 70 1000 300 1210 440 C1370 548 1490 480 1665 350" fill="none" stroke="url(#ribbon)" stroke-width="120" stroke-linecap="round" opacity="0.62"/>
+  <ellipse cx="820" cy="1335" rx="650" ry="110" fill="#6f1738" opacity="0.14" filter="url(#blur)"/>
+  <g transform="translate(120 250) rotate(-1.8 290 430)" filter="url(#shadow)">
+    <path d="M0 60 L78 12 L558 12 L558 790 L78 838 L0 808 Z" fill="#82445b" opacity="0.9"/><path d="M78 12 L558 12 L558 790 L78 838 Z" fill="url(#bookPink)"/><path d="M78 12 L104 26 L104 824 L78 838 Z" fill="#986071" opacity="0.65"/><rect x="114" y="72" width="398" height="690" rx="18" fill="#ffffff" opacity="0.05"/><path d="M114 80 C240 40 410 40 516 88" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.22"/>
+    <text x="320" y="292" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="138" font-weight="700" fill="url(#wine)" letter-spacing="-9">TGM</text><text x="320" y="350" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="24" fill="#6f1738" letter-spacing="7">THE GUIDE METHOD</text>
+  </g>
+  <g transform="translate(630 220)" filter="url(#shadow)">
+    <rect width="650" height="850" rx="50" fill="#1f191c"/><rect x="16" y="16" width="618" height="818" rx="39" fill="url(#screen)"/><rect x="270" y="8" width="110" height="10" rx="5" fill="#51464b"/><path d="M16 16 H634 V260 C490 210 360 250 230 330 C150 378 84 385 16 360 Z" fill="#f5c6d6" opacity="0.85"/><path d="M18 230 C190 60 410 80 635 255" fill="none" stroke="url(#ribbon)" stroke-width="86" opacity="0.62"/>
+    <text x="326" y="132" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="78" font-weight="700" fill="url(#wine)" letter-spacing="-5">TGM</text><text x="326" y="170" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="16" fill="#7d153b" letter-spacing="5">THE GUIDE METHOD</text>
+    <g transform="translate(128 388)" font-family="Inter Display, Arial, sans-serif">
+      <g fill="#f7eef2"><rect width="394" height="62" rx="18"/><rect y="78" width="394" height="62" rx="18"/><rect y="156" width="394" height="62" rx="18"/><rect y="234" width="394" height="62" rx="18"/><rect y="312" width="394" height="62" rx="18"/><rect y="390" width="394" height="62" rx="18"/><rect y="468" width="394" height="62" rx="18"/></g>
+      <g fill="#d2608e"><circle cx="38" cy="31" r="17"/><circle cx="38" cy="109" r="17"/><circle cx="38" cy="187" r="17"/><circle cx="38" cy="265" r="17"/><circle cx="38" cy="343" r="17"/><circle cx="38" cy="421" r="17"/><circle cx="38" cy="499" r="17"/></g>
+      <g fill="#fff"><path d="M32 23 L47 31 L32 39 Z"/><path d="M32 101 L47 109 L32 117 Z"/><path d="M32 179 L47 187 L32 195 Z"/><path d="M32 257 L47 265 L32 273 Z"/><path d="M32 335 L47 343 L32 351 Z"/><path d="M32 413 L47 421 L32 429 Z"/><path d="M32 491 L47 499 L32 507 Z"/></g>
+      <g font-size="27" fill="#6b293f" font-weight="500"><text x="78" y="40">Módulo 1</text><text x="78" y="118">Módulo 2</text><text x="78" y="196">Módulo 3</text><text x="78" y="274">Módulo 4</text><text x="78" y="352">Módulo 5</text><text x="78" y="430">Módulo 6</text><text x="78" y="508">Módulo 7</text></g>
+    </g>
+  </g>
+  <g transform="translate(355 535) rotate(-1.2 280 350)" filter="url(#shadow)">
+    <rect x="44" y="20" width="500" height="640" rx="22" fill="#5f253b" opacity="0.23"/><rect x="34" y="10" width="500" height="640" rx="22" fill="url(#paper)"/><rect x="34" y="10" width="34" height="640" rx="16" fill="#d8aaad"/>
+    <g fill="#7d153b"><circle cx="52" cy="54" r="7"/><circle cx="52" cy="104" r="7"/><circle cx="52" cy="154" r="7"/><circle cx="52" cy="204" r="7"/><circle cx="52" cy="254" r="7"/><circle cx="52" cy="304" r="7"/><circle cx="52" cy="354" r="7"/><circle cx="52" cy="404" r="7"/><circle cx="52" cy="454" r="7"/><circle cx="52" cy="504" r="7"/><circle cx="52" cy="554" r="7"/><circle cx="52" cy="604" r="7"/></g>
+    <g stroke="#a56c78" stroke-width="4"><path d="M40 54h25"/><path d="M40 104h25"/><path d="M40 154h25"/><path d="M40 204h25"/><path d="M40 254h25"/><path d="M40 304h25"/><path d="M40 354h25"/><path d="M40 404h25"/><path d="M40 454h25"/><path d="M40 504h25"/><path d="M40 554h25"/><path d="M40 604h25"/></g>
+    <text x="300" y="265" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="120" font-weight="700" fill="url(#wine)" letter-spacing="-8">TGM</text><text x="300" y="332" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="34" fill="#7b193f" letter-spacing="6">WORKBOOK</text><path d="M160 395 H442" stroke="#b55a7c" stroke-width="3" opacity="0.55"/>
+  </g>
+  <g transform="translate(1180 505) rotate(1 160 310)" filter="url(#shadow)">
+    <rect width="300" height="640" rx="54" fill="#181316"/><rect x="13" y="13" width="274" height="614" rx="43" fill="url(#screen)"/><rect x="95" y="19" width="110" height="23" rx="12" fill="#191417"/><path d="M13 300 C85 230 160 250 288 135 V420 C180 360 110 392 13 470 Z" fill="#f0afc6" opacity="0.75"/><path d="M20 425 C120 318 185 330 287 265" fill="none" stroke="url(#ribbon)" stroke-width="50" opacity="0.58"/>
+    <text x="150" y="220" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="34" fill="#6d1738">Meditación</text><text x="150" y="264" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="34" fill="#6d1738">guiada</text><circle cx="150" cy="405" r="44" fill="url(#wine)"/><path d="M138 383 L177 405 L138 428 Z" fill="#fff"/><rect x="48" y="492" width="204" height="7" rx="4" fill="#e5a8be"/><rect x="48" y="492" width="95" height="7" rx="4" fill="#9e2756"/><circle cx="143" cy="495.5" r="12" fill="#9e2756"/><text x="150" y="565" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="56" font-weight="700" fill="url(#wine)" letter-spacing="-4">TGM</text>
+  </g>
+  <g transform="translate(145 1125)" filter="url(#softShadow)">
+    <path d="M0 0 H930 Q960 0 960 30 V95 Q960 125 930 125 H0 Z" fill="#e8cec9"/><path d="M0 18 H915 Q930 18 930 34 V90 Q930 106 915 106 H0 Z" fill="#fff9f4"/><path d="M0 106 H935 Q965 106 965 136 V202 Q965 232 935 232 H0 Z" fill="#dfc1bc"/><path d="M0 124 H920 Q938 124 938 142 V196 Q938 214 920 214 H0 Z" fill="#fffaf6"/>
+    <text x="520" y="80" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="31" fill="#6f1738" letter-spacing="5">MEDITACIONES</text><text x="520" y="187" text-anchor="middle" font-family="Inter Display, Arial, sans-serif" font-size="31" fill="#6f1738" letter-spacing="5">HERRAMIENTAS</text><text x="845" y="80" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="48" font-weight="700" fill="url(#wine)" letter-spacing="-3">TGM</text><text x="845" y="187" text-anchor="middle" font-family="Noto Serif Display, Georgia, serif" font-size="48" font-weight="700" fill="url(#wine)" letter-spacing="-3">TGM</text>
+  </g>
+  <path d="M-30 1430 C300 1220 570 1460 910 1340 C1150 1255 1320 1165 1650 1295" fill="none" stroke="url(#ribbon)" stroke-width="95" opacity="0.28"/>
+</svg>
