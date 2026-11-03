@@ -150,3 +150,13 @@
     transform:scaleX(1.025);
   }
 }
+
+/* Keep the closing promise readable without splitting EXTRAORDINARIA. */
+.tgm-final-close .tgm-final-extraordinary{
+  font-size:clamp(1rem,6.3vw,3rem)!important;
+  line-height:1.04!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  text-wrap:balance;
+}
