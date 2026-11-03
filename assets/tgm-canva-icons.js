@@ -131,6 +131,24 @@
   document.querySelectorAll('.tgm-final-bonuses .tgm-final-bonus-card').forEach((card, index) => {
     const old = card.querySelector('.tgm-final-bonus-icon');
     if (!old) return;
+    if (index < 2) {
+      const mockups = [
+        { src: '/assets/tgm-bonus-afirmaciones.png', alt: 'Mockup de tres teléfonos con Afirmaciones de Poder' },
+        { src: '/assets/tgm-bonus-riqueza.png', alt: 'Mockup del Audio Activador de Riqueza con teléfono y audífonos' }
+      ];
+      old.className = 'tgm-bonus-mockup';
+      old.style.cssText = 'display:block;width:min(100%,360px);margin:0 auto 24px;';
+      const image = document.createElement('img');
+      image.src = mockups[index].src;
+      image.alt = mockups[index].alt;
+      image.width = 720;
+      image.height = 480;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      image.style.cssText = 'display:block;width:100%;height:auto;object-fit:contain;';
+      old.replaceChildren(image);
+      return;
+    }
     old.className = 'tgm-canva-icon tgm-canva-icon--bonus';
     old.innerHTML = svg(bonusIcons[index] || 'star', 100 + index);
   });
