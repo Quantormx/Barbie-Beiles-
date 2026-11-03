@@ -6,7 +6,7 @@
   max-width:760px!important;
   height:auto!important;
   min-height:0!important;
-  aspect-ratio:247 / 238!important;
+  aspect-ratio:1 / 1!important;
   overflow:hidden!important;
   background:#f7e5e0!important;
 }
@@ -15,7 +15,7 @@
   width:100%!important;
   height:auto!important;
   min-height:0!important;
-  aspect-ratio:247 / 238!important;
+  aspect-ratio:1 / 1!important;
   object-fit:contain!important;
   object-position:center!important;
   background:#f7e5e0!important;

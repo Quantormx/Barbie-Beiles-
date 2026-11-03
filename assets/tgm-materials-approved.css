@@ -2,7 +2,7 @@
 .tgm-final-includes .tgm-final-materials-visual{
   width:min(100%,760px)!important;
   max-width:760px!important;
-  aspect-ratio:247/238!important;
+  aspect-ratio:1/1!important;
   margin:34px auto 50px!important;
   padding:0!important;
   overflow:hidden!important;
@@ -14,8 +14,8 @@
 .tgm-final-includes .tgm-final-materials-visual img{
   display:block!important;
   width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;
+  height:auto!important;
+  object-fit:contain!important;
   object-position:center!important;
   transform:none!important;
   border-radius:0!important;
@@ -23,8 +23,8 @@
 }
 @media(max-width:420px){
   .tgm-final-includes .tgm-final-materials-visual{
-    width:calc(100% + 8px)!important;
-    margin-inline:-4px!important;
+    width:100%!important;
+    margin-inline:auto!important;
     margin-bottom:40px!important;
     border-radius:22px!important;
   }

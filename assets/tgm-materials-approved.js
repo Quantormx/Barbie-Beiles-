@@ -13,6 +13,8 @@
   image.alt = 'The Guide Method: libro, workbook, módulos digitales, meditación guiada y herramientas';
   image.loading = 'eager';
   image.decoding = 'async';
+  image.width = 1254;
+  image.height = 1254;
 
   image.addEventListener('load', () => {
     wrapper?.classList.add('tgm-materials-loaded');
@@ -24,5 +26,5 @@
     image.src = fallback;
   });
 
-  image.src = '/assets/tgm-materials-approved.webp?v=2';
+  image.src = '/assets/tgm-materials-20261103.webp';
 })();
