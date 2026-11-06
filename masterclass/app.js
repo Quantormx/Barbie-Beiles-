@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const eventTime = Date.parse('2026-11-04T19:00:00-06:00');
+  const eventTime = Date.parse('2026-11-18T19:00:00-06:00');
   const fields = ['days','hours','minutes','seconds'].map(id => document.getElementById(id));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let interval;
@@ -45,7 +45,7 @@
     pixel('init','2201485733932576');pixel('track','PageView');
   }
   cta.addEventListener('click',()=>{
-    window.gtag('event','masterclass_registration_click',{event_name:'masterclass_2026_11_04',cta_location:'hero'});
+    window.gtag('event','masterclass_registration_click',{event_name:'masterclass_2026_11_18',cta_location:'hero'});
   });
   // Only a confirmed submission from our own Tally iframe counts as a conversion.
   let conversionReported=false;
@@ -56,8 +56,8 @@
     if(message.event!=='Tally.FormSubmitted')return;
     if(message.payload?.formId!=='zEXNbE'||conversionReported)return;
     conversionReported=true;
-    window.gtag('event','generate_lead',{event_name:'masterclass_2026_11_04'});
-    window.fbq?.('track','CompleteRegistration',{content_name:'Masterclass Barbie Beiles 2026-11-04',status:true});
+    window.gtag('event','generate_lead',{event_name:'masterclass_2026_11_18'});
+    window.fbq?.('track','CompleteRegistration',{content_name:'Masterclass Barbie Beiles 2026-11-18',status:true});
     // Redirect the top-level page only after a successful registration.
     // Tally's native redirect also covers the standalone fallback form.
     setTimeout(()=>window.location.assign('/masterclass/gracias'),300);

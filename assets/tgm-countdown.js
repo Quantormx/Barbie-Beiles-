@@ -2,8 +2,8 @@
   'use strict';
 
   // Fixed Mexico City window. Never stored per visitor or reset on reload.
-  const START_AT = Date.parse('2026-11-04T21:00:00-06:00');
-  const END_AT = Date.parse('2026-11-06T21:00:00-06:00');
+  const START_AT = Date.parse('2026-11-18T21:00:00-06:00');
+  const END_AT = Date.parse('2026-11-20T21:00:00-06:00');
 
   function countdownAt(now) {
     const phase = now < START_AT ? 'scheduled' : now < END_AT ? 'active' : 'ended';
@@ -46,15 +46,15 @@
 
     if (state.phase !== lastPhase) {
       title.textContent = state.phase === 'scheduled'
-        ? 'Comienza el 4 de noviembre a las 9:00 p. m.'
+        ? 'Comienza el 18 de noviembre a las 9:00 p. m.'
         : state.phase === 'active'
           ? 'Este es tu momento. El tiempo cuenta.'
           : 'La cuenta regresiva ha finalizado.';
       note.textContent = state.phase === 'scheduled'
-        ? 'Hora de Ciudad de México · Finaliza el 6 de noviembre, 9:00 p. m.'
+        ? 'Hora de Ciudad de México · Finaliza el 20 de noviembre, 9:00 p. m.'
         : state.phase === 'active'
-          ? 'Finaliza el 6 de noviembre a las 9:00 p. m. · Hora CDMX'
-          : '6 de noviembre de 2026 · 9:00 p. m. · Hora CDMX';
+          ? 'Finaliza el 20 de noviembre a las 9:00 p. m. · Hora CDMX'
+          : '20 de noviembre de 2026 · 9:00 p. m. · Hora CDMX';
       status.textContent = state.phase === 'active'
         ? 'La cuenta regresiva de 48 horas ha comenzado.'
         : state.phase === 'ended' ? 'La cuenta regresiva ha finalizado.' : '';
