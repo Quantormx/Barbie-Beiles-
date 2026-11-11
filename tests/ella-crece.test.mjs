@@ -1,23 +1,83 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseSubmission,scoreLead,hasContactConsent} from '../lib/ella-crece.js';
-const fields=[
-['1. ¿Tu negocio está formalizado y factura actualmente?','Sí, está formalizado y factura'],
-['2. ¿Cuánto tiempo lleva operando tu negocio?','3 años o más'],
-['3. ¿En qué rango están tus ventas mensuales aproximadas? (MXN)','Más de $500,000'],
-['4. ¿Qué monto te gustaría explorar para tu negocio? (MXN)','De $300,001 a $700,000'],
-['5. ¿Para qué utilizarías el financiamiento principalmente?','Expansión del negocio'],
-['6. ¿Cuándo te gustaría contar con ese capital?','Lo antes posible'],
-['Nombre completo','TEST ELLA CRECE BARBIE'],['Correo electrónico','test@example.org'],
-['WhatsApp (con lada)','+525500000000'],
-['Autorización de contacto','Acepto que el equipo de ELLA CRECE me contacte']
-].map(([label,value])=>({label,value}));
-test('fictional high-priority lead is accepted and scored',()=>{
- const record=parseSubmission({eventType:'FORM_RESPONSE',data:{formId:'6DjDrJ',submissionId:'TEST-1',fields}});
- assert.equal(record.isTest,true);
- assert.equal(scoreLead(record).total,100);
- assert.equal(scoreLead(record).priority,'alta');
- assert.equal(hasContactConsent(record),true);
-});
-test('unknown form cannot inject events',()=>assert.throws(()=>parseSubmission({eventType:'FORM_RESPONSE',data:{formId:'incorrect',submissionId:'x',fields}})));
-test('contact consent missing means no contact',()=>assert.equal(hasContactConsent({consent:''}),false));
+import {createHmac} from 'node:crypto';
+import {Readable} from 'node:stream';
+import vm from 'node:vm';
+import {mkdtemp,mkdir,writeFile,readFile,lstat,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {FORM_ID,CONSENT,OPTIONS,AppError,parseSubmission,scoreLead,hasContactConsent,validSignature,authorized,settings,enforceAudience,readJson,confirmation} from '../lib/ella-crece.js';
+import {RedisStore,SendPulse} from '../lib/ella-crece-services.js';
+import {processOne} from '../lib/ella-crece-worker.js';
+import {createHandler} from '../api/ella-crece/webhook.js';
+import {patchAttribution,build} from '../scripts/build-ella-crece.mjs';
+const secret='fixture-only-not-a-real-secret-1234567890';
+function fixture(){const vals=[OPTIONS.formal[0][0],OPTIONS.age[2][0],OPTIONS.sales[3][0],OPTIONS.amount[2][0],OPTIONS.purpose[3][0],OPTIONS.urgency[0][0]];return {eventType:'FORM_RESPONSE',createdAt:new Date().toISOString(),data:{formId:FORM_ID,submissionId:'TEST-01',createdAt:new Date().toISOString(),fields:[...['4PP6bo','jGGRV9','2OOW6b','x99qW9','ZPP7Bv','N88jZb'].map((id,i)=>({key:`question_${id}`,value:[`option-${i}`],options:[{id:`option-${i}`,text:vals[i]}]})),{key:'question_qjjrlk',value:'TEST ELLA CRECE QA'},{key:'question_Q88ZQk',value:' QA@example.org '},{key:'question_922kK4',value:'+52 55 0000 0000'},{key:'question_e99JXo',value:['consent'],options:[{id:'consent',text:CONSENT}]},{label:'perfil_ceo',value:'CEO Visión'},{label:'utm_source',value:'tally'}]}};}
+const lead=()=>parseSubmission(fixture());
+const env=()=>({ELLA_CRECE_MODE:'test',ELLA_CRECE_TALLY_SIGNING_SECRET:secret,ELLA_CRECE_ID_SECRET:secret,CRON_SECRET:secret,ELLA_CRECE_TEST_EMAILS:'qa@example.org',ELLA_CRECE_WORKER_READY:'true',UPSTASH_REDIS_REST_URL:'https://demo.upstash.io',UPSTASH_REDIS_REST_TOKEN:'fixture',SENDPULSE_CLIENT_ID:'fixture',SENDPULSE_CLIENT_SECRET:'fixture',ELLA_CRECE_EMAIL_ENABLED:'false',ELLA_CRECE_SENDER_EMAIL:'sender@example.org'});
+const sign=p=>createHmac('sha256',secret).update(JSON.stringify(p)).digest('base64');
+const req=p=>({method:'POST',headers:{'content-type':'application/json','tally-signature':sign(p)},body:p});
+const res=()=>({headers:{},setHeader(k,v){this.headers[k]=v;},status(n){this.code=n;return this;},json(v){this.body=v;return this;}});
+class MemoryStore{constructor(){this.record={fingerprint:'a',lead:lead(),status:'queued',attempts:0,steps:{}};this.held=false;this.pending=true;}async acquire(){if(this.held)return null;this.held=true;return {token:'lease'};}async release(){this.held=false;}async heartbeat(){}async next(){return this.pending?'key':null;}async get(){return structuredClone(this.record);}async save(k,r){this.record=structuredClone(r);}async finish(k,r){await this.save(k,r);this.pending=false;}async retry(k,r){await this.save(k,r);this.pending=true;}}
+class FakeClient{constructor(){this.calls=[];this.contact={id:101,emails:[],phones:[]};this.existing=[];this.deals=[];this.optedOut=false;this.sender=true;}async findContacts(){this.calls.push('find');return this.existing;}async createContact(){this.calls.push('createContact');return 101;}async getContact(){return this.contact;}async addEmail(id,email){this.calls.push('addEmail');this.contact.emails=[{email}];return true;}async addPhone(id,phone){this.calls.push('addPhone');this.contact.phones=[{phone}];return true;}async contactDeals(){return this.deals;}async createDeal(){this.calls.push('createDeal');return 201;}async note(){this.calls.push('note');return true;}async suppressed(){return this.optedOut;}async smtpAllowed(){return this.sender;}async send(){this.calls.push('send');return 'smtp-fixture';}}
+const run=(store,client,flags={})=>{const e={...env(),...flags};return processOne({store,client,cfg:settings(e),env:e});};
+const mail={ELLA_CRECE_EMAIL_ENABLED:'true',ELLA_CRECE_SMTP_VERIFIED:'true'};
+test('parses real option-id shape and normalizes contact',()=>{const v=lead();assert.equal(v.email,'qa@example.org');assert.equal(v.phone,'+525500000000');assert.equal(v.isTest,true);assert.equal(hasContactConsent(v),true);assert.equal(v.scoring.total,100);assert.equal(v.ceoSource,'unverified_url_not_used_for_scoring');});
+test('MX local phone gets prefix',()=>{const p=fixture();p.data.fields.find(f=>f.key==='question_922kK4').value='5500000000';assert.equal(parseSubmission(p).phone,'+525500000000');});
+test('all known answers remain within score bounds',()=>{for(const[k,choices]of Object.entries(OPTIONS))for(const[value]of choices){const s=scoreLead({...lead(),[k]:value});assert.ok(s.total>=0&&s.total<=100);}});
+test('unknown values never silently get points',()=>assert.throws(()=>scoreLead({...lead(),sales:''}),/unknown_sales/));
+for(const [name,mutate,pattern]of [
+ ['wrong form',p=>p.data.formId='x',/unexpected_form/],['wrong event',p=>p.eventType='DELETE',/unexpected_form/],['invalid id',p=>p.data.submissionId='../bad',/invalid_submission/],
+ ['duplicate field',p=>p.data.fields.push(p.data.fields[0]),/duplicate_field/],['multiple answers',p=>p.data.fields[0].value.push('other'),/multiple_answers/],['unknown option',p=>p.data.fields[0].value=['missing'],/unknown_formal/],
+ ['missing email',p=>p.data.fields=p.data.fields.filter(f=>f.key!=='question_Q88ZQk'),/invalid_email/],['name injection',p=>p.data.fields.find(f=>f.key==='question_qjjrlk').value='QA\nBCC:bad',/invalid_name/],['phone invalid',p=>p.data.fields.find(f=>f.key==='question_922kK4').value='abc',/invalid_phone/],
+ ['missing timestamp',p=>{delete p.createdAt;delete p.data.createdAt;},/invalid_submitted/],['invalid fields',p=>p.data.fields=[null],/invalid_fields/],['malformed options',p=>p.data.fields[0].options={},/invalid_options/]
+])test(`rejects ${name}`,()=>{const p=fixture();mutate(p);assert.throws(()=>parseSubmission(p),pattern);});
+test('negative or generic consent is not authorization',()=>{for(const consent of ['No acepto','Acepto',['x'],''])assert.equal(hasContactConsent({consent}),false);});
+test('unrecognized CEO does not affect scoring',()=>{const p=fixture();p.data.fields.find(f=>f.label==='perfil_ceo').value='fake';const v=parseSubmission(p);assert.equal(v.ceo,'');assert.equal(v.scoring.total,100);});
+test('signature valid and tampering rejected',()=>{const p=fixture(),s=sign(p);assert.equal(validSignature(p,s,secret),true);p.data.formId='wrong';assert.equal(validSignature(p,s,secret),false);});
+test('signature wrong types do not throw',()=>{for(const s of [undefined,['x'],'short'])assert.equal(validSignature({},s,secret),false);});
+test('bearer exact and short secret rejected',()=>{assert.equal(authorized(`Bearer ${secret}`,secret),true);assert.equal(authorized('Bearer short','short'),false);assert.equal(authorized(['Bearer '+secret],secret),false);});
+test('disabled by default and missing credentials block',()=>{assert.equal(settings({}).ready,false);assert.equal(settings(env()).ready,true);assert.equal(settings({...env(),SENDPULSE_CLIENT_SECRET:''}).ready,false);});
+test('live flags cannot activate preview',()=>assert.equal(settings({...env(),ELLA_CRECE_MODE:'live',ELLA_CRECE_LIVE_APPROVED:'true',ELLA_CRECE_PRIVACY_URL:'https://example.org/privacy',VERCEL_ENV:'preview'}).ready,false));
+test('SMTP flag alone cannot enable sending',()=>assert.equal(settings({...env(),ELLA_CRECE_EMAIL_ENABLED:'true'}).ready,false));
+test('test requires both name prefix and allowlisted email',()=>{assert.doesNotThrow(()=>enforceAudience(lead(),settings(env())));assert.throws(()=>enforceAudience({...lead(),email:'other@example.org'},settings(env())),/test_recipient/);assert.throws(()=>enforceAudience({...lead(),isTest:false},settings(env())),/test_recipient/);});
+test('live mode excludes test records',()=>assert.throws(()=>enforceAudience(lead(),{mode:'live'}),/test_record/));
+test('Vercel parsed JSON does not reread stream',async()=>assert.deepEqual(await readJson({headers:{'content-type':'application/json'},body:{a:1}}),{a:1}));
+test('raw stream JSON supported',async()=>{const r=Readable.from(['{"a":','1}']);r.headers={'content-type':'application/json'};assert.deepEqual(await readJson(r),{a:1});});
+test('oversized payload rejected',async()=>assert.rejects(readJson({headers:{'content-type':'application/json'},body:{a:'x'.repeat(140000)}}),/too_large/));
+test('media type and malformed JSON rejected',async()=>{await assert.rejects(readJson({headers:{'content-type':'text/plain'},body:'{}'}),/json_required/);await assert.rejects(readJson({headers:{'content-type':'application/json'},body:'{'}),/invalid_json/);});
+test('202 only after durable enqueue',async()=>{let n=0;const r=res();await createHandler({env:env(),storeFactory:()=>({enqueue:async()=>{n++;return {duplicate:false};}})})(req(fixture()),r);assert.equal(r.code,202);assert.equal(n,1);assert.equal(r.body.crmSynced,false);assert.equal(r.body.emailSent,false);});
+test('duplicate receipt distinguished',async()=>{const r=res();await createHandler({env:env(),storeFactory:()=>({enqueue:async()=>({duplicate:true})})})(req(fixture()),r);assert.equal(r.body.status,'already_received');});
+test('storage outage never reports success',async()=>{const r=res();await createHandler({env:env(),storeFactory:()=>({enqueue:async()=>{throw new AppError('store_unavailable',503,true);}})})(req(fixture()),r);assert.equal(r.code,503);});
+test('conflicting duplicate returns 409',async()=>{const r=res();await createHandler({env:env(),storeFactory:()=>({enqueue:async()=>{throw new AppError('submission_payload_conflict',409);}})})(req(fixture()),r);assert.equal(r.code,409);});
+test('missing config, invalid signature and GET fail closed',async()=>{let r=res();await createHandler({env:{}})(req(fixture()),r);assert.equal(r.code,503);r=res();const q=req(fixture());q.headers['tally-signature']='wrong';await createHandler({env:env()})(q,r);assert.equal(r.code,401);r=res();await createHandler({env:env()})({method:'GET'},r);assert.equal(r.code,405);});
+test('old replay rejected',async()=>{const p=fixture();p.data.createdAt=new Date(Date.now()-8*86400000).toISOString();const r=res();await createHandler({env:env()})(req(p),r);assert.equal(r.code,422);});
+test('no consent creates no stored lead',async()=>{const p=fixture();p.data.fields.find(f=>f.key==='question_e99JXo').value=[];const r=res();await createHandler({env:env(),storeFactory:()=>{throw Error('unexpected');}})(req(p),r);assert.equal(r.body.status,'suppressed_no_contact_consent');});
+test('dry run makes no provider writes',async()=>{const r=res();await createHandler({env:{...env(),ELLA_CRECE_MODE:'dry_run'},storeFactory:()=>{throw Error('unexpected');}})(req(fixture()),r);assert.equal(r.body.mode,'dry_run');assert.equal(r.body.score,100);});
+test('CRM synced, email off, PII removed from completed outbox',async()=>{const s=new MemoryStore(),c=new FakeClient(),o=await run(s,c);assert.equal(o.state,'complete');assert.equal(o.emailStatus,'disabled_no_message_sent');assert.equal(c.calls.filter(x=>x==='createContact').length,1);assert.ok(!c.calls.includes('send'));assert.equal(s.record.lead,undefined);assert.ok(!JSON.stringify(s.record).includes('qa@example.org'));});
+test('one enabled confirmation',async()=>{const s=new MemoryStore(),c=new FakeClient();assert.equal((await run(s,c,mail)).state,'complete');assert.equal(c.calls.filter(x=>x==='send').length,1);});
+test('completed duplicate causes no more writes',async()=>{const s=new MemoryStore(),c=new FakeClient();await run(s,c);const n=c.calls.length;s.pending=true;await run(s,c);assert.equal(c.calls.length,n);});
+test('existing contact reused',async()=>{const s=new MemoryStore(),c=new FakeClient();c.existing=[c.contact];await run(s,c);assert.ok(!c.calls.includes('createContact'));});
+test('ambiguous multiple contacts held for review',async()=>{const s=new MemoryStore(),c=new FakeClient();c.existing=[{id:101},{id:102}];assert.equal((await run(s,c)).state,'review_required');assert.ok(!c.calls.includes('createDeal'));});
+test('existing external deal reused',async()=>{const s=new MemoryStore(),c=new FakeClient();c.deals=[{id:201,pipelineId:187604,externalDealId:`ella-crece:${FORM_ID}:TEST-01`}];await run(s,c);assert.ok(!c.calls.includes('createDeal'));});
+test('SMTP opt-out respected',async()=>{const s=new MemoryStore(),c=new FakeClient();c.optedOut=true;assert.equal((await run(s,c,mail)).emailStatus,'suppressed');assert.ok(!c.calls.includes('send'));});
+test('unverified sender cannot send',async()=>{const s=new MemoryStore(),c=new FakeClient();c.sender=false;assert.equal((await run(s,c,mail)).state,'review_required');assert.ok(!c.calls.includes('send'));});
+test('uncertain send never blindly resent',async()=>{const s=new MemoryStore(),c=new FakeClient();c.send=async()=>{c.calls.push('send');throw new AppError('ambiguous_external_write',503);};await run(s,c,mail);s.pending=true;await run(s,c,mail);assert.equal(c.calls.filter(x=>x==='send').length,1);assert.equal(s.record.status,'review_required');});
+test('inflight operation from crash held for review',async()=>{const s=new MemoryStore(),c=new FakeClient();s.record.inflight='contactCreated';assert.equal((await run(s,c)).state,'review_required');assert.deepEqual(c.calls,[]);});
+test('read outage retries without creating contact',async()=>{const s=new MemoryStore(),c=new FakeClient();c.findContacts=async()=>{throw new AppError('sendpulse_unavailable',503,true);};assert.equal((await run(s,c)).state,'retry');assert.ok(s.pending);assert.ok(!c.calls.includes('createContact'));});
+test('lease blocks simultaneous worker',async()=>{const s=new MemoryStore(),c=new FakeClient();s.held=true;assert.equal((await run(s,c)).state,'busy');assert.deepEqual(c.calls,[]);});
+test('partial progress does not recreate contact',async()=>{const s=new MemoryStore(),c=new FakeClient();s.record.steps.contactId=101;await run(s,c);assert.ok(!c.calls.includes('createContact'));});
+test('one recipient and no internal score in confirmation',()=>{const e=confirmation(lead(),'sender@example.org');assert.equal(e.to.length,1);assert.ok(e.subject.startsWith('[PRUEBA INTERNA]'));assert.ok(!e.text.includes('100/100'));assert.ok(!e.cc&&!e.bcc);});
+test('Redis disallows arbitrary and non-TLS hosts',()=>{for(const u of ['http://localhost','https://attacker.example'])assert.throws(()=>new RedisStore({...env(),UPSTASH_REDIS_REST_URL:u}),/invalid_redis/);});
+test('Redis uses atomic EVAL and header token',async()=>{let call;const s=new RedisStore(env(),async(url,opt)=>{call={url,opt};return {ok:true,json:async()=>({result:1})};});assert.deepEqual(await s.enqueue(lead()),{duplicate:false});assert.equal(call.url,'https://demo.upstash.io');assert.equal(call.opt.headers.Authorization,'Bearer fixture');assert.equal(JSON.parse(call.opt.body)[0],'EVAL');assert.equal(call.opt.redirect,'error');});
+test('OAuth and contact API paths checked',async()=>{const calls=[];const c=new SendPulse(env(),async(url,opt)=>{calls.push({url,opt});return {ok:true,json:async()=>url.includes('oauth')?{access_token:'fake'}:{success:true,data:{id:101}}};});assert.equal(await c.createContact(lead()),101);assert.equal(calls[1].url,'https://api.sendpulse.com/crm/v1/contacts/create');assert.equal(calls[1].opt.headers.Authorization,'Bearer fake');assert.ok(!JSON.parse(calls[1].opt.body).externalContactId.includes('qa@example.org'));});
+test('unsubscribe false is valid',async()=>{const c=new SendPulse(env(),async u=>({ok:true,json:async()=>u.includes('oauth')?{access_token:'fake'}:{result:false}}));assert.equal(await c.suppressed('qa@example.org'),false);});
+test('write timeout non-retryable ambiguous',async()=>{const c=new SendPulse(env(),async u=>{if(u.includes('oauth'))return {ok:true,json:async()=>({access_token:'fake'})};throw Error('timeout');});await assert.rejects(c.createContact(lead()),e=>e.code==='ambiguous_external_write'&&!e.retryable);});
+test('read timeout retryable',async()=>{const c=new SendPulse(env(),async u=>{if(u.includes('oauth'))return {ok:true,json:async()=>({access_token:'fake'})};throw Error('timeout');});await assert.rejects(c.findContacts('qa@example.org'),e=>e.code==='sendpulse_unavailable'&&e.retryable);});
+const html='<style>same</style>\n<!-- tally.so/embed/6DjDrJ -->\n<script>function resize(){if(window.Tally?.loadEmbeds)window.Tally.loadEmbeds();}\nresize();</script>';
+test('patch refuses unknown landing',()=>assert.throws(()=>patchAttribution('<html/>'),/refusing/));
+test('patch idempotent and visual prefix unchanged',()=>{const out=patchAttribution(html);assert.equal(patchAttribution(out),out);assert.ok(out.startsWith('<style>same</style>'));});
+function attribution(search){const frame={dataset:{tallySrc:'https://tally.so/embed/6DjDrJ?alignLeft=1'},getAttribute:()=>null},link={href:'https://tally.so/r/6DjDrJ'};vm.runInNewContext(patchAttribution(html).split('<script>')[1].split('</script>')[0],{URL,URLSearchParams,window:{location:{search},Tally:{loadEmbeds(){}}},document:{querySelector:s=>s.startsWith('iframe')?frame:link}});return [new URL(frame.dataset.tallySrc),new URL(link.href)];}
+test('attribution retains campaign/profile but never PII or tokens',()=>{for(const u of attribution('?utm_source=tally&perfil_ceo=CEO%20Visi%C3%B3n&email=secret%40example.org&token=hidden')){assert.equal(u.searchParams.get('perfil_ceo'),'CEO Visión');assert.equal(u.searchParams.get('utm_source'),'tally');assert.ok(!u.searchParams.has('email'));assert.ok(!u.searchParams.has('token'));}});
+test('unsupported profile ignored',()=>{for(const u of attribution('?perfil_ceo=%3Cscript%3E'))assert.ok(!u.searchParams.has('perfil_ceo'));});
+test('static build excludes secrets and backend while preserving site',async()=>{const root=await mkdtemp(join(tmpdir(),'ec-test-'));try{await mkdir(join(root,'creditos'));await mkdir(join(root,'lib'));await writeFile(join(root,'creditos/index.html'),html);await writeFile(join(root,'index.html'),'unchanged');await writeFile(join(root,'.env'),'MUST_NOT_PUBLISH');await writeFile(join(root,'lib/private.js'),'MUST_NOT_PUBLISH');await build(root);assert.equal(await readFile(join(root,'.site/index.html'),'utf8'),'unchanged');assert.ok((await readFile(join(root,'.site/creditos/index.html'),'utf8')).includes('EC_ATTRIBUTION_V2'));await assert.rejects(lstat(join(root,'.site/.env')),{code:'ENOENT'});await assert.rejects(lstat(join(root,'.site/lib')),{code:'ENOENT'});}finally{await rm(root,{recursive:true,force:true});}});

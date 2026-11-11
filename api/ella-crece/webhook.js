@@ -1,33 +1,14 @@
-import {createHmac,timingSafeEqual} from 'node:crypto';
-import {FORM_ID,parseSubmission,scoreLead,hasContactConsent} from '../../lib/ella-crece.js';
-
-// INERT BY DESIGN: this preview endpoint never sends email or creates CRM data.
-// Activation requires a reviewed persistent idempotency store and verified CRM adapter.
-function signatureValid(body, header, secret) {
-  if (!header || !secret) return false;
-  const expected=createHmac('sha256',secret).update(body).digest('base64');
-  const a=Buffer.from(header.trim()), b=Buffer.from(expected);
-  return a.length===b.length && timingSafeEqual(a,b);
-}
-export default async function handler(req,res) {
-  res.setHeader('Cache-Control','no-store');
-  if(req.method!=='POST') return res.status(405).json({error:'Method not allowed'});
-  if(!process.env.ELLA_CRECE_TALLY_SIGNING_SECRET) return res.status(503).json({error:'Webhook not configured'});
-  // Tally signs the serialized JSON payload. Read raw request bytes before parsing.
-  const chunks=[];let size=0;
-  for await(const chunk of req){size+=chunk.length;if(size>100000){return res.status(413).json({error:'Too large'});}chunks.push(chunk);}
-  const raw=Buffer.concat(chunks).toString('utf8');
-  let payload;
-  try {payload=JSON.parse(raw);} catch {return res.status(400).json({error:'Invalid JSON'});}
-  const signed=signatureValid(JSON.stringify(payload),req.headers['tally-signature'],process.env.ELLA_CRECE_TALLY_SIGNING_SECRET);
-  if(!signed) return res.status(401).json({error:'Invalid signature'});
-  if(payload.data?.formId!==FORM_ID) return res.status(422).json({error:'Wrong form'});
-  let lead;
-  try{lead=parseSubmission(payload);}catch{return res.status(422).json({error:'Invalid form response'});}
-  const scoring=scoreLead(lead);
-  // Do not log or echo PII; store only minimal metadata in test response.
-  return res.status(200).json({ok:true,mode:'dry_run',submissionId:lead.submissionId,
-    priority:scoring.priority,score:scoring.total,consent:hasContactConsent(lead),
-    isTest:lead.isTest, crmSynced:false,emailSent:false,
-    next:'Verify CRM API fields, persistent deduplication and authorized messaging before enabling writes'});
-}
+import {AppError,readJson,validSignature,parseSubmission,hasContactConsent,settings,enforceAudience} from '../../lib/ella-crece.js';
+import {RedisStore} from '../../lib/ella-crece-services.js';
+export function createHandler({env=process.env,storeFactory=e=>new RedisStore(e)}={}){return async(req,res)=>{
+ res.setHeader('Cache-Control','no-store');if(req.method!=='POST'){res.setHeader('Allow','POST');return res.status(405).json({error:'method_not_allowed'});}
+ try{
+  const cfg=settings(env);if(!cfg.ready)throw new AppError('integration_not_ready',503);
+  const payload=await readJson(req);if(!validSignature(payload,req.headers['tally-signature'],env.ELLA_CRECE_TALLY_SIGNING_SECRET))throw new AppError('invalid_signature',401);
+  const v=parseSubmission(payload);enforceAudience(v,cfg);const age=Date.now()-Date.parse(v.submittedAt);if(age>7*86400000||age< -300000)throw new AppError('submission_outside_replay_window');
+  if(!hasContactConsent(v))return res.status(200).json({ok:true,status:'suppressed_no_contact_consent',crmSynced:false,emailSent:false});
+  if(cfg.mode==='dry_run')return res.status(200).json({ok:true,mode:'dry_run',score:v.scoring.total,priority:v.scoring.priority,crmSynced:false,emailSent:false});
+  const saved=await storeFactory(env).enqueue(v);return res.status(202).json({ok:true,status:saved.duplicate?'already_received':'queued',crmSynced:false,emailSent:false});
+ }catch(e){return res.status(e instanceof AppError?e.status:503).json({ok:false,error:e instanceof AppError?e.code:'internal_error'});}
+};}
+export default createHandler();
