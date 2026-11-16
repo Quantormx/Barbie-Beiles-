@@ -23,7 +23,37 @@
   const frame=document.getElementById('registration-form');
   const fallback=document.getElementById('form-fallback');
   const cta=document.querySelector('.hero-cta');
-  const eventPassed=Date.now()>=eventTime;
+  const modal=document.getElementById('registration-dialog');
+  const modalFrame=document.getElementById('modal-registration-form');
+  const modalFallback=document.getElementById('modal-form-fallback');
+  const closeButton=modal.querySelector('.registration-close');
+  let modalLoaded=false;
+  let scrollY=0;
+  let previousBodyStyle;
+  function openRegistration() {
+    if(typeof modal.showModal!=='function')return false;
+    if(modal.open)return true;
+    scrollY=window.scrollY;
+    previousBodyStyle={position:document.body.style.position,top:document.body.style.top,width:document.body.style.width};
+    modal.showModal();
+    document.body.style.position='fixed';document.body.style.top=`-${scrollY}px`;document.body.style.width='100%';
+    if(!modalLoaded){
+      modalFrame.dataset.tallySrc=modalFrame.dataset.registrationSrc;
+      modalFrame.src=modalFrame.dataset.registrationSrc;
+      modalLoaded=true;
+      window.Tally?.loadEmbeds();
+    }
+    closeButton.focus({preventScroll:true});
+    return true;
+  }
+  closeButton.addEventListener('click',()=>modal.close());
+  modal.addEventListener('click',event=>{if(event.target===modal){const r=modal.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)modal.close();}});
+  modal.addEventListener('close',()=>{
+    Object.assign(document.body.style,previousBodyStyle);
+    const behavior=document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,scrollY);document.documentElement.style.scrollBehavior=behavior;
+    cta.focus({preventScroll:true});
+  });
   const parameters=new URLSearchParams(location.search);
   const formUrl=new URL(frame.dataset.tallySrc);
   const fallbackUrl=new URL(fallback.href);
@@ -33,6 +63,8 @@
   }
   frame.dataset.tallySrc=formUrl.href;
   fallback.href=fallbackUrl.href;
+  modalFrame.dataset.registrationSrc=formUrl.href;
+  modalFallback.href=fallbackUrl.href;
 
   window.dataLayer=window.dataLayer||[];
   window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
@@ -44,13 +76,14 @@
     const script=document.createElement('script');script.async=true;script.src='https://connect.facebook.net/en_US/fbevents.js';document.head.appendChild(script);
     pixel('init','2201485733932576');pixel('track','PageView');
   }
-  cta.addEventListener('click',()=>{
+  cta.addEventListener('click',event=>{
+    if(openRegistration())event.preventDefault();
     window.gtag('event','masterclass_registration_click',{event_name:'masterclass_2026_11_18',cta_location:'hero'});
   });
   // Only a confirmed submission from our own Tally iframe counts as a conversion.
   let conversionReported=false;
   window.addEventListener('message',event=>{
-    if(event.origin!=='https://tally.so'||event.source!==frame.contentWindow||typeof event.data!=='string')return;
+    if(event.origin!=='https://tally.so'||![frame.contentWindow,modalFrame.contentWindow].includes(event.source)||typeof event.data!=='string')return;
     if(!event.data.includes('Tally.FormSubmitted'))return;
     let message;try{message=JSON.parse(event.data);}catch{return;}
     if(message.event!=='Tally.FormSubmitted')return;

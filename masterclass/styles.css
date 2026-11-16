@@ -17,3 +17,16 @@ dialog{width:min(490px,calc(100% - 36px));max-height:calc(100dvh - 40px);padding
 /* Live registration embed */
 .signup-embed{padding:24px 26px 14px}.signup-embed iframe{display:block;width:100%;border:0;background:transparent}.form-fallback{font-size:12px;line-height:1.4;margin:12px 0 4px;color:#785250}.form-fallback a{text-underline-offset:3px}.cta[aria-disabled="true"]{cursor:default;filter:grayscale(.4)}
 @media(max-width:760px){.signup-embed{padding:18px 14px 10px}.signup-embed iframe{min-height:390px}}
+
+/* A quiet luminous invitation; no flashing or layout shift. */
+.hero-cta::after{content:"";position:absolute;inset:-50% -70%;pointer-events:none;background:linear-gradient(110deg,transparent 43%,rgba(255,255,255,.21) 49%,transparent 55%);transform:translateX(-60%);animation:cta-glimmer 6s ease-in-out infinite}
+@keyframes cta-glimmer{0%,45%{transform:translateX(-60%);opacity:0}52%{opacity:1}72%{transform:translateX(60%);opacity:0}100%{transform:translateX(60%);opacity:0}}
+.registration-dialog{width:min(560px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:28px 24px 14px;overflow-y:auto;overscroll-behavior:contain;border:1px solid #d4a3a5;border-radius:24px;text-align:center}
+.registration-dialog::backdrop{background:rgba(52,1,2,.48);backdrop-filter:blur(5px)}
+.registration-dialog h2{font-size:32px;margin:8px 22px 6px}
+.registration-dialog .dialog-eyebrow{font-size:12px;letter-spacing:.1em;padding-inline:30px}
+.registration-dialog .registration-meta{font-size:13px;line-height:1.4;color:#785250}
+.registration-close{position:absolute;right:9px;top:7px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--wine);font-size:30px;line-height:1;z-index:1}
+.registration-close:hover{background:#8d1b1b0a}
+.modal-embed{padding:14px 0 0}.modal-embed iframe{min-height:390px}
+@media(max-width:480px){.registration-dialog{padding:24px 14px 10px;border-radius:20px}.registration-dialog h2{font-size:28px}.registration-dialog .registration-meta{font-size:12px}}
