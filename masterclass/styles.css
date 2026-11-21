@@ -30,3 +30,6 @@ dialog{width:min(490px,calc(100% - 36px));max-height:calc(100dvh - 40px);padding
 .registration-close:hover{background:#8d1b1b0a}
 .modal-embed{padding:14px 0 0}.modal-embed iframe{min-height:390px}
 @media(max-width:480px){.registration-dialog{padding:24px 14px 10px;border-radius:20px}.registration-dialog h2{font-size:28px}.registration-dialog .registration-meta{font-size:12px}}
+
+/* Introductory copy for the December masterclass. */
+.hero-description{font-size:clamp(16px,1.4vw,18px);line-height:1.5;margin-top:20px;max-width:605px}.hero-description p+p{margin-top:12px}
