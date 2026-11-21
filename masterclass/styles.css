@@ -33,3 +33,4 @@ dialog{width:min(490px,calc(100% - 36px));max-height:calc(100dvh - 40px);padding
 
 /* Introductory copy for the December masterclass. */
 .hero-description{font-size:clamp(16px,1.4vw,18px);line-height:1.5;margin-top:20px;max-width:605px}.hero-description p+p{margin-top:12px}
+.hero-description .masterclass-word{font-family:var(--title);font-weight:800}
