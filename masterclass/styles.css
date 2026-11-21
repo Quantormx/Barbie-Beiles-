@@ -45,6 +45,7 @@ dialog{width:min(490px,calc(100% - 36px));max-height:calc(100dvh - 40px);padding
 @media(max-width:1100px) and (min-width:761px){#hero-title{font-size:calc(clamp(34px,4.1vw,45px) + 2pt)}}
 @media(max-width:760px){#hero-title{font-size:calc(clamp(32px,8.9vw,50px) + 2pt)}.hero-cta-wrap{padding-top:34px}.cta-wand{right:3px;top:-8px;width:64px;height:64px}}
 @media(max-width:360px){#hero-title{font-size:calc(30px + 2pt)}}
+@media(max-width:340px){#hero-title{letter-spacing:-.04em}}
 @media(prefers-reduced-motion:no-preference){
   .cta-wand{animation:wand-invitation 2.8s ease-in-out .5s 3}
   .wand-sparkles{animation:wand-sparkle 2.8s ease-in-out .5s 3}
