@@ -1,0 +1,1 @@
+{"name":"barbie-beiles-site","private":true,"type":"module","engines":{"node":"24.x"},"scripts":{"test":"node --test tests/ella-crece.test.mjs","build":"npm test && node scripts/build-ella-crece.mjs"}}

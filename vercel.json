@@ -1,48 +1,19 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "routes": [
-    {
-      "src": "/masterclass/gracias",
-      "dest": "/masterclass/gracias/index.html"
-    },
-    {
-      "src": "/masterclass/gracias/",
-      "dest": "/masterclass/gracias/index.html"
-    },
-    {
-      "src": "/masterclass",
-      "dest": "/masterclass/index.html"
-    },
-    {
-      "src": "/masterclass/",
-      "dest": "/masterclass/index.html"
-    },
-    {
-      "src": "/theguidemethod",
-      "dest": "/theguidemethod/mobile-first.html"
-    },
-    {
-      "src": "/theguidemethod/",
-      "dest": "/theguidemethod/mobile-first.html"
-    },
-    {
-      "src": "/theguidemethod-mobile",
-      "dest": "/theguidemethod/mobile-first.html"
-    },
-    {
-      "src": "/theguidemethod-mobile/",
-      "dest": "/theguidemethod/mobile-first.html"
-    },
-    {
-      "src": "/demotgm",
-      "dest": "/demotgm/index.html"
-    },
-    {
-      "src": "/demotgm/",
-      "dest": "/demotgm/index.html"
-    },
-    {
-      "handle": "filesystem"
-    }
-  ]
+ "$schema":"https://openapi.vercel.sh/vercel.json",
+ "buildCommand":"npm run build",
+ "outputDirectory":".site",
+ "functions":{"api/ella-crece/webhook.js":{"maxDuration":15},"api/ella-crece/worker.js":{"maxDuration":60}},
+ "routes":[
+ {"src":"/masterclass/gracias","dest":"/masterclass/gracias/index.html"},
+ {"src":"/masterclass/gracias/","dest":"/masterclass/gracias/index.html"},
+ {"src":"/masterclass","dest":"/masterclass/index.html"},
+ {"src":"/masterclass/","dest":"/masterclass/index.html"},
+ {"src":"/theguidemethod","dest":"/theguidemethod/mobile-first.html"},
+ {"src":"/theguidemethod/","dest":"/theguidemethod/mobile-first.html"},
+ {"src":"/theguidemethod-mobile","dest":"/theguidemethod/mobile-first.html"},
+ {"src":"/theguidemethod-mobile/","dest":"/theguidemethod/mobile-first.html"},
+ {"src":"/demotgm","dest":"/demotgm/index.html"},
+ {"src":"/demotgm/","dest":"/demotgm/index.html"},
+ {"handle":"filesystem"}
+ ]
 }
